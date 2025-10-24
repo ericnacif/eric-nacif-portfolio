@@ -1,34 +1,32 @@
 .skill-card {
-    text-align: left;
-    padding: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    /* Borda sutil do Figma */
-    border-radius: 10px;
-    background-color: var(--background-color);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-    height: 100%;
+  text-align: left;
+  padding: 20px;
+  border: 1px solid var(--border-color); /* Usa variável */
+  border-radius: 10px;
+  background-color: var(--card-bg); /* Usa variável */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  height: 100%;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .skill-icon {
-    font-size: 28px;
-    color: var(--text-color);
+  font-size: 28px;
+  color: var(--text-color);
 }
 
 .skill-card h4 {
-    /* Valores extraídos do código Figma */
-    font-weight: 800;
-    font-size: 16px;
-    margin: 0;
+  font-weight: 800;
+  font-size: 16px;
+  margin: 0;
+  color: var(--text-color);
 }
 
 .skill-card p {
-    /* Valores extraídos do código Figma */
-    color: var(--text-color);
-    /* No Figma a cor é preta */
-    font-size: 10px;
-    font-weight: 300;
-    line-height: 1.5;
+  color: var(--gray-color); /* Alterado */
+  font-size: 10px;
+  font-weight: 300;
+  line-height: 1.5;
 }

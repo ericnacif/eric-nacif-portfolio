@@ -1,97 +1,96 @@
 .about-section {
-    padding-top: 80px;
-    padding-bottom: 100px;
+  padding-top: 80px;
+  padding-bottom: 100px;
 }
 
 .about-header-content {
-    display: flex;
-    gap: 100px;
-    margin-bottom: 80px;
-    align-items: flex-start;
+  display: flex;
+  gap: 100px;
+  margin-bottom: 80px;
+  align-items: flex-start;
 }
 
 .about-header-content .section-title {
-    margin-bottom: 0;
-    white-space: nowrap;
-    flex-shrink: 0;
+  margin-bottom: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .about-bio {
-    max-width: 761px;
-    padding-top: 150px;
-    /* AUMENTADO O ESPAÇO SUPERIOR */
+  max-width: 761px;
+  padding-top: 120px; /* <-- ALTERADO AQUI */
 }
 
 .about-bio h3 {
-    font-size: 30px;
-    font-weight: 400;
-    margin-bottom: 20px;
+  font-size: 30px;
+  font-weight: 400;
+  margin-bottom: 20px;
 }
 
 .about-bio p {
-    color: var(--gray-color);
-    line-height: 1.8;
-    margin-bottom: 30px;
-    font-size: 14px;
-    font-weight: 300;
+  color: var(--gray-color);
+  line-height: 1.8;
+  margin-bottom: 30px;
+  font-size: 14px;
+  font-weight: 300;
 }
 
 .about-links a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-weight: 400;
-    font-size: 14px;
-    text-transform: uppercase;
-    margin-right: 25px;
-    transition: color 0.3s ease;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: uppercase;
+  margin-right: 25px;
+  transition: color 0.3s ease;
 }
 
 .about-links a:hover {
-    color: var(--gray-color);
+  color: var(--gray-color);
 }
 
 .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-    margin-bottom: 80px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-bottom: 80px;
 }
 
 .experience-lists-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    padding-top: 50px;
-    border-top: 1px solid var(--border-color);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding-top: 50px;
+  border-top: 1px solid var(--border-color);
 }
 
 /* Responsividade */
 @media (max-width: 1024px) {
-    .about-header-content {
-        flex-direction: column;
-        gap: 40px;
-        align-items: center;
-    }
-
-    .about-bio {
-        text-align: center;
-        padding-top: 0;
-    }
+  .about-header-content {
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+  }
+  .about-bio {
+    text-align: center;
+    padding-top: 0; /* No mobile, voltamos a 0 */
+  }
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .experience-lists-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
 }
 
 @media (max-width: 768px) {
-    .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .experience-lists-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
+   /* Estilos para responsividade, se necessário */
 }
 
 @media (max-width: 500px) {
-    .skills-grid {
-        grid-template-columns: 1fr;
-    }
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
 }

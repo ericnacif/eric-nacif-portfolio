@@ -1,28 +1,26 @@
 .experience-list-card {
-    padding-right: 20px;
+  padding-right: 20px;
 }
 
 .experience-list-card h4 {
-    /* Valores extraídos do código Figma */
-    font-weight: 800;
-    font-size: 16px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
+  font-weight: 800;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-color); /* Usa variável */
+  padding-bottom: 10px;
+  color: var(--text-color);
+  transition: border-color 0.3s ease;
 }
 
 .experience-list-card ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .experience-list-card li {
-    /* Valores extraídos do código Figma */
-    color: var(--text-color);
-    /* No Figma a cor é preta */
-    margin-bottom: 8px;
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 1.6;
-    /* Mais espaçado */
+  color: var(--gray-color); /* Alterado */
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.6;
 }

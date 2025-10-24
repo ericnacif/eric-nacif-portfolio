@@ -1,15 +1,17 @@
 .custom-cursor {
-    width: 30px;
-    height: 30px;
-    border: 2px solid #1a1a1a;
-    border-radius: 50%;
-    position: fixed;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 9999;
-    /* A transição agora é gerenciada pela Framer Motion */
+  /* Propriedades de cor e transição foram REMOVIDAS daqui */
+  
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  
+  /* Definimos a borda aqui para que o Framer saiba o que animar */
+  border-width: 2px;
+  border-style: solid;
 }
 
 body {
-    cursor: none;
+  cursor: none;
 }

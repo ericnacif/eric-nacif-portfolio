@@ -1,25 +1,36 @@
 /* IMPORTAÇÃO DAS FONTES */
-@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Manrope:wght@300;400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Manrope:wght@300;400;500;700;800&display=swap'); /* Manrope adicionada de volta */
 @import url('https://fonts.cdnfonts.com/css/glacial-indifference');
-/* <-- ADICIONADO AQUI */
 
+/* 1. DEFINIÇÃO DAS VARIÁVEIS DE COR E FONTE */
 :root {
-  /* Cores */
-  --background-color: #ffffff;
+  /* ... (suas variáveis de cor permanecem as mesmas) ... */
+  --accent-color: #8A2BE2;
+  --accent-color-hover: #4169E1;
+  --bg-color: #ffffff;
   --text-color: #1a1a1a;
   --gray-color: #808080;
-  --light-gray-color: #ffffff;
+  --card-bg: #ffffff;
   --border-color: #e0e0e0;
+  --shadow-color: rgba(0, 0, 0, 0.07);
+
+  /* --- ATUALIZAÇÃO DA HIERARQUIA DE FONTES --- */
+  --font-main: 'Manrope', sans-serif; /* Fonte principal para corpo e títulos */
+  --font-display: 'DotGothic16', sans-serif; /* Fonte do Hero */
+  --font-logo: 'Glacial Indifference', sans-serif; /* Fonte do Logo */
 }
 
-/* Tipografia */
-:root {
-  --font-main: 'Manrope', sans-serif;
-  --font-display: 'DotGothic16', sans-serif;
-  --font-logo: 'Glacial Indifference', sans-serif;
-  /* <-- ADICIONADO AQUI */
+/* 2. DEFINIÇÃO DAS VARIÁVEIS (DARK MODE) */
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #f5f5f5;
+  --gray-color: #a0a0a0;
+  --card-bg: #1e1e1e;
+  --border-color: #333333;
+  --shadow-color: rgba(255, 255, 255, 0.05);
 }
 
+/* 3. RESET GLOBAL E BODY */
 * {
   margin: 0;
   padding: 0;
@@ -31,10 +42,12 @@ html {
 }
 
 body {
-  font-family: var(--font-main);
-  background-color: var(--background-color);
+  font-family: var(--font-main); /* Usa Manrope */
+  font-weight: 400; /* Peso padrão para o corpo */
+  background-color: var(--bg-color);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
   cursor: none;
 }
 
@@ -46,9 +59,19 @@ body {
 
 .section-title {
   display: inline-block;
+  font-family: var(--font-main); /* Garante Manrope */
   font-size: 30px;
-  font-weight: 800;
+  font-weight: 800; /* Manrope ExtraBold */
   padding-bottom: 15px;
   margin-bottom: 80px;
   border-bottom: 7px solid var(--text-color);
+  transition: border-color 0.3s ease;
+}
+
+/* Ajustes de peso para outros títulos comuns (opcional, mas bom) */
+h3 {
+  font-weight: 700; /* Manrope Bold */
+}
+h4 {
+  font-weight: 700; /* Manrope Bold */
 }

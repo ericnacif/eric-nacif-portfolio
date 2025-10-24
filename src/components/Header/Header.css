@@ -1,72 +1,175 @@
+/* --- BASE E LAYOUT DESKTOP --- */
 .main-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-    padding: 0 50px;
-    border-bottom: 1px solid var(--border-color);
-    transition: height 0.3s ease, background-color 0.3s ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--bg-color);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  padding: 0 50px;
+  border-bottom: 1px solid var(--border-color);
+  transition: height 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .header-container {
-    display: grid;
-    /* LAYOUT DE 3 COLUNAS: [logo] [nav] [espaço] */
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    max-width: 1240px;
-    margin: 0 auto;
-    height: 80px;
-    transition: height 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1240px;
+  margin: 0 auto;
+  /* --- ALTERAÇÃO: Aumentado para acomodar o logo maior --- */
+  height: 100px; 
+  transition: height 0.3s ease;
 }
 
-/* ESTILO DO NOVO LOGO (SEU NOME) */
-.header-logo-name {
-    font-family: var(--font-logo);
-    font-size: 24px;
-    font-weight: 700;
-    /* Glacial Indifference Bold */
-    text-decoration: none;
-    color: var(--text-color);
-    text-transform: lowercase;
-    letter-spacing: -0.5px;
-    justify-self: start;
-    /* Alinha à esquerda */
+/* --- ESTILOS ATUALIZADOS PARA O LOGO PNG --- */
+.header-logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }
 
-.main-header nav {
-    display: flex;
-    gap: 50px;
-    justify-self: center;
-    /* Alinha no centro da grid */
+.header-logo-img {
+  margin-left: 0;
+  padding-left: 0;
+  margin-right: 50px;
+  padding-top: 45px;
+  height: 400px !important; /* TESTE COM !important */
+  width: auto;
+  transition: height 0.3s ease;
 }
 
-.main-header nav a {
-    text-decoration: none;
-    color: var(--gray-color);
-    font-size: 14px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    transition: color 0.3s ease;
+/* --- FIM DOS ESTILOS DO LOGO --- */
+
+
+.desktop-nav {
+  display: flex;
+  gap: 50px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.main-header nav a:hover {
-    color: var(--text-color);
+.desktop-nav a {
+  text-decoration: none;
+  color: var(--gray-color);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: color 0.3s ease;
 }
 
-.header-right-spacer {
-    justify-self: end;
-    /* Apenas para ocupar a 3ª coluna */
+.desktop-nav a:hover {
+  color: var(--text-color);
 }
 
-/* ESTADO ENCOLHIDO (SCROLLED) */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 18px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.theme-toggle:hover {
+  color: var(--accent-color);
+  transform: scale(1.1);
+}
+
+/* --- ESTADO DE SCROLL --- */
 .main-header.scrolled {
-    background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(var(--bg-color-rgb, 255, 255, 255), 0.9);
 }
+[data-theme="light"] { --bg-color-rgb: 255, 255, 255; }
+[data-theme="dark"] { --bg-color-rgb: 18, 18, 18; }
 
 .main-header.scrolled .header-container {
-    height: 60px;
+  /* --- ALTERAÇÃO: Ajustado para o estado 'scrolled' --- */
+  height: 80px;
+}
+.main-header.scrolled .header-logo-img {
+  /* --- ALTERAÇÃO: Ajustado para o estado 'scrolled' --- */
+  height: 60px; 
+}
+
+
+/* --- LAYOUT MOBILE --- */
+.mobile-menu-btn {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 20px;
+  display: none;
+  transition: color 0.3s ease;
+}
+.mobile-menu-btn:hover {
+  color: var(--accent-color);
+}
+
+.mobile-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-color);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobile-close-btn {
+  position: absolute;
+  top: 30px;
+  right: 50px;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.mobile-nav a {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-color);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* --- @MEDIA QUERY --- */
+@media (max-width: 768px) {
+  .main-header {
+    padding: 0 20px;
+  }
+  .desktop-nav {
+    display: none;
+  }
+  .mobile-menu-btn {
+    display: block;
+  }
+  .mobile-close-btn {
+    right: 20px;
+  }
+   .header-container {
+     justify-content: space-between;
+   }
 }
