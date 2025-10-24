@@ -1,0 +1,28 @@
+.experience-list-card {
+    padding-right: 20px;
+}
+
+.experience-list-card h4 {
+    /* Valores extraídos do código Figma */
+    font-weight: 800;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.experience-list-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.experience-list-card li {
+    /* Valores extraídos do código Figma */
+    color: var(--text-color);
+    /* No Figma a cor é preta */
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.6;
+    /* Mais espaçado */
+}

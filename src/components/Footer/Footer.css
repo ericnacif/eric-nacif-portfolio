@@ -1,0 +1,26 @@
+.main-footer {
+    text-align: center;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    /* AUMENTADO O ESPAÇAMENTO */
+    margin-top: 20px;
+}
+
+.social-icons a {
+    display: inline-block;
+}
+
+.social-icons img {
+    height: 36px;
+    width: auto;
+    transition: opacity 0.3s ease;
+}
+
+.social-icons a:hover img {
+    opacity: 0.7;
+}

@@ -1,0 +1,90 @@
+.project-card {
+    /* MUDADO PARA LAYOUT VERTICAL */
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    /* Remove o gap, o padding cuidará disso */
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 0;
+    /* Remove padding antigo */
+    overflow: hidden;
+    /* Essencial para a imagem se ajustar às bordas */
+
+    /* Mantém a animação de hover */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.07);
+}
+
+.project-image {
+    /* MUDADO PARA PROPORÇÃO 16:9 */
+    width: 100%;
+    height: auto;
+    /* Remove altura fixa */
+    aspect-ratio: 16 / 9;
+    /* Proporção de tela (widescreen) */
+    object-fit: cover;
+    border-radius: 0;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border-color);
+    /* Linha sutil separando imagem do texto */
+}
+
+.project-info {
+    padding: 25px;
+    /* Adiciona padding de volta, mas só na área de texto */
+}
+
+.project-info h3 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.project-info p {
+    color: var(--gray-color);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-size: 12px;
+    font-weight: 300;
+}
+
+.project-info h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.contribution-list {
+    list-style-type: '✓  ';
+    padding-left: 20px;
+    margin-bottom: 25px;
+}
+
+.contribution-list li {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--gray-color);
+    margin-bottom: 5px;
+}
+
+.project-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.project-tags .tag {
+    background-color: var(--light-gray-color);
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.25);
+    padding: 2px 10px;
+    border-radius: 7.5px;
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+}

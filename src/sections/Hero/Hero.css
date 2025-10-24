@@ -1,0 +1,39 @@
+.hero-section {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.hero-title {
+    font-family: var(--font-display);
+    font-size: 45px;
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+/* EFEITO DE GRADIENTE ANIMADO NO TÍTULO */
+.hero-title span {
+    background: linear-gradient(90deg, #8A2BE2, #4169E1, #8A2BE2);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-size: 200% 100%;
+    animation: gradient-animation 4s ease infinite;
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 200% 50%;
+    }
+
+    50% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 200% 50%;
+    }
+}

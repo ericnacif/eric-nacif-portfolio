@@ -1,0 +1,18 @@
+.custom-cursor {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #1a1a1a;
+    border-radius: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    /* Centraliza o círculo no cursor */
+    pointer-events: none;
+    /* Permite clicar através do elemento */
+    z-index: 9999;
+    transition: width 0.2s, height 0.2s;
+}
+
+/* Opcional: esconde o cursor padrão */
+body {
+    cursor: none;
+}

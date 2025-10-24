@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Manrope:wght@300;400;500;700;800&display=swap');
+
+:root {
+  /* Cores */
+  --background-color: #ffffff;
+  --text-color: #1a1a1a;
+  --gray-color: #808080;
+  /* Cor exata do Figma para parágrafos */
+  --light-gray-color: #ffffff;
+  /* Fundo das tags é branco */
+  --border-color: #e0e0e0;
+}
+
+/* Tipografia */
+:root {
+  --font-main: 'Manrope', sans-serif;
+  --font-display: 'DotGothic16', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  cursor: none;
+}
+
+.container {
+  max-width: 1240px;
+  /* Aumentado para corresponder ao espaçamento lateral */
+  margin: 0 auto;
+  padding: 100px 20px;
+}
+
+/* CLASSE UTILITÁRIA PARA TÍTULOS DE SEÇÃO (VALORES DO FIGMA) */
+.section-title {
+  display: inline-block;
+  font-size: 30px;
+  font-weight: 800;
+  padding-bottom: 15px;
+  margin-bottom: 80px;
+  border-bottom: 7px solid var(--text-color);
+  /* Traço com 7px de espessura */
+}
