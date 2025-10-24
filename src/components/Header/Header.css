@@ -8,22 +8,39 @@
     z-index: 1000;
     padding: 0 50px;
     border-bottom: 1px solid var(--border-color);
+    transition: height 0.3s ease, background-color 0.3s ease;
 }
 
 .header-container {
-    display: flex;
-    justify-content: center;
-    /* CENTRALIZADO */
+    display: grid;
+    /* LAYOUT DE 3 COLUNAS: [logo] [nav] [espaço] */
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     max-width: 1240px;
     margin: 0 auto;
     height: 80px;
+    transition: height 0.3s ease;
+}
+
+/* ESTILO DO NOVO LOGO (SEU NOME) */
+.header-logo-name {
+    font-family: var(--font-logo);
+    font-size: 24px;
+    font-weight: 700;
+    /* Glacial Indifference Bold */
+    text-decoration: none;
+    color: var(--text-color);
+    text-transform: lowercase;
+    letter-spacing: -0.5px;
+    justify-self: start;
+    /* Alinha à esquerda */
 }
 
 .main-header nav {
     display: flex;
     gap: 50px;
-    /* Aumentado o espaçamento */
+    justify-self: center;
+    /* Alinha no centro da grid */
 }
 
 .main-header nav a {
@@ -31,11 +48,25 @@
     color: var(--gray-color);
     font-size: 14px;
     font-weight: 500;
-    text-transform: lowercase;
+    text-transform: uppercase;
     letter-spacing: 0.1em;
     transition: color 0.3s ease;
 }
 
 .main-header nav a:hover {
     color: var(--text-color);
+}
+
+.header-right-spacer {
+    justify-self: end;
+    /* Apenas para ocupar a 3ª coluna */
+}
+
+/* ESTADO ENCOLHIDO (SCROLLED) */
+.main-header.scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+.main-header.scrolled .header-container {
+    height: 60px;
 }

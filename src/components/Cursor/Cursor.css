@@ -5,14 +5,11 @@
     border-radius: 50%;
     position: fixed;
     transform: translate(-50%, -50%);
-    /* Centraliza o círculo no cursor */
     pointer-events: none;
-    /* Permite clicar através do elemento */
     z-index: 9999;
-    transition: width 0.2s, height 0.2s;
+    /* A transição agora é gerenciada pela Framer Motion */
 }
 
-/* Opcional: esconde o cursor padrão */
 body {
     cursor: none;
 }
