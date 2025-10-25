@@ -8,7 +8,6 @@ import './Header.css';
 import logoImage from '../../assets/logo/logo.png'; 
 // --- FIM DA IMPORTAÇÃO ---
 
-
 const NavLinks = ({ onClick }) => (
   <>
     <motion.a href="#home" onClick={onClick} whileHover={{ y: -2 }} transition={{ type: 'spring', stiffness: 300 }}>Home</motion.a>
@@ -42,7 +41,6 @@ const Header = () => {
   return (
     <header className={`main-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="header-container">
-        
         {/* --- 2. SUBSTITUA O SVG PELO IMG --- */}
         <a href="#home" className="header-logo-link" aria-label="Voltar para o início">
           {/* Usamos a tag <img> agora */}

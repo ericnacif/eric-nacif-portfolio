@@ -13,42 +13,44 @@
 }
 
 .header-container {
+  position: relative; /* Ancoragem para a nav absoluta */
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 1240px;
   margin: 0 auto;
-  /* --- ALTERAÇÃO: Aumentado para acomodar o logo maior --- */
   height: 100px; 
   transition: height 0.3s ease;
 }
 
-/* --- ESTILOS ATUALIZADOS PARA O LOGO PNG --- */
+/* --- ESTILOS DO LOGO --- */
 .header-logo-link {
   display: flex;
   align-items: center;
+  height: 100%;          /* Ocupa a altura do header */
   text-decoration: none;
 }
 
 .header-logo-img {
+  display: block;
+  height: 80px;          /* Altura coerente com o header */
+  width: auto;
   margin-left: 0;
   padding-left: 0;
   margin-right: 50px;
-  padding-top: 45px;
-  height: 400px !important; /* TESTE COM !important */
-  width: auto;
+  padding: 0;            /* Removido padding-top antigo */
   transition: height 0.3s ease;
+  object-fit: contain;
 }
 
-/* --- FIM DOS ESTILOS DO LOGO --- */
-
-
+/* --- NAV DESKTOP --- */
 .desktop-nav {
   display: flex;
   gap: 50px;
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  top: 50%;                 /* Centraliza verticalmente */
+  transform: translate(-50%, -50%);
 }
 
 .desktop-nav a {
@@ -92,14 +94,11 @@
 [data-theme="dark"] { --bg-color-rgb: 18, 18, 18; }
 
 .main-header.scrolled .header-container {
-  /* --- ALTERAÇÃO: Ajustado para o estado 'scrolled' --- */
   height: 80px;
 }
 .main-header.scrolled .header-logo-img {
-  /* --- ALTERAÇÃO: Ajustado para o estado 'scrolled' --- */
   height: 60px; 
 }
-
 
 /* --- LAYOUT MOBILE --- */
 .mobile-menu-btn {
@@ -169,7 +168,7 @@
   .mobile-close-btn {
     right: 20px;
   }
-   .header-container {
-     justify-content: space-between;
-   }
+  .header-container {
+    justify-content: space-between;
+  }
 }
