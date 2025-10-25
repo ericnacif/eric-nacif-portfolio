@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 import { FaSun, FaMoon, FaBars, FaTimes } from 'react-icons/fa';
 import './Header.css';
-
-// --- 1. IMPORTE O LOGO PNG ---
-import logoImage from '../../assets/logo/logo.png'; 
-// --- FIM DA IMPORTAÇÃO ---
 
 const NavLinks = ({ onClick }) => (
   <>
@@ -23,36 +19,22 @@ const Header = () => {
   const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+    document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
   }, [isMenuOpen]);
 
   return (
     <header className={`main-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="header-container">
-        {/* --- 2. SUBSTITUA O SVG PELO IMG --- */}
         <a href="#home" className="header-logo-link" aria-label="Voltar para o início">
-          {/* Usamos a tag <img> agora */}
-          <img 
-            src={logoImage} 
-            alt="Eric Nacif Logo" 
-            className="header-logo-img" 
-          /> 
+          <span className="header-logo-text">eric nacif</span>
         </a>
-        {/* --- FIM DA SUBSTITUIÇÃO --- */}
 
-        {/* NAVEGAÇÃO DESKTOP */}
         <nav className="desktop-nav">
           <NavLinks />
         </nav>
@@ -67,9 +49,8 @@ const Header = () => {
         </div>
       </div>
 
-      {/* OVERLAY DO MENU MOBILE */}
       {isMenuOpen && (
-        <motion.div 
+        <motion.div
           className="mobile-nav-overlay"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
