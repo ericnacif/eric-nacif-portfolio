@@ -13,14 +13,16 @@ const ProjectCard = ({ title, description, contribution, tags, image }) => {
       transition={{ type: 'spring', stiffness: 300 }}
     >
       {/* Wrapper da imagem não é mais necessário */}
-      {/* Imagem agora é uma tag <img> normal */}
+      {/* Imagem agora é uma tag <img> normal com otimizações de performance */}
       <img
         src={image}
         alt={title}
         className="project-image"
         loading="lazy"
         decoding="async"
-        sizes="(max-width: 1024px) 100vw, 600px"
+        sizes="(max-width: 768px) 100vw, (max-width: 1240px) 50vw, 600px"
+        draggable={false}
+        style={{ width: '100%', height: 'auto', aspectRatio: '16 / 9', objectFit: 'cover' }}
       />
 
       <div className="project-info">

@@ -1,5 +1,6 @@
 .hero-section {
-  min-height: 80vh;
+  min-height: 75dvh;
+  /* melhor em mobile com barras dinâmicas */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,9 +10,11 @@
 }
 
 .hero-title {
-  font-family: var(--font-display); /* <-- VOLTOU PARA DotGothic16 */
-  font-size: 45px;
-  font-weight: 400; /* Peso padrão do DotGothic16 */
+  font-family: var(--font-display);
+  /* <-- VOLTOU PARA DotGothic16 */
+  font-size: clamp(28px, 8vw, 45px);
+  font-weight: 400;
+  /* Peso padrão do DotGothic16 */
   line-height: 1.2;
 }
 

@@ -1,19 +1,21 @@
 .skill-card {
   text-align: left;
   padding: 20px;
-  border: 1px solid var(--border-color); /* Usa variável */
+  border: 1px solid var(--border-color);
+  /* Usa variável */
   border-radius: 10px;
-  background-color: var(--card-bg); /* Usa variável */
+  background-color: var(--card-bg);
+  /* Usa variável */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 15px;
+  gap: 12px;
   height: 100%;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .skill-icon {
-  font-size: 28px;
+  font-size: clamp(22px, 2.8vw, 28px);
   color: var(--text-color);
 }
 
@@ -25,8 +27,9 @@
 }
 
 .skill-card p {
-  color: var(--gray-color); /* Alterado */
-  font-size: 10px;
+  color: var(--gray-color);
+  /* Alterado */
+  font-size: clamp(12px, 1.2vw, 14px);
   font-weight: 300;
-  line-height: 1.5;
+  line-height: 1.6;
 }

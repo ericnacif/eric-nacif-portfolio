@@ -22,6 +22,9 @@
   /* Fonte do Hero */
   --font-logo: 'Glacial Indifference', sans-serif;
   /* Fonte do Logo */
+
+  /* Espessura do sublinhado do título da seção */
+  --section-title-border-w: 7px;
 }
 
 /* 2. DEFINIÇÃO DAS VARIÁVEIS (DARK MODE) */
@@ -54,7 +57,14 @@ body {
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.3s ease, color 0.3s ease;
-  /* cursor: none; */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ocultar cursor apenas em dispositivos com mouse (evita problema no mobile) */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
 }
 
 .container {
@@ -67,12 +77,12 @@ body {
   display: inline-block;
   font-family: var(--font-main);
   /* Garante Manrope */
-  font-size: 30px;
+  font-size: clamp(22px, 4vw, 30px);
   font-weight: 800;
   /* Manrope ExtraBold */
   padding-bottom: 15px;
-  margin-bottom: 80px;
-  border-bottom: 7px solid var(--text-color);
+  margin-bottom: 64px;
+  border-bottom: var(--section-title-border-w) solid var(--text-color);
   transition: border-color 0.3s ease;
 }
 
@@ -87,6 +97,28 @@ h4 {
   /* Manrope Bold */
 }
 
+/* Mídia: reduzir padding e peso visual em telas menores */
+@media (max-width: 1024px) {
+  .container {
+    padding: 72px 16px;
+  }
+
+  :root {
+    --section-title-border-w: 5px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 56px 14px;
+  }
+
+  :root {
+    --section-title-border-w: 4px;
+  }
+}
+
+/* Mídia: respeitar usuários que preferem menos movimento */
 @media (prefers-reduced-motion: reduce) {
 
   *,
@@ -98,7 +130,18 @@ h4 {
   }
 }
 
+/* Acessibilidade: foco visível */
 :focus-visible {
   outline: 2px solid var(--accent-color);
   outline-offset: 2px;
+}
+
+/* Mídia e mídia responsiva por padrão */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
 }

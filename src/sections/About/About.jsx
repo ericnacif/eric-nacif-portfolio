@@ -107,8 +107,8 @@ const About = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
       >
-        {skillsData.map((skill, index) => (
-          <motion.div key={index} variants={itemVariants}>
+        {skillsData.map((skill) => (
+          <motion.div key={skill.title} variants={itemVariants}>
             <SkillCard {...skill} />
           </motion.div>
         ))}
