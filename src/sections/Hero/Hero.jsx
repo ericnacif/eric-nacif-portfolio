@@ -6,6 +6,7 @@ const Hero = () => {
   // TÍTULO ATUALIZADO
   const text = "desenvolvedor full stack";
   const letters = Array.from(text);
+  const firstSpaceIndex = text.indexOf(' '); // índice do espaço entre "desenvolvedor" e "full"
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -38,14 +39,20 @@ const Hero = () => {
         aria-label="desenvolvedor full stack"
       >
         {letters.map((letter, index) => (
-          <motion.span key={index} variants={letterVariants} aria-hidden="true">
-            {letter === " " ? "\u00A0" : letter}
-          </motion.span>
+          <React.Fragment key={index}>
+            <motion.span variants={letterVariants} aria-hidden="true">
+              {/* Use espaço normal para permitir quebra; o <br> controlará no mobile */}
+              {letter}
+            </motion.span>
+            {index === firstSpaceIndex && (
+              // quebra apenas no mobile
+              <br className="mobile-break" />
+            )}
+          </React.Fragment>
         ))}
       </motion.h1>
 
       {/* Subtítulo e botão CTA removidos daqui */}
-
     </section>
   );
 };

@@ -89,36 +89,13 @@ body {
 /* Ajustes de peso para outros títulos comuns (opcional, mas bom) */
 h3 {
   font-weight: 700;
-  /* Manrope Bold */
 }
 
 h4 {
   font-weight: 700;
-  /* Manrope Bold */
 }
 
-/* Mídia: reduzir padding e peso visual em telas menores */
-@media (max-width: 1024px) {
-  .container {
-    padding: 72px 16px;
-  }
-
-  :root {
-    --section-title-border-w: 5px;
-  }
-}
-
-@media (max-width: 600px) {
-  .container {
-    padding: 56px 14px;
-  }
-
-  :root {
-    --section-title-border-w: 4px;
-  }
-}
-
-/* Mídia: respeitar usuários que preferem menos movimento */
+/* Respeitar usuários que preferem menos movimento */
 @media (prefers-reduced-motion: reduce) {
 
   *,
@@ -136,7 +113,7 @@ h4 {
   outline-offset: 2px;
 }
 
-/* Mídia e mídia responsiva por padrão */
+/* Mídia e assets responsivos */
 img,
 picture,
 video,
@@ -144,4 +121,32 @@ canvas,
 svg {
   display: block;
   max-width: 100%;
+}
+
+/* SOMENTE MOBILE: sem rolagem lateral e espaçamentos mais compactos */
+@media (max-width: 768px) {
+
+  html,
+  body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .container {
+    padding: 72px 16px;
+  }
+
+  :root {
+    --section-title-border-w: 5px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 56px 14px;
+  }
+
+  :root {
+    --section-title-border-w: 4px;
+  }
 }

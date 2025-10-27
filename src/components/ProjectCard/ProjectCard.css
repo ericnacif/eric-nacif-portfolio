@@ -1,85 +1,168 @@
 .project-card {
-  display: flex;
-  flex-direction: column; 
-  gap: 0;
-  background-color: var(--card-bg);
-  border-radius: 8px;
-  padding: 0;
-  overflow: hidden; 
+  background: var(--card-bg);
   border: 1px solid var(--border-color);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
-
-.project-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 20px var(--shadow-color);
-}
-
-/* Wrapper da imagem REMOVIDO */
 
 .project-image {
-  /* Estilos de posicionamento absoluto REMOVIDOS */
   width: 100%;
-  height: auto; /* Altura automática para manter proporção */
-  aspect-ratio: 16 / 9; /* Mantém a proporção */
-  object-fit: cover; /* Cobre a área sem distorcer */
-  border-bottom: 1px solid var(--border-color); /* Mantém a linha */
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
 }
 
 .project-info {
-  padding: 25px;
+  padding: 16px;
 }
 
-/* ... (Restante do CSS permanece o mesmo) ... */
-
 .project-info h3 {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 15px;
+  margin: 0 0 8px 0;
+  font-size: 18px;
   color: var(--text-color);
 }
 
-.project-info p {
+.project-description {
   color: var(--gray-color);
-  line-height: 1.6;
-  margin-bottom: 20px;
   font-size: 14px;
-  font-weight: 400;
+  line-height: 1.6;
+  margin-bottom: 12px;
 }
 
-.project-info h4 {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--text-color);
+.project-contrib-title {
+  margin-top: 14px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--text-color);
 }
 
 .contribution-list {
-    list-style-type: '✓  ';
-    padding-left: 20px;
-    margin-bottom: 25px;
-}
-
-.contribution-list li {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--gray-color);
-    margin-bottom: 5px;
+  margin: 0 0 12px 16px;
+  padding: 0;
+  color: var(--gray-color);
+  font-size: 14px;
 }
 
 .project-tags {
   display: flex;
-  gap: 10px;
   flex-wrap: wrap;
+  gap: 8px;
 }
 
-.project-tags .tag {
-  background-color: var(--bg-color);
-  box-shadow: 0px 0px 1px var(--border-color);
-  padding: 3px 12px;
-  border-radius: 7.5px;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
+.tag {
+  display: inline-block;
+  padding: 6px 10px;
+  font-size: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
   color: var(--text-color);
+  background: transparent;
+}
+
+/* Botão de detalhes (visível só no mobile) */
+.show-details-mobile {
+  display: none;
+  margin-top: 14px;
+  padding: 10px 12px;
+  font-size: 14px;
+  background: var(--text-color);
+  color: var(--bg-color);
+  border: none;
+  border-radius: 8px;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .6);
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  overflow: auto;
+  background: var(--bg-color);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  padding: 16px;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.modal-title {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: var(--text-color);
+}
+
+.modal-tags {
+  margin-bottom: 12px;
+}
+
+.modal-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.modal-description {
+  color: var(--gray-color);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.modal-subtitle {
+  margin-top: 14px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.modal-list {
+  margin: 0 0 12px 16px;
+  padding: 0;
+  color: var(--gray-color);
+  font-size: 14px;
+}
+
+/* Ajustes somente para mobile */
+@media (max-width: 768px) {
+
+  /* Esconder descrição e contribuição dentro do card; mostrar só imagem, título e tags */
+  .project-description,
+  .project-contrib-title,
+  .contribution-list {
+    display: none;
+  }
+
+  .show-details-mobile {
+    display: inline-flex;
+  }
+
+  /* Cards ocupam a largura toda no mobile (stack) */
+  .project-card {
+    width: 100%;
+  }
 }

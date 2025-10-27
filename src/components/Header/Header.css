@@ -23,7 +23,7 @@
     transition: height 0.3s ease;
 }
 
-/* Logo como texto (mesma fonte do Hero) */
+/* Logo como texto */
 .header-logo-link {
     display: flex;
     align-items: center;
@@ -31,11 +31,12 @@
 }
 
 .header-logo-text {
+    font-family: var(--font-logo);
     font-size: 32px;
     /* bem visível */
     line-height: 1;
     letter-spacing: 0.02em;
-    color: #8a2be2;
+    color: var(--text-color);
     margin-right: 28px;
     user-select: none;
     white-space: nowrap;
@@ -168,21 +169,43 @@
     }
 }
 
+/* Melhor posicionamento no mobile + sem overflow lateral */
 @media (max-width: 768px) {
+    .main-header {
+        padding: 0 16px;
+        /* reduz padding para evitar overflow */
+    }
+
     .header-container {
         height: 72px;
-        padding: 0 20px;
+        padding: 0 0;
+        /* já temos padding no wrapper */
+        position: relative;
+        /* base para posicionar logo e botão */
+    }
+
+    /* Centraliza a logo no header */
+    .header-logo-link {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .header-logo-text {
         font-size: 26px;
+        margin-right: 0;
     }
 
-    .main-header.scrolled .header-container {
-        height: 64px;
+    /* Botão do menu alinhado à direita */
+    .mobile-menu-btn {
+        position: absolute;
+        right: 8px;
     }
 
-    .main-header.scrolled .header-logo-text {
-        font-size: 22px;
+    /* Garantir que nada cause rolagem lateral */
+    .main-header,
+    .header-container {
+        width: 100%;
+        overflow-x: clip;
     }
 }

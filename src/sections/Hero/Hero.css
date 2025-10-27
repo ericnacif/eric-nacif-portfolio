@@ -11,14 +11,23 @@
 
 .hero-title {
   font-family: var(--font-display);
-  /* <-- VOLTOU PARA DotGothic16 */
   font-size: clamp(28px, 8vw, 45px);
   font-weight: 400;
-  /* Peso padrão do DotGothic16 */
   line-height: 1.2;
 }
 
 .hero-title span {
   color: var(--accent-color);
   transition: color 0.3s ease;
+}
+
+/* Quebra apenas no mobile */
+.mobile-break {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-break {
+    display: block;
+  }
 }
