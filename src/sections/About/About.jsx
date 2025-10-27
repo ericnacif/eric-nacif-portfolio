@@ -2,13 +2,15 @@ import React from 'react';
 import SkillCard from '../../components/SkillCard/SkillCard';
 import ExperienceList from '../../components/ExperienceList/ExperienceList';
 import './About.css';
-import { FaPaintBrush, FaCode, FaReact, FaWordpress } from 'react-icons/fa'; // Ícones de volta
 import { motion } from 'framer-motion';
+import { SiLaravel, SiReact, SiPostgresql, SiTailwindcss } from 'react-icons/si';
 
 // Dados com base no currículo
 const personalInfo = {
   name: "Eric Nacif",
-  bio: `Desenvolvedor Full-Stack com experiência em PHP, Laravel e JavaScript na criação de sistemas web. Com vivência prática no desenvolvimento de interfaces responsivas e APIs, busco ativamente uma oportunidade para entregar soluções tecnológicas eficientes e colaborar com equipes de alta performance.`,
+  bio: `Desenvolvedor full stack em início de carreira, com base sólida em PHP/Laravel e JavaScript.
+   Tenho prática em criar APIs REST, interfaces responsivas em React e modelagem de dados com MySQL/Postgre.
+   Busco uma oportunidade para contribuir em equipes que valorizam código limpo, performance e aprendizado contínuo.`,
   links: {
     instagram: "https://instagram.com/nacif_",
     github: "https://github.com/ericnacif",
@@ -17,26 +19,43 @@ const personalInfo = {
 };
 
 // DADOS DE SKILLS (OS 4 CARDS) REVERTIDOS
+// Cards de skills nas categorias solicitadas
 const skillsData = [
-    { icon: <FaPaintBrush />, title: "Interface & Design", description: "Briefing, wireframe, UI, UX e branding." },
-    { icon: <FaCode />, title: "HTML & CSS", description: "Responsive websites with fast loading." },
-    { icon: <FaReact />, title: "React.js", description: "Build your system with modernjs." },
-    { icon: <FaWordpress />, title: "WordPress", description: "Create your e-commerce and blog with PHP." }
+  {
+    icon: <SiLaravel />,
+    title: "Laravel, PHP & Blade",
+    description: "APIs REST com Laravel, Blade, Eloquent, autenticação e performance em PHP."
+  },
+  {
+    icon: <SiReact />,
+    title: "React, React Native & Node.js",
+    description: "SPA com React, apps móveis com React Native e back-end/SSR com Node.js."
+  },
+  {
+    icon: <SiPostgresql />,
+    title: "Banco de Dados (SQL, Postgre & Firebase)",
+    description: "Modelagem e queries SQL, PostgreSQL; Realtime/Auth com Firebase."
+  },
+  {
+    icon: <SiTailwindcss />,
+    title: "Tailwind, CSS3 & Bootstrap",
+    description: "CSS utilitário (Tailwind), base moderna com CSS3 e componentes com Bootstrap."
+  }
 ];
 
 // Dados das listas de experiência
 const experienceListsData = {
   hadExperiences: {
-    title: "Experiências com",
-    items: ["Firebase Database", "MySQL Database", "GIT, GitHub, Bitbucket", "Coding PHP", "Figma, Adobe XD, Sketch", "CSS Preprocessors", "Digital Marketing", "Coding Python (Django)"]
+    title: "Experiências com:",
+    items: ["SQL", "GIT, GitHub", "PHP", "Figma", "CSS", "Laravel", "JavaScript", "HTML5"]
   },
   haveYearsExperience: {
-    title: "Experiência de Anos com",
-    items: ["Coding HTML5", "Coding CSS3", "Coding WordPress", "Coding JavaScript", "Using Elementor", "Using Adobe Package", "Creating Brand and Logo", "Creating User Interface"]
+    title: "Anos de Experiência com:",
+    items: ["HTML5", "CSS3", "WordPress, Elementor", "JavaScript", "Pacote Adobe", "Interface de Usuário"]
   },
   workAndStudy: {
-    title: "Estudo & Pratico",
-    items: ["Coding React.js", "Coding CSS3", "Coding JavaScript", "Studying TypeScript", "Studying Node.js basics", "Studying API RESTful", "Studying User Experience"]
+    title: "Estudo & Pratico:",
+    items: ["React.js", "Next.js", "React Native", "TypeScript", "Node.js", "API RESTful", "PostgreSQL", "MongoDB", "Tailwind CSS"]
   }
 };
 
