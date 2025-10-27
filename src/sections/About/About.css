@@ -18,7 +18,8 @@
 
 .about-bio {
   max-width: 761px;
-  padding-top: 120px; /* <-- ALTERADO AQUI */
+  padding-top: 120px;
+  /* <-- ALTERADO AQUI */
 }
 
 .about-bio h3 {
@@ -51,7 +52,7 @@
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 30px;
   margin-bottom: 80px;
 }
@@ -71,14 +72,18 @@
     gap: 40px;
     align-items: center;
   }
+
   .about-bio {
     text-align: center;
-    padding-top: 0; /* No mobile, voltamos a 0 */
+    padding-top: 0;
+    /* No mobile, voltamos a 0 */
   }
+
   .skills-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
+
   .experience-lists-grid {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -86,7 +91,7 @@
 }
 
 @media (max-width: 768px) {
-   /* Estilos para responsividade, se necessário */
+  /* Estilos para responsividade, se necessário */
 }
 
 @media (max-width: 500px) {

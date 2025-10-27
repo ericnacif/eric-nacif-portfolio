@@ -54,7 +54,7 @@ const experienceListsData = {
     items: ["HTML5", "CSS3", "WordPress, Elementor", "JavaScript", "Pacote Adobe", "Interface de Usuário"]
   },
   workAndStudy: {
-    title: "Estudo & Pratico:",
+    title: "Estudo & Prática:",
     items: ["React.js", "Next.js", "React Native", "TypeScript", "Node.js", "API RESTful", "PostgreSQL", "MongoDB", "Tailwind CSS"]
   }
 };

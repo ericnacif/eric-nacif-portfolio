@@ -14,24 +14,26 @@ const ProjectCard = ({ title, description, contribution, tags, image }) => {
     >
       {/* Wrapper da imagem não é mais necessário */}
       {/* Imagem agora é uma tag <img> normal */}
-      <img 
-        src={image} 
-        alt={title} 
+      <img
+        src={image}
+        alt={title}
         className="project-image"
-        // style={{ y }} foi removido
+        loading="lazy"
+        decoding="async"
+        sizes="(max-width: 1024px) 100vw, 600px"
       />
 
       <div className="project-info">
         <h3>{title}</h3>
         <p>{description}</p>
-        
+
         {contribution && contribution.length > 0 && (
           <>
             <h4>Minha Contribuição:</h4>
             <ul className="contribution-list">
-                {contribution.map((item, index) => (
-                    <li key={index}>{item}</li>
-                ))}
+              {contribution.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
             </ul>
           </>
         )}

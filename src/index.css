@@ -1,5 +1,6 @@
 /* IMPORTAÇÃO DAS FONTES */
-@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Manrope:wght@300;400;500;700;800&display=swap'); /* Manrope adicionada de volta */
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Manrope:wght@300;400;500;700;800&display=swap');
+/* Manrope adicionada de volta */
 @import url('https://fonts.cdnfonts.com/css/glacial-indifference');
 
 /* 1. DEFINIÇÃO DAS VARIÁVEIS DE COR E FONTE */
@@ -15,9 +16,12 @@
   --shadow-color: rgba(0, 0, 0, 0.07);
 
   /* --- ATUALIZAÇÃO DA HIERARQUIA DE FONTES --- */
-  --font-main: 'Manrope', sans-serif; /* Fonte principal para corpo e títulos */
-  --font-display: 'DotGothic16', sans-serif; /* Fonte do Hero */
-  --font-logo: 'Glacial Indifference', sans-serif; /* Fonte do Logo */
+  --font-main: 'Manrope', sans-serif;
+  /* Fonte principal para corpo e títulos */
+  --font-display: 'DotGothic16', sans-serif;
+  /* Fonte do Hero */
+  --font-logo: 'Glacial Indifference', sans-serif;
+  /* Fonte do Logo */
 }
 
 /* 2. DEFINIÇÃO DAS VARIÁVEIS (DARK MODE) */
@@ -42,13 +46,15 @@ html {
 }
 
 body {
-  font-family: var(--font-main); /* Usa Manrope */
-  font-weight: 400; /* Peso padrão para o corpo */
+  font-family: var(--font-main);
+  /* Usa Manrope */
+  font-weight: 400;
+  /* Peso padrão para o corpo */
   background-color: var(--bg-color);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.3s ease, color 0.3s ease;
-  cursor: none;
+  /* cursor: none; */
 }
 
 .container {
@@ -59,9 +65,11 @@ body {
 
 .section-title {
   display: inline-block;
-  font-family: var(--font-main); /* Garante Manrope */
+  font-family: var(--font-main);
+  /* Garante Manrope */
   font-size: 30px;
-  font-weight: 800; /* Manrope ExtraBold */
+  font-weight: 800;
+  /* Manrope ExtraBold */
   padding-bottom: 15px;
   margin-bottom: 80px;
   border-bottom: 7px solid var(--text-color);
@@ -70,8 +78,27 @@ body {
 
 /* Ajustes de peso para outros títulos comuns (opcional, mas bom) */
 h3 {
-  font-weight: 700; /* Manrope Bold */
+  font-weight: 700;
+  /* Manrope Bold */
 }
+
 h4 {
-  font-weight: 700; /* Manrope Bold */
+  font-weight: 700;
+  /* Manrope Bold */
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
 }

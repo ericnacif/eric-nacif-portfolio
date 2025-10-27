@@ -35,9 +35,10 @@ const Hero = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
+        aria-label="desenvolvedor full stack"
       >
         {letters.map((letter, index) => (
-          <motion.span key={index} variants={letterVariants}>
+          <motion.span key={index} variants={letterVariants} aria-hidden="true">
             {letter === " " ? "\u00A0" : letter}
           </motion.span>
         ))}
