@@ -2,22 +2,19 @@ import React, { useState } from 'react';
 import './Footer.css';
 import { motion } from 'framer-motion';
 
-// --- VERIFY THESE IMPORTS ---
-// Should be default imports like this
+// Ícones SVG (arquivos locais)
 import FigmaIcon from '../../assets/icons/figma.svg';
 import LinkedinIcon from '../../assets/icons/linkedin.svg';
 import InstagramIcon from '../../assets/icons/instagram.svg';
 import GithubIcon from '../../assets/icons/github.svg';
-// --- END VERIFICATION ---
 
 const socialLinks = [
-  { href: "https://linkedin.com/in/eric-nacif", IconComponent: LinkedinIcon, alt: "LinkedIn" },
+  { href: "https://www.linkedin.com/in/eric-nacif-956930324/", IconComponent: LinkedinIcon, alt: "LinkedIn" },
   { href: "https://github.com/ericnacif", IconComponent: GithubIcon, alt: "GitHub" },
-  { href: "#", IconComponent: InstagramIcon, alt: "Instagram" },
-  { href: "#", IconComponent: FigmaIcon, alt: "Figma" },
+  { href: "https://www.instagram.com/nacif_/", IconComponent: InstagramIcon, alt: "Instagram" },
+  { href: "https://www.figma.com/@nacif_eric", IconComponent: FigmaIcon, alt: "Figma" },
 ];
 
-// ... (Rest of the Footer component remains the same) ...
 const Footer = () => {
   const [status, setStatus] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,13 +28,10 @@ const Footer = () => {
     const data = new FormData(form);
 
     try {
-      // REMEMBER TO PUT YOUR FORMSPREE ID HERE
       const response = await fetch("https://formspree.io/f/movpajdd", {
         method: "POST",
         body: data,
-        headers: {
-          'Accept': 'application/json'
-        }
+        headers: { 'Accept': 'application/json' }
       });
 
       if (response.ok) {
@@ -54,7 +48,6 @@ const Footer = () => {
       setIsSubmitting(false);
     }
   };
-
 
   return (
     <footer id="contato" className="container main-footer">
@@ -93,13 +86,11 @@ const Footer = () => {
             transition={{ type: 'spring', stiffness: 400 }}
             aria-label={link.alt}
           >
-            {/* --- CORREÇÃO AQUI --- */}
             <img
               src={link.IconComponent}
               alt={link.alt}
               className="social-icon-svg"
             />
-            {/* --- FIM DA CORREÇÃO --- */}
           </motion.a>
         ))}
       </div>

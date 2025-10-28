@@ -12,13 +12,14 @@ const personalInfo = {
    Tenho prática em criar APIs REST, interfaces responsivas em React e modelagem de dados com MySQL/Postgre.
    Busco uma oportunidade para contribuir em equipes que valorizam código limpo, performance e aprendizado contínuo.`,
   links: {
-    instagram: "https://instagram.com/nacif_",
+    instagram: "https://www.instagram.com/nacif_/",
     github: "https://github.com/ericnacif",
+    linkedin: "https://www.linkedin.com/in/eric-nacif-956930324/",
+    figma: "https://www.figma.com/@nacif_eric",
     email: "mailto:naciferic7@gmail.com"
   }
 };
 
-// DADOS DE SKILLS (OS 4 CARDS) REVERTIDOS
 // Cards de skills nas categorias solicitadas
 const skillsData = [
   {
@@ -59,7 +60,6 @@ const experienceListsData = {
   }
 };
 
-
 // Variantes de animação
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -94,12 +94,14 @@ const About = () => {
           <div className="about-links">
             <a href={personalInfo.links.instagram} target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
             <a href={personalInfo.links.github} target="_blank" rel="noopener noreferrer">GITHUB</a>
+            <a href={personalInfo.links.linkedin} target="_blank" rel="noopener noreferrer">LINKEDIN</a>
+            <a href={personalInfo.links.figma} target="_blank" rel="noopener noreferrer">FIGMA</a>
             <a href={personalInfo.links.email}>EMAIL</a>
           </div>
         </motion.div>
       </div>
 
-      {/* GRID DE SKILLS REVERTIDO */}
+      {/* GRID DE SKILLS */}
       <motion.div
         className="skills-grid"
         variants={containerVariants}

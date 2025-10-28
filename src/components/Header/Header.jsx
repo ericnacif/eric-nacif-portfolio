@@ -107,7 +107,6 @@ const Header = () => {
         </a>
 
         <nav className="desktop-nav" aria-label="Navegação principal">
-          <a href="#home">Home</a>
           <a href="#projetos">Projetos</a>
           <a href="#sobre">Sobre</a>
           <a href="#contato">Contato</a>
