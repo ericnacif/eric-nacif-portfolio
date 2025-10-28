@@ -8,7 +8,7 @@
 
 Site pessoal com foco em performance, mobile-first, modo escuro/claro, acessibilidade e microinterações. Projetos destacados, seção “Sobre mim” e formulário de contato.
 
-- Live: [Portfólio](ericnacif.netlify.app)
+- Live: [ericnacif.netlify.app](https://ericnacif.netlify.app)
 - Repositório: [ericnacif/eric-nacif-portfolio](https://github.com/ericnacif/eric-nacif-portfolio)
 
 ---
