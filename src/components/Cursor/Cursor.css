@@ -1,17 +1,21 @@
 .custom-cursor {
-  /* Propriedades de cor e transição foram REMOVIDAS daqui */
-  
-  border-radius: 50%;
   position: fixed;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  z-index: 9999;
-  
-  /* Definimos a borda aqui para que o Framer saiba o que animar */
-  border-width: 2px;
-  border-style: solid;
+  z-index: 3000;
+
+  border: 2px solid var(--text-color);
+  border-radius: 50%;
+  background: transparent;
+
+  /* Ajuda a GPU otimizar o movimento contínuo */
+  will-change: transform;
 }
 
-body {
-  cursor: none;
+/* Nunca mostra o cursor custom em dispositivos touch */
+@media (hover: none),
+(pointer: coarse) {
+  .custom-cursor {
+    display: none;
+  }
 }

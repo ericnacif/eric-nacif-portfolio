@@ -1,69 +1,73 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Cursor.css';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue } from 'framer-motion';
+
+const isCoarsePointer = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia &&
+  (window.matchMedia('(hover: none)').matches || window.matchMedia('(pointer: coarse)').matches);
 
 const Cursor = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [cursorVariant, setCursorVariant] = useState('default');
+  // Desktop only
+  const [enabled, setEnabled] = useState(false);
+  const [hovering, setHovering] = useState(false);
 
+  // Posição 1:1 sem lag (MotionValue)
+  const x = useMotionValue(-100);
+  const y = useMotionValue(-100);
+
+  // Detecta se deve habilitar (somente desktop/mouse)
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-
-    const interactiveElements = document.querySelectorAll(
-      'a, button, .project-card, .skill-card, .back-to-top'
-    );
-
-    const handleMouseEnter = () => setCursorVariant('hover');
-    const handleMouseLeave = () => setCursorVariant('default');
-
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', handleMouseEnter);
-      el.addEventListener('mouseleave', handleMouseLeave);
-    });
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      interactiveElements.forEach(el => {
-        el.removeEventListener('mouseenter', handleMouseEnter);
-        el.removeEventListener('mouseleave', handleMouseLeave);
-      });
-    };
+    const compute = () => setEnabled(!isCoarsePointer());
+    compute();
+    const onResize = () => compute();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  // --- CORREÇÃO AQUI ---
-  // Diga explicitamente ao Framer Motion para animar as cores
-  // usando as variáveis CSS.
-  const variants = {
-    default: {
-      height: 30,
-      width: 30,
-      borderColor: 'var(--text-color)', // <-- Adicionado
-      backgroundColor: 'transparent',   // <-- Adicionado
-    },
-    hover: {
-      height: 50,
-      width: 50,
-      borderColor: 'var(--accent-color)',
-      backgroundColor: 'rgba(138, 43, 226, 0.1)',
-    }
-  };
-  // --- FIM DA CORREÇÃO ---
+  // Atualiza posição diretamente (sem spring) para resposta imediata
+  useEffect(() => {
+    if (!enabled) return;
+    const move = (e) => {
+      x.set(e.clientX);
+      y.set(e.clientY);
+    };
+    window.addEventListener('mousemove', move, { passive: true });
+    return () => window.removeEventListener('mousemove', move);
+  }, [enabled, x, y]);
+
+  // Hover em elementos interativos altera tamanho/cor do anel
+  useEffect(() => {
+    if (!enabled) return;
+    const selectors = 'a, button, .project-card, .skill-card, .back-to-top, [role="button"], .mobile-menu a';
+    const interactive = Array.from(document.querySelectorAll(selectors));
+    const onEnter = () => setHovering(true);
+    const onLeave = () => setHovering(false);
+    interactive.forEach((el) => {
+      el.addEventListener('mouseenter', onEnter);
+      el.addEventListener('mouseleave', onLeave);
+    });
+    return () => {
+      interactive.forEach((el) => {
+        el.removeEventListener('mouseenter', onEnter);
+        el.removeEventListener('mouseleave', onLeave);
+      });
+    };
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   return (
     <motion.div
       className="custom-cursor"
-      style={{
-        left: position.x,
-        top: position.y,
+      style={{ x, y }}
+      animate={{
+        height: hovering ? 40 : 28,
+        width: hovering ? 40 : 28,
+        borderColor: hovering ? 'var(--accent-color)' : 'var(--text-color)',
+        backgroundColor: hovering ? 'rgba(138,43,226,0.08)' : 'transparent',
       }}
-      variants={variants}
-      animate={cursorVariant}
-      // Esta transição agora controla o tamanho E as cores
-      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 26 }}
     />
   );
 };

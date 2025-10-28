@@ -1,24 +1,80 @@
-import React, { useEffect, useState } from 'react'; // useRef e hooks de scroll removidos
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import './ProjectCard.css';
 
 const ProjectCard = ({ title, description, contribution, tags, image }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const modalRef = useRef(null);
+  const previouslyFocusedElement = useRef(null);
+  const scrollYRef = useRef(0);
 
-  // Bloquear scroll do body quando o modal estiver aberto (apenas mobile)
   useEffect(() => {
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    if (isMobile) {
-      if (isModalOpen) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
+    if (!isModalOpen) return;
+
+    previouslyFocusedElement.current = document.activeElement;
+
+    // Freeze scroll (iOS/Android/Desktop)
+    scrollYRef.current = window.scrollY;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollYRef.current}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+
+    // Bloquear gestos de fundo
+    const prevent = (e) => e.preventDefault();
+    document.addEventListener('touchmove', prevent, { passive: false });
+
+    // Foco inicial
+    const closeBtn = modalRef.current?.querySelector('.modal-close');
+    closeBtn?.focus();
+
+    // Trap de foco + ESC
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setIsModalOpen(false);
       }
-    }
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusable = modalRef.current.querySelectorAll(
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+        );
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault(); last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault(); first.focus();
+        }
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+
     return () => {
-      document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('touchmove', prevent);
+
+      // Restore scroll
+      document.documentElement.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollYRef.current);
+
+      previouslyFocusedElement.current && previouslyFocusedElement.current.focus?.();
     };
   }, [isModalOpen]);
+
+  const open = () => setIsModalOpen(true);
+  const close = () => setIsModalOpen(false);
+
+  // Fechar ao clicar/tocar fora
+  const handleOverlayPointerDown = () => close();
+  const stopPropagation = (e) => e.stopPropagation();
 
   return (
     <>
@@ -27,7 +83,6 @@ const ProjectCard = ({ title, description, contribution, tags, image }) => {
         whileHover={{ y: -8, boxShadow: "0 10px 20px var(--shadow-color)" }}
         transition={{ type: 'spring', stiffness: 300 }}
       >
-        {/* Imagem otimizada */}
         <img
           src={image}
           alt={title}
@@ -41,7 +96,7 @@ const ProjectCard = ({ title, description, contribution, tags, image }) => {
         <div className="project-info">
           <h3>{title}</h3>
 
-          {/* No desktop mantém descrição e contribuição visíveis; no mobile, escondidos via CSS */}
+          {/* Desktop: descrição visível; Mobile: oculta via CSS */}
           <p className="project-description">{description}</p>
 
           {contribution && contribution.length > 0 && (
@@ -61,11 +116,10 @@ const ProjectCard = ({ title, description, contribution, tags, image }) => {
             ))}
           </div>
 
-          {/* Botão só aparece no mobile para abrir modal */}
           <button
             type="button"
             className="show-details-mobile"
-            onClick={() => setIsModalOpen(true)}
+            onClick={open}
             aria-haspopup="dialog"
             aria-controls={`project-modal-${title}`}
           >
@@ -74,7 +128,6 @@ const ProjectCard = ({ title, description, contribution, tags, image }) => {
         </div>
       </motion.div>
 
-      {/* Modal - apenas será usado no mobile (o botão só aparece no mobile) */}
       {isModalOpen && (
         <div
           className="modal-overlay"
@@ -82,23 +135,30 @@ const ProjectCard = ({ title, description, contribution, tags, image }) => {
           aria-modal="true"
           aria-labelledby={`modal-title-${title}`}
           id={`project-modal-${title}`}
-          onClick={() => setIsModalOpen(false)}
+          onPointerDown={handleOverlayPointerDown}
         >
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="modal-content"
+            onPointerDown={stopPropagation}
+            ref={modalRef}
+          >
             <button
               type="button"
               className="modal-close"
               aria-label="Fechar"
-              onClick={() => setIsModalOpen(false)}
+              onClick={close}
             >
               ×
             </button>
+
             <h3 id={`modal-title-${title}`} className="modal-title">{title}</h3>
+
             <div className="project-tags modal-tags">
               {tags.map((tag, index) => (
                 <span key={index} className="tag">{tag}</span>
               ))}
             </div>
+
             {image && (
               <img
                 src={image}
@@ -109,7 +169,9 @@ const ProjectCard = ({ title, description, contribution, tags, image }) => {
                 draggable={false}
               />
             )}
+
             {description && <p className="modal-description">{description}</p>}
+
             {contribution && contribution.length > 0 && (
               <>
                 <h4 className="modal-subtitle">Minha Contribuição:</h4>

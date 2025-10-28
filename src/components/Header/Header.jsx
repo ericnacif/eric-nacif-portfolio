@@ -1,68 +1,151 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { useTheme } from '../../context/ThemeContext';
-import { FaSun, FaMoon, FaBars, FaTimes } from 'react-icons/fa';
+import React, { useEffect, useRef, useState } from 'react';
 import './Header.css';
-
-const NavLinks = ({ onClick }) => (
-  <>
-    <motion.a href="#home" onClick={onClick} whileHover={{ y: -2 }} transition={{ type: 'spring', stiffness: 300 }}>Home</motion.a>
-    <motion.a href="#projetos" onClick={onClick} whileHover={{ y: -2 }} transition={{ type: 'spring', stiffness: 300 }}>Projetos</motion.a>
-    <motion.a href="#sobre" onClick={onClick} whileHover={{ y: -2 }} transition={{ type: 'spring', stiffness: 300 }}>Sobre</motion.a>
-    <motion.a href="#contato" onClick={onClick} whileHover={{ y: -2 }} transition={{ type: 'spring', stiffness: 300 }}>Contato</motion.a>
-  </>
-);
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaSun, FaMoon, FaBars, FaTimes } from 'react-icons/fa';
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
+  const [theme, setTheme] = useState('light');
 
+  const menuRef = useRef(null);
+  const menuBtnRef = useRef(null);
+
+  // Estado de scroll do header (classe scrolled)
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const header = document.querySelector('.main-header');
+    const onScroll = () => {
+      if (!header) return;
+      if (window.scrollY > 8) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Tema
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
+    const stored = localStorage.getItem('theme');
+    const initial =
+      stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    setTheme(initial);
+    document.documentElement.setAttribute('data-theme', initial);
+  }, []);
+  const toggleTheme = () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  };
+
+  // Fecha com ESC quando o menu estiver aberto
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setIsMenuOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
   }, [isMenuOpen]);
 
+  // Clique/touch fora do painel fecha o menu (sem overlay e sem travar scroll)
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const onPointerDown = (e) => {
+      const menuEl = menuRef.current;
+      const btnEl = menuBtnRef.current;
+      const target = e.target;
+      if (!menuEl || !btnEl) return;
+      if (!menuEl.contains(target) && !btnEl.contains(target)) {
+        setIsMenuOpen(false);
+      }
+    };
+    // Captura em nível de documento para pegar qualquer clique fora
+    document.addEventListener('pointerdown', onPointerDown, { capture: true });
+    return () => document.removeEventListener('pointerdown', onPointerDown, { capture: true });
+  }, [isMenuOpen]);
+
+  // Variantes do painel mobile
+  const panelVariants = {
+    hidden: { opacity: 0, y: -12, scale: 0.98 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { type: 'spring', stiffness: 260, damping: 24 },
+    },
+    exit: { opacity: 0, y: -12, scale: 0.98, transition: { duration: 0.15 } },
+  };
+  const linkVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: (i = 1) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: 0.05 * i, type: 'spring', stiffness: 400, damping: 26 },
+    }),
+    exit: { opacity: 0, y: 10, transition: { duration: 0.15 } },
+  };
+
+  const closeMenu = () => setIsMenuOpen(false);
+
   return (
-    <header className={`main-header ${isScrolled ? 'scrolled' : ''}`}>
+    <header className="main-header" role="banner">
       <div className="header-container">
-        <a href="#home" className="header-logo-link" aria-label="Voltar para o início">
+        <button
+          ref={menuBtnRef}
+          className="mobile-menu-btn"
+          aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-menu"
+          onClick={() => setIsMenuOpen((v) => !v)}
+        >
+          {isMenuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+
+        <a href="#home" className="header-logo-link" onClick={closeMenu}>
           <span className="header-logo-text">eric nacif</span>
         </a>
 
-        <nav className="desktop-nav">
-          <NavLinks />
+        <nav className="desktop-nav" aria-label="Navegação principal">
+          <a href="#home">Home</a>
+          <a href="#projetos">Projetos</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#contato">Contato</a>
         </nav>
 
         <div className="header-controls">
-          <button onClick={toggleTheme} className="theme-toggle" aria-label="Trocar tema">
-            {theme === 'light' ? <FaMoon /> : <FaSun />}
-          </button>
-          <button onClick={() => setIsMenuOpen(true)} className="mobile-menu-btn" aria-label="Abrir menu">
-            <FaBars />
+          <button className="theme-toggle" onClick={toggleTheme} aria-label="Alternar tema">
+            {theme === 'dark' ? <FaMoon /> : <FaSun />}
           </button>
         </div>
       </div>
 
-      {isMenuOpen && (
-        <motion.div
-          className="mobile-nav-overlay"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-        >
-          <button onClick={() => setIsMenuOpen(false)} className="mobile-close-btn" aria-label="Fechar menu">
-            <FaTimes />
-          </button>
-          <nav className="mobile-nav">
-            <NavLinks onClick={() => setIsMenuOpen(false)} />
-          </nav>
-        </motion.div>
-      )}
+      {/* Painel mobile flutuante (sem overlay, não bloqueia scroll) */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.nav
+            id="mobile-menu"
+            className="mobile-menu-floating"
+            aria-label="Navegação mobile"
+            ref={menuRef}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={panelVariants}
+          >
+            {/* Removido "Home" conforme solicitado */}
+            <motion.a href="#projetos" onClick={closeMenu} custom={1} variants={linkVariants}>
+              Projetos
+            </motion.a>
+            <motion.a href="#sobre" onClick={closeMenu} custom={2} variants={linkVariants}>
+              Sobre
+            </motion.a>
+            <motion.a href="#contato" onClick={closeMenu} custom={3} variants={linkVariants}>
+              Contato
+            </motion.a>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

@@ -19,7 +19,6 @@
 .about-bio {
   max-width: 761px;
   padding-top: 120px;
-  /* <-- ALTERADO AQUI */
 }
 
 .about-bio h3 {
@@ -44,16 +43,32 @@
   text-transform: uppercase;
   margin-right: 25px;
   transition: color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .about-links a:hover {
   color: var(--gray-color);
 }
 
+/* Garante que ícones dentro dos links herdem a cor do tema */
+.about-links a svg,
+.about-links a svg * {
+  color: inherit;
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+/* Para imagens-ícone pretas, adicione className="icon-dark-adapt" no <img> */
+[data-theme="dark"] .about-links img.icon-dark-adapt {
+  filter: invert(1) hue-rotate(180deg) brightness(1.1) contrast(0.95);
+}
+
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 30px;
+  gap: 24px;
   margin-bottom: 80px;
 }
 
@@ -67,6 +82,11 @@
 
 /* Responsividade */
 @media (max-width: 1024px) {
+  .about-section {
+    padding-top: 60px;
+    padding-bottom: 80px;
+  }
+
   .about-header-content {
     flex-direction: column;
     gap: 40px;
@@ -76,11 +96,9 @@
   .about-bio {
     text-align: center;
     padding-top: 0;
-    /* No mobile, voltamos a 0 */
   }
 
   .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
 
@@ -88,10 +106,6 @@
     grid-template-columns: 1fr;
     gap: 40px;
   }
-}
-
-@media (max-width: 768px) {
-  /* Estilos para responsividade, se necessário */
 }
 
 @media (max-width: 500px) {

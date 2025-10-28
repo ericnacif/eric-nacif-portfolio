@@ -1,11 +1,7 @@
-/* IMPORTAÇÃO DAS FONTES */
 @import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Manrope:wght@300;400;500;700;800&display=swap');
-/* Manrope adicionada de volta */
 @import url('https://fonts.cdnfonts.com/css/glacial-indifference');
 
-/* 1. DEFINIÇÃO DAS VARIÁVEIS DE COR E FONTE */
 :root {
-  /* ... (suas variáveis de cor permanecem as mesmas) ... */
   --accent-color: #8A2BE2;
   --accent-color-hover: #4169E1;
   --bg-color: #ffffff;
@@ -15,19 +11,13 @@
   --border-color: #e0e0e0;
   --shadow-color: rgba(0, 0, 0, 0.07);
 
-  /* --- ATUALIZAÇÃO DA HIERARQUIA DE FONTES --- */
   --font-main: 'Manrope', sans-serif;
-  /* Fonte principal para corpo e títulos */
   --font-display: 'DotGothic16', sans-serif;
-  /* Fonte do Hero */
   --font-logo: 'Glacial Indifference', sans-serif;
-  /* Fonte do Logo */
 
-  /* Espessura do sublinhado do título da seção */
   --section-title-border-w: 7px;
 }
 
-/* 2. DEFINIÇÃO DAS VARIÁVEIS (DARK MODE) */
 [data-theme="dark"] {
   --bg-color: #121212;
   --text-color: #f5f5f5;
@@ -37,7 +27,6 @@
   --shadow-color: rgba(255, 255, 255, 0.05);
 }
 
-/* 3. RESET GLOBAL E BODY */
 * {
   margin: 0;
   padding: 0;
@@ -50,9 +39,7 @@ html {
 
 body {
   font-family: var(--font-main);
-  /* Usa Manrope */
   font-weight: 400;
-  /* Peso padrão para o corpo */
   background-color: var(--bg-color);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
@@ -60,7 +47,15 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Ocultar cursor apenas em dispositivos com mouse (evita problema no mobile) */
+/* SVGs herdam cor (dark mode-friendly) */
+svg,
+svg * {
+  color: inherit;
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+/* Cursor custom apenas em desktop */
 @media (hover: hover) and (pointer: fine) {
   body {
     cursor: none;
@@ -75,18 +70,14 @@ body {
 
 .section-title {
   display: inline-block;
-  font-family: var(--font-main);
-  /* Garante Manrope */
   font-size: clamp(22px, 4vw, 30px);
   font-weight: 800;
-  /* Manrope ExtraBold */
   padding-bottom: 15px;
   margin-bottom: 64px;
   border-bottom: var(--section-title-border-w) solid var(--text-color);
   transition: border-color 0.3s ease;
 }
 
-/* Ajustes de peso para outros títulos comuns (opcional, mas bom) */
 h3 {
   font-weight: 700;
 }
@@ -95,7 +86,6 @@ h4 {
   font-weight: 700;
 }
 
-/* Respeitar usuários que preferem menos movimento */
 @media (prefers-reduced-motion: reduce) {
 
   *,
@@ -107,13 +97,11 @@ h4 {
   }
 }
 
-/* Acessibilidade: foco visível */
 :focus-visible {
   outline: 2px solid var(--accent-color);
   outline-offset: 2px;
 }
 
-/* Mídia e assets responsivos */
 img,
 picture,
 video,
@@ -123,7 +111,7 @@ svg {
   max-width: 100%;
 }
 
-/* SOMENTE MOBILE: sem rolagem lateral e espaçamentos mais compactos */
+/* MOBILE: sem rolagem lateral e padding mais compacto */
 @media (max-width: 768px) {
 
   html,
@@ -149,4 +137,13 @@ svg {
   :root {
     --section-title-border-w: 4px;
   }
+}
+
+/* Footer: ícones pretos no claro, brancos no escuro */
+.social-icons img {
+  filter: brightness(0) saturate(100%);
+}
+
+[data-theme="dark"] .social-icons img {
+  filter: brightness(0) invert(1);
 }

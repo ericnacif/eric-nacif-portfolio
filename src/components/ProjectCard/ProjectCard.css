@@ -61,7 +61,7 @@
   background: transparent;
 }
 
-/* Botão de detalhes (visível só no mobile) */
+/* Botão de detalhes (mostra no mobile) */
 .show-details-mobile {
   display: none;
   margin-top: 14px;
@@ -78,10 +78,13 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, .6);
-  z-index: 2000;
+  z-index: 4000;
+  /* acima de tudo */
   display: grid;
   place-items: center;
   padding: 16px;
+  overscroll-behavior: contain;
+  /* evita bounce */
 }
 
 .modal-content {
@@ -147,10 +150,9 @@
   font-size: 14px;
 }
 
-/* Ajustes somente para mobile */
+/* Mobile */
 @media (max-width: 768px) {
 
-  /* Esconder descrição e contribuição dentro do card; mostrar só imagem, título e tags */
   .project-description,
   .project-contrib-title,
   .contribution-list {
@@ -161,7 +163,6 @@
     display: inline-flex;
   }
 
-  /* Cards ocupam a largura toda no mobile (stack) */
   .project-card {
     width: 100%;
   }

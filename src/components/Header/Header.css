@@ -19,11 +19,10 @@
     max-width: 1240px;
     margin: 0 auto;
     height: 88px;
-    /* área do header */
     transition: height 0.3s ease;
 }
 
-/* Logo como texto */
+/* Logo */
 .header-logo-link {
     display: flex;
     align-items: center;
@@ -33,14 +32,12 @@
 .header-logo-text {
     font-family: var(--font-logo);
     font-size: 32px;
-    /* bem visível */
     line-height: 1;
     letter-spacing: 0.02em;
     color: var(--text-color);
     margin-right: 28px;
-    user-select: none;
     white-space: nowrap;
-    transition: font-size 0.3s ease, transform 0.2s ease, color 0.3s ease;
+    transition: font-size 0.3s ease, color 0.3s ease;
 }
 
 /* Navegação desktop centralizada */
@@ -69,7 +66,7 @@
 .header-controls {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
 }
 
 .theme-toggle {
@@ -77,16 +74,17 @@
     border: none;
     color: var(--text-color);
     cursor: pointer;
-    font-size: 18px;
-    transition: color 0.3s ease, transform 0.3s ease;
+    font-size: 20px;
+    line-height: 1;
+    transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .theme-toggle:hover {
     color: var(--accent-color);
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
-/* Estado de scroll (reduz levemente tudo) */
+/* Estado de scroll */
 .main-header.scrolled {
     background-color: rgba(var(--bg-color-rgb, 255, 255, 255), 0.9);
 }
@@ -107,13 +105,13 @@
     font-size: 26px;
 }
 
-/* Mobile */
+/* Botão menu mobile */
 .mobile-menu-btn {
     background: none;
     border: none;
     color: var(--text-color);
     cursor: pointer;
-    font-size: 20px;
+    font-size: 22px;
     display: none;
     transition: color 0.3s ease;
 }
@@ -122,40 +120,41 @@
     color: var(--accent-color);
 }
 
-.mobile-nav-overlay {
+/* Painel mobile flutuante - não bloqueia scroll e fecha com clique fora */
+.mobile-menu-floating {
     position: fixed;
-    inset: 0;
+    top: 72px;
+    /* Altura do header em mobile */
+    left: 16px;
+    right: 16px;
+    margin: 0 auto;
+    z-index: 1500;
+    /* Acima do conteúdo, abaixo de modais */
     background: var(--bg-color);
-    z-index: 1100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.mobile-close-btn {
-    position: absolute;
-    top: 20px;
-    right: 24px;
-    background: none;
-    border: none;
-    color: var(--text-color);
-    font-size: 22px;
-    cursor: pointer;
-}
-
-.mobile-nav {
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 24px 20px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 16px;
     text-align: center;
+    box-shadow: 0 12px 30px var(--shadow-color);
 }
 
-.mobile-nav a {
+.mobile-menu-floating a {
     text-decoration: none;
     color: var(--text-color);
-    font-size: 18px;
+    font-size: 16px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
+    padding: 10px 14px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.mobile-menu-floating a:hover {
+    background: var(--card-bg);
+    transform: translateY(-1px);
 }
 
 /* Responsividade */
@@ -169,22 +168,17 @@
     }
 }
 
-/* Melhor posicionamento no mobile + sem overflow lateral */
 @media (max-width: 768px) {
     .main-header {
         padding: 0 16px;
-        /* reduz padding para evitar overflow */
     }
 
     .header-container {
         height: 72px;
-        padding: 0 0;
-        /* já temos padding no wrapper */
         position: relative;
-        /* base para posicionar logo e botão */
+        padding: 0;
     }
 
-    /* Centraliza a logo no header */
     .header-logo-link {
         position: absolute;
         left: 50%;
@@ -196,13 +190,11 @@
         margin-right: 0;
     }
 
-    /* Botão do menu alinhado à direita */
     .mobile-menu-btn {
         position: absolute;
         right: 8px;
     }
 
-    /* Garantir que nada cause rolagem lateral */
     .main-header,
     .header-container {
         width: 100%;
