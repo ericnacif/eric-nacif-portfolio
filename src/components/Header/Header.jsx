@@ -1,16 +1,36 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Header.css';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaSun, FaMoon, FaBars, FaTimes } from 'react-icons/fa';
+import { FaSun, FaMoon, FaBars, FaTimes, FaGlobe, FaDownload } from 'react-icons/fa';
+
+// CORREÇÃO AQUI: O nome do arquivo agora bate com sua pasta (logo-blue.png)
+import logoBlue from '../../assets/images/logo-blue.png';
+
+// Imports dos PDFs
+import cvPt from '../../assets/docs/cv-pt.pdf';
+import cvEn from '../../assets/docs/cv-en.pdf';
+
+// Importando o contexto de idioma
+import { useLanguage } from '../../context/LanguageContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [theme, setTheme] = useState('light');
+  const [showLangMenu, setShowLangMenu] = useState(false);
+
+  // Hook do Contexto de Idioma
+  const { language, changeLanguage, t } = useLanguage();
 
   const menuRef = useRef(null);
   const menuBtnRef = useRef(null);
 
-  // Estado de scroll do header (classe scrolled)
+  // Seleção do arquivo de CV baseado no idioma
+  const getCvLink = () => {
+    if (language === 'pt') return cvPt;
+    return cvEn;
+  };
+
+  // Scroll Header Logic
   useEffect(() => {
     const header = document.querySelector('.main-header');
     const onScroll = () => {
@@ -23,14 +43,14 @@ const Header = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Tema
+  // Theme Logic
   useEffect(() => {
     const stored = localStorage.getItem('theme');
-    const initial =
-      stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const initial = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     setTheme(initial);
     document.documentElement.setAttribute('data-theme', initial);
   }, []);
+
   const toggleTheme = () => {
     const next = theme === 'dark' ? 'light' : 'dark';
     setTheme(next);
@@ -38,110 +58,121 @@ const Header = () => {
     localStorage.setItem('theme', next);
   };
 
-  // Fecha com ESC quando o menu estiver aberto
+  // Fechar menu ao clicar fora
   useEffect(() => {
     if (!isMenuOpen) return;
-    const onKeyDown = (e) => {
-      if (e.key === 'Escape') setIsMenuOpen(false);
-    };
-    document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
-  }, [isMenuOpen]);
-
-  // Clique/touch fora do painel fecha o menu (sem overlay e sem travar scroll)
-  useEffect(() => {
-    if (!isMenuOpen) return;
+    const onKeyDown = (e) => { if (e.key === 'Escape') setIsMenuOpen(false); };
     const onPointerDown = (e) => {
-      const menuEl = menuRef.current;
-      const btnEl = menuBtnRef.current;
-      const target = e.target;
-      if (!menuEl || !btnEl) return;
-      if (!menuEl.contains(target) && !btnEl.contains(target)) {
+      if (menuRef.current && !menuRef.current.contains(e.target) && !menuBtnRef.current.contains(e.target)) {
         setIsMenuOpen(false);
       }
     };
-    // Captura em nível de documento para pegar qualquer clique fora
+    document.addEventListener('keydown', onKeyDown);
     document.addEventListener('pointerdown', onPointerDown, { capture: true });
-    return () => document.removeEventListener('pointerdown', onPointerDown, { capture: true });
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('pointerdown', onPointerDown, { capture: true });
+    };
   }, [isMenuOpen]);
 
-  // Variantes do painel mobile
+  const closeMenu = () => setIsMenuOpen(false);
+
+  // Variantes de Animação
   const panelVariants = {
     hidden: { opacity: 0, y: -12, scale: 0.98 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { type: 'spring', stiffness: 260, damping: 24 },
-    },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 260, damping: 24 } },
     exit: { opacity: 0, y: -12, scale: 0.98, transition: { duration: 0.15 } },
   };
-  const linkVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: (i = 1) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: 0.05 * i, type: 'spring', stiffness: 400, damping: 26 },
-    }),
-    exit: { opacity: 0, y: 10, transition: { duration: 0.15 } },
-  };
-
-  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <header className="main-header" role="banner">
       <div className="header-container">
+
+        {/* Mobile Menu Button */}
         <button
           ref={menuBtnRef}
           className="mobile-menu-btn"
-          aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
-          aria-expanded={isMenuOpen}
-          aria-controls="mobile-menu"
           onClick={() => setIsMenuOpen((v) => !v)}
+          aria-label="Menu"
         >
           {isMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
+        {/* LOGO */}
         <a href="#home" className="header-logo-link" onClick={closeMenu}>
-          <span className="header-logo-text">eric nacif</span>
+          <img src={logoBlue} alt="Eric Nacif" className="header-logo-img" />
         </a>
 
-        <nav className="desktop-nav" aria-label="Navegação principal">
-          <a href="#projetos">Projetos</a>
-          <a href="#sobre">Sobre</a>
-          <a href="#contato">Contato</a>
+        {/* Desktop Nav */}
+        <nav className="desktop-nav">
+          <a href="#projetos">{t.nav.projects}</a>
+          <a href="#sobre">{t.nav.about}</a>
+          <a href="#contato">{t.nav.contact}</a>
         </nav>
 
+        {/* Controls */}
         <div className="header-controls">
-          <button className="theme-toggle" onClick={toggleTheme} aria-label="Alternar tema">
+
+          {/* Language Switcher */}
+          <div className="lang-switcher" onMouseEnter={() => setShowLangMenu(true)} onMouseLeave={() => setShowLangMenu(false)}>
+            <button className="lang-btn">
+              <FaGlobe /> <span className="current-lang">{language.toUpperCase()}</span>
+            </button>
+
+            <AnimatePresence>
+              {showLangMenu && (
+                <motion.div
+                  className="lang-dropdown"
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 5 }}
+                >
+                  <button onClick={() => changeLanguage('pt')} className={language === 'pt' ? 'active' : ''}>PT</button>
+                  <button onClick={() => changeLanguage('en')} className={language === 'en' ? 'active' : ''}>EN</button>
+                  <button onClick={() => changeLanguage('es')} className={language === 'es' ? 'active' : ''}>ES</button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Theme Toggle */}
+          <button className="theme-toggle" onClick={toggleTheme} aria-label="Alterar Tema">
             {theme === 'dark' ? <FaMoon /> : <FaSun />}
           </button>
+
+          {/* CV Button */}
+          <a href={getCvLink()} download className="cv-button" title={t.cvBtn}>
+            <span className="cv-text">{t.cvBtn}</span>
+            <FaDownload className="cv-icon" />
+          </a>
         </div>
       </div>
 
-      {/* Painel mobile flutuante (sem overlay, não bloqueia scroll) */}
+      {/* Mobile Menu Dropdown */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.nav
             id="mobile-menu"
             className="mobile-menu-floating"
-            aria-label="Navegação mobile"
             ref={menuRef}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={panelVariants}
+            initial="hidden" animate="visible" exit="exit" variants={panelVariants}
           >
-            {/* Removido "Home" conforme solicitado */}
-            <motion.a href="#projetos" onClick={closeMenu} custom={1} variants={linkVariants}>
-              Projetos
-            </motion.a>
-            <motion.a href="#sobre" onClick={closeMenu} custom={2} variants={linkVariants}>
-              Sobre
-            </motion.a>
-            <motion.a href="#contato" onClick={closeMenu} custom={3} variants={linkVariants}>
-              Contato
-            </motion.a>
+            <a href="#projetos" onClick={closeMenu}>{t.nav.projects}</a>
+            <a href="#sobre" onClick={closeMenu}>{t.nav.about}</a>
+            <a href="#contato" onClick={closeMenu}>{t.nav.contact}</a>
+
+            <div className="mobile-divider"></div>
+
+            <div className="mobile-controls">
+              <div className="mobile-lang">
+                <button onClick={() => changeLanguage('pt')} className={language === 'pt' ? 'active' : ''}>PT</button>
+                <button onClick={() => changeLanguage('en')} className={language === 'en' ? 'active' : ''}>EN</button>
+                <button onClick={() => changeLanguage('es')} className={language === 'es' ? 'active' : ''}>ES</button>
+              </div>
+              <a href={getCvLink()} download className="mobile-cv-btn">
+                {t.cvBtn} <FaDownload />
+              </a>
+            </div>
           </motion.nav>
         )}
       </AnimatePresence>

@@ -1,32 +1,67 @@
-@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Manrope:wght@300;400;500;700;800&display=swap');
-@import url('https://fonts.cdnfonts.com/css/glacial-indifference');
+/* =========================================
+   1. IMPORTS & FONTES
+   ========================================= */
 
+/* Fonte Principal: Cocomat Pro */
+/* Certifique-se que o arquivo está em: src/assets/fonts/cocomat-pro-regular.ttf */
+@font-face {
+  font-family: 'Cocomat Pro';
+  src: url('./assets/fonts/cocomat-pro-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Fallback e fontes secundárias */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&display=swap');
+@import url('https://fonts.cdnfonts.com/css/glacial-indifference');
+/* Mantido para logos antigos se precisar */
+
+/* =========================================
+   2. VARIÁVEIS GLOBAIS (CORES & TEMA)
+   ========================================= */
 :root {
-  --accent-color: #8A2BE2;
+  /* Paleta Nova */
+  --color-black: #000000;
+  --color-gray: #a6a6a6;
+  --color-white: #fff8f8;
+  --color-accent: #2952FF;
+  /* Azul da Logo */
+
+  /* Configuração do Tema (Baseado no Dark Mode como padrão) */
+  --bg-color: var(--color-black);
+  --text-color: var(--color-white);
+  --text-secondary: var(--color-gray);
+
+  --accent-color: var(--color-accent);
   --accent-color-hover: #4169E1;
-  --bg-color: #ffffff;
-  --text-color: #1a1a1a;
-  --gray-color: #808080;
+
+  --card-bg: #121212;
+  --border-color: #333333;
+  --shadow-color: rgba(255, 255, 255, 0.05);
+
+  /* Tipografia */
+  --font-main: 'Cocomat Pro', 'Manrope', sans-serif;
+  --font-display: 'Cocomat Pro', sans-serif;
+
+  --section-title-border-w: 4px;
+  /* Mais fino e elegante */
+}
+
+/* Override para Tema Claro (mantido caso use o toggle) */
+[data-theme="light"] {
+  --bg-color: var(--color-white);
+  --text-color: var(--color-black);
+  --text-secondary: #555555;
+
   --card-bg: #ffffff;
   --border-color: #e0e0e0;
   --shadow-color: rgba(0, 0, 0, 0.07);
-
-  --font-main: 'Manrope', sans-serif;
-  --font-display: 'DotGothic16', sans-serif;
-  --font-logo: 'Glacial Indifference', sans-serif;
-
-  --section-title-border-w: 7px;
 }
 
-[data-theme="dark"] {
-  --bg-color: #121212;
-  --text-color: #f5f5f5;
-  --gray-color: #a0a0a0;
-  --card-bg: #1e1e1e;
-  --border-color: #333333;
-  --shadow-color: rgba(255, 255, 255, 0.05);
-}
-
+/* =========================================
+   3. RESET & ESTILOS BASE
+   ========================================= */
 * {
   margin: 0;
   padding: 0;
@@ -35,6 +70,7 @@
 
 html {
   scroll-behavior: smooth;
+  width: 100%;
 }
 
 body {
@@ -44,22 +80,40 @@ body {
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* SVGs herdam cor (dark mode-friendly) */
-svg,
-svg * {
-  color: inherit;
-  fill: currentColor;
-  stroke: currentColor;
+/* =========================================
+   4. PATTERN (Ondas)
+   ========================================= */
+/* Classe utilitária para aplicar o fundo de ondas onde desejar */
+.bg-pattern {
+  background-image: url('./assets/images/bg-pattern.png');
+  /* Imagem recortada */
+  background-repeat: repeat;
+  background-size: 300px;
+  /* Ajuste o zoom das ondas aqui */
+  opacity: 0.15;
+  /* Deixa sutil para não brigar com o texto */
+  mix-blend-mode: overlay;
+  /* Mistura com a cor de fundo */
+  pointer-events: none;
+  /* Garante que não atrapalhe cliques */
 }
 
-/* Cursor custom apenas em desktop */
-@media (hover: hover) and (pointer: fine) {
-  body {
-    cursor: none;
-  }
+/* =========================================
+   5. TIPOGRAFIA & LAYOUT
+   ========================================= */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: inherit;
 }
 
 .container {
@@ -70,20 +124,39 @@ svg * {
 
 .section-title {
   display: inline-block;
-  font-size: clamp(22px, 4vw, 30px);
-  font-weight: 800;
-  padding-bottom: 15px;
+  font-size: clamp(32px, 5vw, 48px);
+  /* Maior e mais impactante */
+  font-weight: 700;
   margin-bottom: 64px;
-  border-bottom: var(--section-title-border-w) solid var(--text-color);
-  transition: border-color 0.3s ease;
+  position: relative;
+  /* Removemos a borda padrão antiga para um visual mais limpo ou usamos um detalhe novo */
+  border-bottom: none;
 }
 
-h3 {
-  font-weight: 700;
+/* Detalhe visual abaixo do título (linha azul) */
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--accent-color);
+  margin-top: 8px;
+  border-radius: 2px;
 }
 
-h4 {
-  font-weight: 700;
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Acessibilidade */
+:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 4px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -97,53 +170,49 @@ h4 {
   }
 }
 
-:focus-visible {
-  outline: 2px solid var(--accent-color);
-  outline-offset: 2px;
-}
+/* =========================================
+   6. COMPONENTES ESPECÍFICOS
+   ========================================= */
 
-img,
-picture,
-video,
-canvas,
-svg {
-  display: block;
-  max-width: 100%;
-}
-
-/* MOBILE: sem rolagem lateral e padding mais compacto */
-@media (max-width: 768px) {
-
-  html,
+/* Lógica do Cursor Customizado (Só desktop) */
+@media (hover: hover) and (pointer: fine) {
   body {
-    overflow-x: hidden;
-    width: 100%;
+    cursor: none;
   }
+}
 
+/* Footer Icons: Inversão de cor inteligente */
+.social-icons img,
+.social-icons svg {
+  transition: filter 0.3s ease;
+}
+
+/* Se fundo for claro, ícones pretos */
+[data-theme="light"] .social-icons img {
+  filter: brightness(0);
+}
+
+/* Se fundo for escuro (padrão), ícones brancos */
+[data-theme="dark"] .social-icons img,
+body:not([data-theme="light"]) .social-icons img {
+  filter: brightness(0) invert(1);
+}
+
+/* =========================================
+   7. RESPONSIVIDADE
+   ========================================= */
+@media (max-width: 768px) {
   .container {
-    padding: 72px 16px;
+    padding: 72px 20px;
   }
 
-  :root {
-    --section-title-border-w: 5px;
+  .section-title {
+    margin-bottom: 40px;
   }
 }
 
 @media (max-width: 600px) {
   .container {
-    padding: 56px 14px;
+    padding: 56px 16px;
   }
-
-  :root {
-    --section-title-border-w: 4px;
-  }
-}
-
-/* Footer: ícones pretos no claro, brancos no escuro */
-.social-icons img {
-  filter: brightness(0) saturate(100%);
-}
-
-[data-theme="dark"] .social-icons img {
-  filter: brightness(0) invert(1);
 }
