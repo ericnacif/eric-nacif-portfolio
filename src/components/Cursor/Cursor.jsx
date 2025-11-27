@@ -8,15 +8,12 @@ const isCoarsePointer = () =>
   (window.matchMedia('(hover: none)').matches || window.matchMedia('(pointer: coarse)').matches);
 
 const Cursor = () => {
-  // Desktop only
   const [enabled, setEnabled] = useState(false);
   const [hovering, setHovering] = useState(false);
 
-  // Posição 1:1 sem lag (MotionValue)
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
 
-  // Detecta se deve habilitar (somente desktop/mouse)
   useEffect(() => {
     const compute = () => setEnabled(!isCoarsePointer());
     compute();
@@ -25,7 +22,6 @@ const Cursor = () => {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  // Atualiza posição diretamente (sem spring) para resposta imediata
   useEffect(() => {
     if (!enabled) return;
     const move = (e) => {
@@ -36,18 +32,34 @@ const Cursor = () => {
     return () => window.removeEventListener('mousemove', move);
   }, [enabled, x, y]);
 
-  // Hover em elementos interativos altera tamanho/cor do anel
   useEffect(() => {
     if (!enabled) return;
-    const selectors = 'a, button, .project-card, .skill-card, .back-to-top, [role="button"], .mobile-menu a';
+    const selectors = 'a, button, input[type="submit"], .project-card, .social-btn, [role="button"]';
     const interactive = Array.from(document.querySelectorAll(selectors));
+    
     const onEnter = () => setHovering(true);
     const onLeave = () => setHovering(false);
+    
+    // MutationObserver para detectar novos elementos dinamicamente
+    const observer = new MutationObserver(() => {
+        const newInteractive = Array.from(document.querySelectorAll(selectors));
+        newInteractive.forEach(el => {
+            el.removeEventListener('mouseenter', onEnter);
+            el.removeEventListener('mouseleave', onLeave);
+            el.addEventListener('mouseenter', onEnter);
+            el.addEventListener('mouseleave', onLeave);
+        });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
     interactive.forEach((el) => {
       el.addEventListener('mouseenter', onEnter);
       el.addEventListener('mouseleave', onLeave);
     });
+
     return () => {
+      observer.disconnect();
       interactive.forEach((el) => {
         el.removeEventListener('mouseenter', onEnter);
         el.removeEventListener('mouseleave', onLeave);
@@ -62,12 +74,13 @@ const Cursor = () => {
       className="custom-cursor"
       style={{ x, y }}
       animate={{
-        height: hovering ? 40 : 28,
-        width: hovering ? 40 : 28,
+        height: hovering ? 48 : 24, // Maior no hover para destacar
+        width: hovering ? 48 : 24,
         borderColor: hovering ? 'var(--accent-color)' : 'var(--text-color)',
-        backgroundColor: hovering ? 'rgba(138,43,226,0.08)' : 'transparent',
+        backgroundColor: hovering ? 'rgba(41, 82, 255, 0.1)' : 'transparent', // Azul transparente
+        borderWidth: hovering ? 2 : 2
       }}
-      transition={{ type: 'spring', stiffness: 300, damping: 26 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 28 }}
     />
   );
 };
