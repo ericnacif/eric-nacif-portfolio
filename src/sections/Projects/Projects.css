@@ -1,22 +1,12 @@
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 60px 40px;
+  gap: 40px;
 }
 
-/* Mantém o estilo existente no desktop (sem alterações) */
-
-/* Apenas mobile: uma coluna, sem overflow lateral */
 @media (max-width: 768px) {
   .projects-grid {
-    display: grid;
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-
-  /* Evita qualquer espaçamento que cause overflow */
-  .projects-grid,
-  .project-card {
-    overflow-x: clip;
+    grid-template-columns: 1fr;
+    gap: 32px;
   }
 }

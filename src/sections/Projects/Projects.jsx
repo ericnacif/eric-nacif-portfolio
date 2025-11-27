@@ -2,57 +2,108 @@ import React from 'react';
 import ProjectCard from '../../components/ProjectCard/ProjectCard';
 import './Projects.css';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../../context/LanguageContext';
 
-// Importe as imagens
-import certificafeImg from '../../assets/project-certificafe.png';
-import engelmigImg from '../../assets/project-engelmig.png';
-
-const projectsData = [
-  { 
-    title: "Sistema Interno - Certificafé", 
-    description: "Atuação direta na manutenção e otimização do sistema principal da empresa. O foco foi garantir a estabilidade e a performance da aplicação legada, além de modernizar consultas e rotas.",
-    contribution: [
-        "Correção de bugs e depuração de código legado em PHP e JavaScript.",
-        "Manutenção de rotas e otimização de consultas ao banco de dados SQL com Laravel.",
-        "Desenvolvimento de views com a template engine Blade."
-    ],
-    tags: ["PHP", "Laravel", "JavaScript", "Blade", "API"],
-    image: certificafeImg
-  },
-  { 
-    title: "Site Institucional - ENGELMIG Energia", 
-    description: "Durante o estágio em TI, tive a oportunidade de colaborar com a presença digital e a comunicação interna da empresa, participando ativamente em projetos web e de comunicação.",
-    contribution: [
-        "Participação ativa no desenvolvimento do site institucional da empresa utilizando WordPress.",
-        "Customizações de front-end com HTML, CSS e JavaScript.",
-        "Criação de campanhas de comunicação interna."
-    ],
-    tags: ["WordPress", "HTML", "CSS", "JavaScript"],
-    image: engelmigImg
-  }
-];
-
-// Variantes para animar o container e os itens
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2, // Atraso de 0.2s entre cada card
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring', stiffness: 100 },
-  },
-};
+// Imagens
+import certificafeImg from '../../assets/images/project-certificafe.png'; // Verifique se o caminho está correto
+import engelmigImg from '../../assets/images/project-engelmig.png';
 
 const Projects = () => {
+  const { language } = useLanguage();
+
+  // Dados dos Projetos com Tradução
+  const projectsData = [
+    { 
+      id: "certificafe",
+      image: certificafeImg,
+      tags: ["PHP", "Laravel", "JavaScript", "Blade", "API"],
+      translations: {
+        pt: {
+          title: "Sistema Interno - Certificafé",
+          description: "Manutenção e otimização do sistema principal. Foco em estabilidade, performance de aplicação legada e modernização de consultas.",
+          contribution: [
+            "Correção de bugs em PHP e JavaScript.",
+            "Otimização de consultas SQL com Laravel.",
+            "Desenvolvimento de views com Blade."
+          ]
+        },
+        en: {
+          title: "Internal System - Certificafé",
+          description: "Maintenance and optimization of the core system. Focused on stability, legacy application performance, and query modernization.",
+          contribution: [
+            "Bug fixing in PHP and JavaScript.",
+            "SQL query optimization with Laravel.",
+            "View development using Blade."
+          ]
+        },
+        es: {
+          title: "Sistema Interno - Certificafé",
+          description: "Mantenimiento y optimización del sistema principal. Enfocado en estabilidad, rendimiento de aplicaciones heredadas y modernización de consultas.",
+          contribution: [
+            "Corrección de errores en PHP y JavaScript.",
+            "Optimización de consultas SQL con Laravel.",
+            "Desarrollo de vistas con Blade."
+          ]
+        }
+      }
+    },
+    { 
+      id: "engelmig",
+      image: engelmigImg,
+      tags: ["WordPress", "HTML", "CSS", "JavaScript"],
+      translations: {
+        pt: {
+          title: "Site Institucional - ENGELMIG Energia",
+          description: "Colaboração na presença digital e comunicação interna da empresa, participando ativamente em projetos web.",
+          contribution: [
+            "Desenvolvimento do site institucional (WordPress).",
+            "Customizações de front-end.",
+            "Criação de campanhas internas."
+          ]
+        },
+        en: {
+          title: "Corporate Website - ENGELMIG Energia",
+          description: "Collaboration on digital presence and internal communication, actively participating in web projects.",
+          contribution: [
+            "Corporate website development (WordPress).",
+            "Front-end customizations.",
+            "Internal campaign creation."
+          ]
+        },
+        es: {
+          title: "Sitio Corporativo - ENGELMIG Energia",
+          description: "Colaboración en la presencia digital y comunicación interna, participando activamente en proyectos web.",
+          contribution: [
+            "Desarrollo del sitio corporativo (WordPress).",
+            "Personalizaciones de front-end.",
+            "Creación de campañas internas."
+          ]
+        }
+      }
+    }
+  ];
+
+  // Tradução do Título da Seção
+  const sectionTitle = {
+    pt: "Projetos Selecionados",
+    en: "Selected Projects",
+    es: "Proyectos Seleccionados"
+  };
+
+  // Variantes de Animação
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100 } },
+  };
+
   return (
     <motion.section 
       id="projetos" 
@@ -68,19 +119,32 @@ const Projects = () => {
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.5 }}
       >
-        Projetos
+        {sectionTitle[language] || sectionTitle.pt}
       </motion.h2>
       
       <motion.div 
         className="projects-grid"
-        variants={containerVariants} // Aplica as variantes do container
+        variants={containerVariants}
       >
-        {projectsData.map((project, index) => (
-          // Cada ProjectCard é envolvido em um 'motion.div' para o stagger
-          <motion.div key={index} variants={itemVariants}>
-            <ProjectCard {...project} />
-          </motion.div>
-        ))}
+        {projectsData.map((project, index) => {
+          // Pega os dados do idioma atual
+          const currentLangData = project.translations[language] || project.translations.pt;
+          
+          return (
+            <motion.div key={index} variants={itemVariants}>
+              <ProjectCard 
+                {...currentLangData} // Passa título, desc, contrib traduzidos
+                image={project.image}
+                tags={project.tags}
+                // Passamos textos de botão/labels pro card também
+                labels={{
+                  details: language === 'pt' ? 'Ver detalhes' : (language === 'es' ? 'Ver detalles' : 'View details'),
+                  contribution: language === 'pt' ? 'Minha Contribuição:' : (language === 'es' ? 'Mi Contribución:' : 'My Contribution:')
+                }}
+              />
+            </motion.div>
+          );
+        })}
       </motion.div>
     </motion.section>
   );
