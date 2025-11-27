@@ -45,6 +45,9 @@ const Hero = () => {
   return (
     <section id="home" className="hero-section">
       <div className="container hero-container">
+
+        {/* NOME REMOVIDO DAQUI (Agora está no Header) */}
+
         <motion.h1
           className="hero-title"
           variants={containerVariants}
