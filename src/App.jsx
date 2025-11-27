@@ -5,9 +5,7 @@ import Projects from './sections/Projects/Projects';
 import About from './sections/About/About';
 import Footer from './components/Footer/Footer';
 import Cursor from './components/Cursor/Cursor';
-// CORREÇÃO: O caminho foi simplificado.
-// (Isto assume que 'BackToTop.jsx' está em 'src/components/')
-import BackToTop from './components/BackToTop.jsx';
+import BackToTop from './components/BackToTop';
 
 function App() {
   return (
@@ -16,8 +14,8 @@ function App() {
       <Header />
       <main>
         <Hero />
-        <Projects />
-        <About />
+        <About />    {/* Agora o Sobre vem logo após a apresentação visual */}
+        <Projects /> {/* Projetos ficam em destaque logo na sequência */}
       </main>
       <Footer />
       <BackToTop />

@@ -1,139 +1,60 @@
 import React from 'react';
-import SkillCard from '../../components/SkillCard/SkillCard';
-import ExperienceList from '../../components/ExperienceList/ExperienceList';
 import './About.css';
-import { motion } from 'framer-motion';
-import { SiLaravel, SiReact, SiPostgresql, SiTailwindcss } from 'react-icons/si';
-
-// Dados com base no currículo
-const personalInfo = {
-  name: "Eric Nacif",
-  bio: `Desenvolvedor full stack em início de carreira, com base sólida em PHP/Laravel e JavaScript.
-   Tenho prática em criar APIs REST, interfaces responsivas em React e modelagem de dados com MySQL/Postgre.
-   Busco uma oportunidade para contribuir em equipes que valorizam código limpo, performance e aprendizado contínuo.`,
-  links: {
-    instagram: "https://www.instagram.com/nacif_/",
-    github: "https://github.com/ericnacif",
-    linkedin: "https://www.linkedin.com/in/eric-nacif-956930324/",
-    figma: "https://www.figma.com/@nacif_eric",
-    email: "mailto:naciferic7@gmail.com"
-  }
-};
-
-// Cards de skills nas categorias solicitadas
-const skillsData = [
-  {
-    icon: <SiLaravel />,
-    title: "Laravel, PHP & Blade",
-    description: "APIs REST com Laravel, Blade, Eloquent, autenticação e performance em PHP."
-  },
-  {
-    icon: <SiReact />,
-    title: "React, React Native & Node.js",
-    description: "SPA com React, apps móveis com React Native e back-end/SSR com Node.js."
-  },
-  {
-    icon: <SiPostgresql />,
-    title: "Banco de Dados (SQL, Postgre & Firebase)",
-    description: "Modelagem e queries SQL, PostgreSQL; Realtime/Auth com Firebase."
-  },
-  {
-    icon: <SiTailwindcss />,
-    title: "Tailwind, CSS3 & Bootstrap",
-    description: "CSS utilitário (Tailwind), base moderna com CSS3 e componentes com Bootstrap."
-  }
-];
-
-// Dados das listas de experiência
-const experienceListsData = {
-  hadExperiences: {
-    title: "Experiências com:",
-    items: ["SQL", "GIT, GitHub", "PHP", "Figma", "CSS", "Laravel", "JavaScript", "HTML5"]
-  },
-  haveYearsExperience: {
-    title: "Anos de Experiência com:",
-    items: ["HTML5", "CSS3", "WordPress, Elementor", "JavaScript", "Pacote Adobe", "Interface de Usuário"]
-  },
-  workAndStudy: {
-    title: "Estudo & Prática:",
-    items: ["React.js", "Next.js", "React Native", "TypeScript", "Node.js", "API RESTful", "PostgreSQL", "MongoDB", "Tailwind CSS"]
-  }
-};
-
-// Variantes de animação
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15 },
-  },
-};
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { type: 'spring', stiffness: 100 },
-  },
-};
+import { useLanguage } from '../../context/LanguageContext';
+import { SiInstagram, SiGithub, SiLinkedin, SiGmail } from 'react-icons/si';
 
 const About = () => {
+  const { language } = useLanguage();
+
+  const content = {
+    pt: {
+      // Texto curto e direto. Foca no "Valor" que você entrega, não apenas ferramentas.
+      paragraph1: "Olá, sou o Eric. Desenvolvedor Full Stack focado em transformar problemas complexos em interfaces simples e eficientes.",
+      paragraph2: "Com base sólida em PHP e JavaScript, crio produtos digitais completos — do banco de dados à experiência mobile. Valorizo código limpo, performance e, acima de tudo, soluções que funcionam.",
+      cta: "Vamos construir algo juntos?"
+    },
+    en: {
+      paragraph1: "Hi, I'm Eric. A Full Stack Developer focused on turning complex problems into simple, efficient interfaces.",
+      paragraph2: "With a solid foundation in PHP and JavaScript, I build complete digital products — from database to mobile experience. I value clean code, performance, and above all, solutions that work.",
+      cta: "Let's build something together?"
+    },
+    es: {
+      paragraph1: "Hola, soy Eric. Desarrollador Full Stack enfocado en transformar problemas complejos en interfaces simples y eficientes.",
+      paragraph2: "Con una base sólida en PHP y JavaScript, creo productos digitales completos. Valoro el código limpio, el rendimiento y, sobre todo, las soluciones que funcionan.",
+      cta: "¿Construimos algo juntos?"
+    }
+  };
+
+  const t = content[language] || content.pt;
+
+  const socialLinks = [
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/eric-nacif-956930324/", icon: <SiLinkedin /> },
+    { name: "GitHub", url: "https://github.com/ericnacif", icon: <SiGithub /> },
+    { name: "Instagram", url: "https://www.instagram.com/nacif_/", icon: <SiInstagram /> },
+    { name: "Email", url: "mailto:naciferic7@gmail.com", icon: <SiGmail /> }
+  ];
+
   return (
-    <section id="sobre" className="container about-section">
-      <div className="about-header-content">
-        <h2 className="section-title">Sobre mim</h2>
-        <motion.div
-          className="about-bio"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h3>{personalInfo.name}</h3>
-          <p>{personalInfo.bio}</p>
-          <div className="about-links">
-            <a href={personalInfo.links.instagram} target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
-            <a href={personalInfo.links.github} target="_blank" rel="noopener noreferrer">GITHUB</a>
-            <a href={personalInfo.links.linkedin} target="_blank" rel="noopener noreferrer">LINKEDIN</a>
-            <a href={personalInfo.links.figma} target="_blank" rel="noopener noreferrer">FIGMA</a>
-            <a href={personalInfo.links.email}>EMAIL</a>
+    <section id="sobre" className="about-section">
+      <div className="container about-container">
+        
+        <div className="about-text-area">
+          <p className="intro-text">{t.paragraph1}</p>
+          <p className="detail-text">{t.paragraph2}</p>
+        </div>
+
+        <div className="about-footer">
+          <span className="cta-text">{t.cta}</span>
+          <div className="social-icons-row">
+            {socialLinks.map((link, i) => (
+              <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label={link.name}>
+                {link.icon}
+              </a>
+            ))}
           </div>
-        </motion.div>
+        </div>
+
       </div>
-
-      {/* GRID DE SKILLS */}
-      <motion.div
-        className="skills-grid"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        {skillsData.map((skill) => (
-          <motion.div key={skill.title} variants={itemVariants}>
-            <SkillCard {...skill} />
-          </motion.div>
-        ))}
-      </motion.div>
-
-      {/* Grid de listas de experiência */}
-      <motion.div
-        className="experience-lists-grid"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        <motion.div variants={itemVariants}>
-          <ExperienceList {...experienceListsData.hadExperiences} />
-        </motion.div>
-        <motion.div variants={itemVariants}>
-          <ExperienceList {...experienceListsData.haveYearsExperience} />
-        </motion.div>
-        <motion.div variants={itemVariants}>
-          <ExperienceList {...experienceListsData.workAndStudy} />
-        </motion.div>
-      </motion.div>
     </section>
   );
 };

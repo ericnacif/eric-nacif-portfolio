@@ -1,12 +1,13 @@
 import React from 'react';
 import './SkillCard.css';
 
-const SkillCard = ({ icon, title, description }) => { // Remove 'items'
+// Componente simples para uso futuro ou seções extras
+const SkillCard = ({ title, description, icon }) => {
     return (
         <div className="skill-card">
-            <div className="skill-icon" aria-hidden="true">{icon}</div>
+            <div className="skill-icon">{icon}</div>
             <h4>{title}</h4>
-            <p>{description}</p> {/* Nova prop para descrição */}
+            <p>{description}</p>
         </div>
     );
 };
