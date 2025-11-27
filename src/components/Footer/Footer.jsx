@@ -1,28 +1,82 @@
 import React, { useState } from 'react';
 import './Footer.css';
 import { motion } from 'framer-motion';
-
-// Ícones SVG (arquivos locais)
-import FigmaIcon from '../../assets/icons/figma.svg';
-import LinkedinIcon from '../../assets/icons/linkedin.svg';
-import InstagramIcon from '../../assets/icons/instagram.svg';
-import GithubIcon from '../../assets/icons/github.svg';
-
-const socialLinks = [
-  { href: "https://www.linkedin.com/in/eric-nacif-956930324/", IconComponent: LinkedinIcon, alt: "LinkedIn" },
-  { href: "https://github.com/ericnacif", IconComponent: GithubIcon, alt: "GitHub" },
-  { href: "https://www.instagram.com/nacif_/", IconComponent: InstagramIcon, alt: "Instagram" },
-  { href: "https://www.figma.com/@nacif_eric", IconComponent: FigmaIcon, alt: "Figma" },
-];
+import { useLanguage } from '../../context/LanguageContext';
+import { SiFigma, SiLinkedin, SiInstagram, SiGithub } from 'react-icons/si';
 
 const Footer = () => {
+  const { language } = useLanguage();
   const [status, setStatus] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Traduções
+  const content = {
+    pt: {
+      title: "Contato",
+      subtitle: "Gostou do meu trabalho? Vamos conversar.",
+      placeholders: {
+        name: "Seu nome",
+        email: "Seu e-mail",
+        message: "Sua mensagem"
+      },
+      button: {
+        default: "Enviar Mensagem",
+        sending: "Enviando..."
+      },
+      status: {
+        success: "Mensagem enviada com sucesso!",
+        error: "Erro ao enviar. Tente novamente."
+      }
+    },
+    en: {
+      title: "Contact",
+      subtitle: "Liked my work? Let's talk.",
+      placeholders: {
+        name: "Your name",
+        email: "Your email",
+        message: "Your message"
+      },
+      button: {
+        default: "Send Message",
+        sending: "Sending..."
+      },
+      status: {
+        success: "Message sent successfully!",
+        error: "Error sending. Please try again."
+      }
+    },
+    es: {
+      title: "Contacto",
+      subtitle: "¿Te gustó mi trabajo? Hablemos.",
+      placeholders: {
+        name: "Tu nombre",
+        email: "Tu correo",
+        message: "Tu mensaje"
+      },
+      button: {
+        default: "Enviar Mensaje",
+        sending: "Enviando..."
+      },
+      status: {
+        success: "¡Mensaje enviado con éxito!",
+        error: "Error al enviar. Inténtalo de nuevo."
+      }
+    }
+  };
+
+  const t = content[language] || content.pt;
+
+  const socialLinks = [
+    { href: "https://www.linkedin.com/in/eric-nacif-956930324/", icon: <SiLinkedin />, alt: "LinkedIn" },
+    { href: "https://github.com/ericnacif", icon: <SiGithub />, alt: "GitHub" },
+    { href: "https://www.instagram.com/nacif_/", icon: <SiInstagram />, alt: "Instagram" },
+    { href: "https://www.figma.com/@nacif_eric", icon: <SiFigma />, alt: "Figma" },
+  ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setStatus("Enviando...");
+    setStatus("");
 
     const form = e.target;
     const data = new FormData(form);
@@ -35,64 +89,67 @@ const Footer = () => {
       });
 
       if (response.ok) {
-        setStatus("Mensagem enviada com sucesso!");
+        setStatus(t.status.success);
         form.reset();
       } else {
-        const errorData = await response.json();
-        const errorMessage = errorData.errors?.map(e => e.message).join(', ') || "Erro desconhecido.";
-        setStatus(`Erro ao enviar: ${errorMessage}`);
+        setStatus(t.status.error);
       }
     } catch (error) {
-      setStatus("Erro de rede. Verifique sua conexão e tente novamente.");
+      setStatus(t.status.error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <footer id="contato" className="container main-footer">
-      <h2 className="section-title">Contato</h2>
+    <footer id="contato" className="main-footer">
+      <div className="container">
+        <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+        >
+            <h2 className="section-title">{t.title}</h2>
+            <p className="footer-subtitle">{t.subtitle}</p>
 
-      <motion.form
-        className="contact-form"
-        onSubmit={handleSubmit}
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6 }}
-      >
-        <p>Gostou do meu trabalho? Vamos conversar.</p>
-        <div className="form-row">
-          <input type="text" name="name" placeholder="Seu nome" required disabled={isSubmitting} />
-          <input type="email" name="email" placeholder="Seu e-mail" required disabled={isSubmitting} />
-        </div>
-        <textarea name="message" placeholder="Sua mensagem" rows="5" required disabled={isSubmitting}></textarea>
+            <form className="contact-form" onSubmit={handleSubmit}>
+            <div className="form-row">
+                <input type="text" name="name" placeholder={t.placeholders.name} required disabled={isSubmitting} />
+                <input type="email" name="email" placeholder={t.placeholders.email} required disabled={isSubmitting} />
+            </div>
+            <textarea name="message" placeholder={t.placeholders.message} rows="5" required disabled={isSubmitting}></textarea>
 
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Enviando..." : "Enviar"}
-        </button>
+            <button type="submit" disabled={isSubmitting} className="submit-btn">
+                {isSubmitting ? t.button.sending : t.button.default}
+            </button>
 
-        {status && <p className={`form-status ${status.includes('Erro') ? 'error' : 'success'}`}>{status}</p>}
-      </motion.form>
+            {status && (
+                <p className={`form-status ${status.includes('sucesso') || status.includes('success') || status.includes('éxito') ? 'success' : 'error'}`}>
+                {status}
+                </p>
+            )}
+            </form>
 
-      <div className="social-icons">
-        {socialLinks.map((link, index) => (
-          <motion.a
-            key={index}
-            href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.1, opacity: 0.8 }}
-            transition={{ type: 'spring', stiffness: 400 }}
-            aria-label={link.alt}
-          >
-            <img
-              src={link.IconComponent}
-              alt={link.alt}
-              className="social-icon-svg"
-            />
-          </motion.a>
-        ))}
+            <div className="footer-socials">
+            {socialLinks.map((link, index) => (
+                <a
+                key={index}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social-link"
+                aria-label={link.alt}
+                >
+                {link.icon}
+                </a>
+            ))}
+            </div>
+            
+            <div className="footer-copy">
+                <p>© {new Date().getFullYear()} Eric Nacif. {language === 'pt' ? 'Todos os direitos reservados.' : (language === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.')}</p>
+            </div>
+        </motion.div>
       </div>
     </footer>
   );
