@@ -11,7 +11,7 @@ import BackToTop from './components/BackToTop';
 import Preloader from './components/Preloader/Preloader';
 import ScrollProgress from './components/ScrollProgress/ScrollProgress';
 import WhatsAppButton from './components/WhatsAppButton/WhatsAppButton';
-// REMOVIDO: import NoiseOverlay from './components/NoiseOverlay/NoiseOverlay';
+import EasterEgg from './components/EasterEgg/EasterEgg'; // <--- Importe aqui
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,8 +28,8 @@ function App() {
   return (
     <>
       <Cursor />
-
       <ScrollProgress />
+      <EasterEgg /> {/* <--- Adicione aqui (pode ser em qualquer lugar, pois é invisível) */}
 
       <AnimatePresence mode="wait">
         {isLoading && <Preloader key="preloader" />}
