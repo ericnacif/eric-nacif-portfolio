@@ -1,0 +1,11 @@
+.scroll-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    /* Linha fina de progresso */
+    background: var(--accent-color);
+    z-index: 10000;
+    transform-origin: 0%;
+}

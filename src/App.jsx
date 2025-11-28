@@ -9,6 +9,8 @@ import Footer from './components/Footer/Footer';
 import Cursor from './components/Cursor/Cursor';
 import BackToTop from './components/BackToTop';
 import Preloader from './components/Preloader/Preloader';
+import ScrollProgress from './components/ScrollProgress/ScrollProgress';
+// REMOVIDO: import NoiseOverlay from './components/NoiseOverlay/NoiseOverlay';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,6 +27,8 @@ function App() {
   return (
     <>
       <Cursor />
+
+      <ScrollProgress />
 
       <AnimatePresence mode="wait">
         {isLoading && <Preloader key="preloader" />}

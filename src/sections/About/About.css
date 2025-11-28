@@ -7,27 +7,87 @@
     margin: 0 auto;
 }
 
+/* --- ÁREA PRINCIPAL (Alterada para Flex) --- */
 .about-text-area {
     margin-bottom: 60px;
+    display: flex;
+    /* Alinha o topo do texto com o topo da imagem */
+    align-items: flex-start;
+    /* Espaço entre o texto e a imagem */
+    gap: 60px;
 }
 
+/* Coluna de Texto (Esquerda) */
+.about-content-left {
+    /* Ocupa mais espaço (ex: 60-70%) */
+    flex: 2;
+}
+
+/* Coluna de Imagem (Direita) */
+.about-image-right {
+    /* Ocupa o espaço restante */
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* Garante alinhamento no topo */
+    padding-top: 10px;
+    /* Pequeno ajuste fino para alinhar visualmente com a altura da fonte do primeiro parágrafo */
+}
+
+/* Estilo da Logo */
+.about-logo {
+    width: 100%;
+    height: auto;
+    /* Define um tamanho máximo para a logo não ficar exagerada */
+    max-width: 220px;
+    object-fit: contain;
+}
+
+
+/* TÍTULO DE SEÇÃO */
+.section-title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 40px;
+    position: relative;
+    padding-bottom: 15px;
+    text-align: left;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 60px;
+    height: 4px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+}
+
+/* TEXTO INTRODUTÓRIO */
 .intro-text {
-    font-size: clamp(24px, 4vw, 32px);
+    font-size: clamp(22px, 3.5vw, 28px);
     font-weight: 400;
     color: var(--text-color);
-    line-height: 1.4;
+    line-height: 1.5;
     margin-bottom: 32px;
     font-family: var(--font-display);
+    text-align: justify;
 }
 
+/* TEXTO DETALHE */
 .detail-text {
-    font-size: 18px;
+    font-size: clamp(16px, 2vw, 18px);
     line-height: 1.8;
     color: var(--text-secondary);
-    max-width: 800px;
+    /* max-width removido aqui, pois o container pai agora controla a largura */
+    text-align: justify;
 }
 
-/* --- FOOTER (Aumentando CTA e Ícones) --- */
 .about-footer {
     display: flex;
     align-items: center;
@@ -35,30 +95,25 @@
     gap: 32px;
     padding-top: 32px;
     border-top: 1px solid var(--border-color);
+    width: 100%;
 }
 
-/* CTA TEXTO (Aumentado) */
 .cta-text {
     font-family: var(--font-display);
     font-size: clamp(18px, 2.5vw, 24px);
-    /* Aumentado e responsivo */
     color: var(--accent-color);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-/* LINHA DE ÍCONES SOCIAIS */
 .social-icons-row {
     display: flex;
     gap: 28px;
-    /* Aumentado o espaço entre os ícones */
 }
 
-/* ÍCONE INDIVIDUAL (Aumentado) */
 .social-icon-btn {
     font-size: 28px;
-    /* Aumentado de 22px para 28px */
     color: var(--text-color);
     transition: transform 0.2s ease, color 0.2s ease;
     display: flex;
@@ -70,8 +125,46 @@
     transform: translateY(-3px);
 }
 
-/* Responsividade */
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 900px) {
+
+    /* Em tablets menores, diminui o gap */
+    .about-text-area {
+        gap: 30px;
+    }
+
+    .about-logo {
+        max-width: 180px;
+    }
+}
+
 @media (max-width: 768px) {
+
+    /* Muda para coluna única no mobile */
+    .about-text-area {
+        flex-direction: column;
+        gap: 40px;
+        align-items: center;
+        /* Centraliza no mobile */
+    }
+
+    /* No mobile, coloca a imagem acima do texto (opcional) */
+    .about-image-right {
+        order: -1;
+        width: 100%;
+        justify-content: center;
+        padding-top: 0;
+    }
+
+    .about-content-left {
+        width: 100%;
+    }
+
+    .about-logo {
+        max-width: 150px;
+        /* Logo menor no mobile */
+    }
+
     .about-footer {
         flex-direction: column;
         align-items: flex-start;
@@ -79,10 +172,9 @@
     }
 
     .detail-text {
-        font-size: 16px;
+        font-size: 15px;
     }
 
-    /* CTA Text no Mobile */
     .cta-text {
         font-size: 16px;
     }

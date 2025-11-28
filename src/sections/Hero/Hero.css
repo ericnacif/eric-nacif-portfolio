@@ -1,5 +1,6 @@
 .hero-section {
     position: relative;
+    /* ESSENCIAL para o NoiseOverlay ABSOLUTE funcionar */
     min-height: 85vh;
     display: flex;
     justify-content: center;
@@ -10,7 +11,8 @@
 
 .hero-container {
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    /* Acima do Noise */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -39,7 +41,18 @@
 }
 
 @media (max-width: 768px) {
-    .hero-section { min-height: 70vh; }
-    .hero-title { font-size: clamp(32px, 11vw, 56px); line-height: 1.2; }
-    .mobile-break { display: block; content: ""; margin-top: 8px; }
+    .hero-section {
+        min-height: 70vh;
+    }
+
+    .hero-title {
+        font-size: clamp(32px, 11vw, 56px);
+        line-height: 1.2;
+    }
+
+    .mobile-break {
+        display: block;
+        content: "";
+        margin-top: 8px;
+    }
 }

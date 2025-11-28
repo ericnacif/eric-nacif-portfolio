@@ -11,7 +11,6 @@ import engelmigImg from '../../assets/images/project-engelmig.png';
 const Projects = () => {
   const { language } = useLanguage();
 
-  // Dados dos Projetos com Tradução
   const projectsData = [
     {
       id: "certificafe",
@@ -83,14 +82,12 @@ const Projects = () => {
     }
   ];
 
-  // Tradução do Título da Seção
   const sectionTitle = {
     pt: "Projetos Selecionados",
     en: "Selected Projects",
     es: "Proyectos Seleccionados"
   };
 
-  // Variantes de Animação (Mantidas)
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -130,7 +127,8 @@ const Projects = () => {
           const currentLangData = project.translations[language] || project.translations.pt;
 
           return (
-            <motion.div key={index} variants={itemVariants}>
+            /* ADICIONADO: className 'project-card-wrapper' para forçar altura */
+            <motion.div key={index} variants={itemVariants} className="project-card-wrapper">
               <ProjectCard
                 {...currentLangData}
                 image={project.image}

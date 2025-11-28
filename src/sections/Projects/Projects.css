@@ -1,12 +1,44 @@
+/* TÍTULO DE SEÇÃO (Mantendo consistência com o About) */
+.section-title {
+  font-family: var(--font-display);
+  /* Ajustado de clamp(42px, 6vw, 64px) para: */
+  font-size: clamp(36px, 5vw, 52px);
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 40px;
+  position: relative;
+  padding-bottom: 15px;
+  text-align: left;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 60px;
+  height: 4px;
+  background-color: var(--accent-color);
+  border-radius: 2px;
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 40px;
+  align-items: stretch;
+}
+
+.project-card-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 768px) {
   .projects-grid {
     grid-template-columns: 1fr;
     gap: 32px;
+    align-items: stretch;
   }
 }

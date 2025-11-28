@@ -1,35 +1,30 @@
 .project-card {
-  background: var(--card-bg);
-  /* Borda removida, substituída por sombra suave */
-  border: 1px solid transparent;
-  border-radius: 16px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
   overflow: hidden;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  position: relative;
-  transition: all 0.3s ease;
-
-  /* Sombra suave para dar o efeito "flutuante" */
-  box-shadow: 0 0 0 1px var(--border-color);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  /* ADICIONADO: Garante que o card ocupe 100% da altura do wrapper */
+  height: 100%;
 }
 
 .project-card:hover {
-  /* Sombra mais forte e azulada no hover para dar a elevação */
-  box-shadow: 0 10px 30px rgba(41, 82, 255, 0.15), 0 0 0 1px var(--accent-color);
-  border-color: transparent;
+  box-shadow: 0 10px 30px rgba(41, 82, 255, 0.15);
+  transform: translateY(-5px);
 }
 
-.card-image-wrapper {
+.project-image-wrapper {
   overflow: hidden;
-  border-bottom: 1px solid var(--border-color);
 }
 
 .project-image {
   width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  transition: transform 0.5s ease;
+  height: auto;
+  display: block;
+  transition: transform 0.4s ease;
 }
 
 .project-card:hover .project-image {
@@ -38,10 +33,10 @@
 
 .project-info {
   padding: 24px;
+  /* ADICIONADO: Faz com que a área de info cresça para preencher espaço vazio, alinhando tags no fundo */
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  gap: 16px;
 }
 
 .project-info h3 {
@@ -49,13 +44,19 @@
   font-size: 20px;
   color: var(--text-color);
   margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.project-card:hover .project-info h3 {
+  -webkit-text-stroke: 0.5px var(--accent-color);
+  color: var(--accent-color);
 }
 
 .project-description {
-  font-size: 15px;
-  color: var(--text-secondary);
-  line-height: 1.6;
+  /* ADICIONADO: Empurra as tags para o final do card se os textos tiverem tamanhos diferentes */
   flex-grow: 1;
+  margin-bottom: 16px;
+  /* Garante espaçamento antes das tags */
 }
 
 .project-tags {
@@ -63,20 +64,43 @@
   flex-wrap: wrap;
   gap: 8px;
   margin-top: auto;
+  /* Garante alinhamento no fundo se flex-grow não for usado no texto */
 }
 
 .tag {
   font-size: 12px;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-color);
+  font-weight: 500;
+  text-transform: uppercase;
   color: var(--text-secondary);
-  transition: all 0.2s;
+  background-color: var(--bg-color);
+  padding: 4px 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
 }
 
-.project-card:hover .tag {
-  border-color: var(--accent-color);
-  color: var(--text-color);
+.project-links a {
+  font-size: 14px;
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.3s ease;
+  margin-right: 15px;
+}
+
+.project-links a:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .project-card {
+    flex-direction: column;
+  }
+
+  .project-info h3 {
+    font-size: 18px;
+  }
+
+  .tag {
+    font-size: 11px;
+  }
 }
