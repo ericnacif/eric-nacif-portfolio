@@ -35,7 +35,7 @@ function App() {
       <main>
         <Hero />
         <About />
-        <Projects />
+        <Projects />    {/* Projetos agora é a penúltima seção */}
       </main>
       <Footer />
       <BackToTop />

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
 
 // Imagens
-import certificafeImg from '../../assets/images/project-certificafe.png'; // Verifique se o caminho está correto
+import certificafeImg from '../../assets/images/project-certificafe.png';
 import engelmigImg from '../../assets/images/project-engelmig.png';
 
 const Projects = () => {
@@ -13,10 +13,10 @@ const Projects = () => {
 
   // Dados dos Projetos com Tradução
   const projectsData = [
-    { 
+    {
       id: "certificafe",
       image: certificafeImg,
-      tags: ["PHP", "Laravel", "JavaScript", "Blade", "API"],
+      tags: ["PHP", "Laravel", "JavaScript", "React Native", "Blade", "API"],
       translations: {
         pt: {
           title: "Sistema Interno - Certificafé",
@@ -47,7 +47,7 @@ const Projects = () => {
         }
       }
     },
-    { 
+    {
       id: "engelmig",
       image: engelmigImg,
       tags: ["WordPress", "HTML", "CSS", "JavaScript"],
@@ -90,7 +90,7 @@ const Projects = () => {
     es: "Proyectos Seleccionados"
   };
 
-  // Variantes de Animação
+  // Variantes de Animação (Mantidas)
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -105,14 +105,14 @@ const Projects = () => {
   };
 
   return (
-    <motion.section 
-      id="projetos" 
+    <motion.section
+      id="projetos"
       className="container"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
     >
-      <motion.h2 
+      <motion.h2
         className="section-title"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -121,26 +121,20 @@ const Projects = () => {
       >
         {sectionTitle[language] || sectionTitle.pt}
       </motion.h2>
-      
-      <motion.div 
+
+      <motion.div
         className="projects-grid"
         variants={containerVariants}
       >
         {projectsData.map((project, index) => {
-          // Pega os dados do idioma atual
           const currentLangData = project.translations[language] || project.translations.pt;
-          
+
           return (
             <motion.div key={index} variants={itemVariants}>
-              <ProjectCard 
-                {...currentLangData} // Passa título, desc, contrib traduzidos
+              <ProjectCard
+                {...currentLangData}
                 image={project.image}
                 tags={project.tags}
-                // Passamos textos de botão/labels pro card também
-                labels={{
-                  details: language === 'pt' ? 'Ver detalhes' : (language === 'es' ? 'Ver detalles' : 'View details'),
-                  contribution: language === 'pt' ? 'Minha Contribuição:' : (language === 'es' ? 'Mi Contribución:' : 'My Contribution:')
-                }}
               />
             </motion.div>
           );

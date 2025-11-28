@@ -1,10 +1,9 @@
 .about-section {
     padding: 60px 0 100px 0;
-    /* Removemos bordas para fluir naturalmente do Hero */
 }
 
 .about-container {
-    max-width: 1000px; /* Um pouco mais estreito para leitura */
+    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -12,7 +11,6 @@
     margin-bottom: 60px;
 }
 
-/* Primeiro parágrafo: Grande e impactante */
 .intro-text {
     font-size: clamp(24px, 4vw, 32px);
     font-weight: 400;
@@ -22,7 +20,6 @@
     font-family: var(--font-display);
 }
 
-/* Segundo parágrafo: Complementar, cor secundária */
 .detail-text {
     font-size: 18px;
     line-height: 1.8;
@@ -30,31 +27,38 @@
     max-width: 800px;
 }
 
-/* Área inferior com CTA e Ícones */
+/* --- FOOTER (Aumentando CTA e Ícones) --- */
 .about-footer {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 32px;
     padding-top: 32px;
     border-top: 1px solid var(--border-color);
 }
 
+/* CTA TEXTO (Aumentado) */
 .cta-text {
     font-family: var(--font-display);
-    font-size: 16px;
+    font-size: clamp(18px, 2.5vw, 24px);
+    /* Aumentado e responsivo */
     color: var(--accent-color);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
+/* LINHA DE ÍCONES SOCIAIS */
 .social-icons-row {
     display: flex;
-    gap: 20px;
+    gap: 28px;
+    /* Aumentado o espaço entre os ícones */
 }
 
+/* ÍCONE INDIVIDUAL (Aumentado) */
 .social-icon-btn {
-    font-size: 22px;
+    font-size: 28px;
+    /* Aumentado de 22px para 28px */
     color: var(--text-color);
     transition: transform 0.2s ease, color 0.2s ease;
     display: flex;
@@ -73,8 +77,13 @@
         align-items: flex-start;
         gap: 24px;
     }
-    
+
     .detail-text {
+        font-size: 16px;
+    }
+
+    /* CTA Text no Mobile */
+    .cta-text {
         font-size: 16px;
     }
 }
