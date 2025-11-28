@@ -13,20 +13,24 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [theme, setTheme] = useState('light');
   const [showLangMenu, setShowLangMenu] = useState(false);
-
-  // NOVO: Estado para guardar qual seção está visível no momento
-  const [activeSection, setActiveSection] = useState('');
+  const [activeSection, setActiveSection] = useState('hero');
 
   const { language, changeLanguage, t } = useLanguage();
   const menuRef = useRef(null);
   const menuBtnRef = useRef(null);
+
+  // DEFINIÇÃO DOS ITENS DO MENU (Nova Ordem: Sobre -> Projetos -> Contato)
+  const navItems = [
+    { id: 'sobre', label: t.nav?.about || "Sobre" },
+    { id: 'projetos', label: t.nav?.projects || "Projetos" },
+    { id: 'contato', label: t.nav?.contact || "Contato" }
+  ];
 
   const getCvLink = () => {
     if (language === 'pt') return cvPt;
     return cvEn;
   };
 
-  // Efeito de Scroll (Sombra no Header)
   useEffect(() => {
     const header = document.querySelector('.main-header');
     const onScroll = () => {
@@ -39,32 +43,31 @@ const Header = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // NOVO: Lógica de Scroll Spy (Detecta seção ativa)
+  // --- SCROLL SPY (Detector de Seção) ---
   useEffect(() => {
-    const sections = document.querySelectorAll('section[id]'); // Pega todas as seções que têm ID
+    // Observa sections E o footer
+    const sections = document.querySelectorAll('section[id], footer#contato');
 
     const observerOptions = {
       root: null,
-      rootMargin: '0px',
-      threshold: 0.3 // Ativa quando 30% da seção estiver visível
+      rootMargin: '-30% 0px -40% 0px', // Ajuste para trocar o foco mais no meio da tela
+      threshold: 0
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
+          // Se for Hero, remove a pílula ou marca hero
+          if (entry.target.id === 'hero') setActiveSection('hero');
+          else setActiveSection(entry.target.id);
         }
       });
     }, observerOptions);
 
     sections.forEach((section) => observer.observe(section));
-
-    return () => {
-      sections.forEach((section) => observer.unobserve(section));
-    };
+    return () => sections.forEach((section) => observer.unobserve(section));
   }, []);
 
-  // Theme Logic
   useEffect(() => {
     const stored = localStorage.getItem('theme');
     const initial = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -79,7 +82,6 @@ const Header = () => {
     localStorage.setItem('theme', next);
   };
 
-  // Menu Mobile Logic
   useEffect(() => {
     if (!isMenuOpen) return;
     const onKeyDown = (e) => { if (e.key === 'Escape') setIsMenuOpen(false); };
@@ -98,6 +100,7 @@ const Header = () => {
 
   const closeMenu = () => setIsMenuOpen(false);
 
+  // Variants para o menu mobile
   const panelVariants = {
     hidden: { opacity: 0, y: -12, scale: 0.98 },
     visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 260, damping: 24 } },
@@ -117,34 +120,34 @@ const Header = () => {
           {isMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        {/* LOGO + NOME */}
-        <a href="#home" className="header-logo-link" onClick={closeMenu}>
+        {/* LOGO */}
+        <a href="#hero" className="header-logo-link" onClick={() => { setActiveSection('hero'); closeMenu(); }}>
           <img src={logoBlue} alt="Logo" className="header-logo-img" />
           <span className="header-logo-text">Eric Nacif</span>
         </a>
 
+        {/* --- DESKTOP NAV (COM ANIMAÇÃO DE PÍLULA) --- */}
         <nav className="desktop-nav">
-          {/* Lógica condicional adicionada no className */}
-          <a
-            href="#projetos"
-            className={activeSection === 'projetos' ? 'active' : ''}
-          >
-            {t.nav.projects}
-          </a>
-
-          <a
-            href="#sobre"
-            className={activeSection === 'sobre' ? 'active' : ''}
-          >
-            {t.nav.about}
-          </a>
-
-          <a
-            href="#contato"
-            className={activeSection === 'contato' ? 'active' : ''}
-          >
-            {t.nav.contact}
-          </a>
+          {navItems.map((item) => {
+            const isActive = activeSection === item.id;
+            return (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className={`nav-item ${isActive ? 'active' : ''}`}
+                onClick={() => setActiveSection(item.id)}
+              >
+                {isActive && (
+                  <motion.div
+                    className="nav-pill-bg"
+                    layoutId="navPill"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+                <span className="nav-text">{item.label}</span>
+              </a>
+            )
+          })}
         </nav>
 
         <div className="header-controls">
@@ -187,30 +190,17 @@ const Header = () => {
             ref={menuRef}
             initial="hidden" animate="visible" exit="exit" variants={panelVariants}
           >
-            {/* Também adicionei a classe active no menu mobile */}
-            <a
-              href="#projetos"
-              onClick={closeMenu}
-              className={activeSection === 'projetos' ? 'active' : ''}
-            >
-              {t.nav.projects}
-            </a>
-
-            <a
-              href="#sobre"
-              onClick={closeMenu}
-              className={activeSection === 'sobre' ? 'active' : ''}
-            >
-              {t.nav.about}
-            </a>
-
-            <a
-              href="#contato"
-              onClick={closeMenu}
-              className={activeSection === 'contato' ? 'active' : ''}
-            >
-              {t.nav.contact}
-            </a>
+            {/* MAP DO MOBILE COM A MESMA ORDEM */}
+            {navItems.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={closeMenu}
+                className={activeSection === item.id ? 'active' : ''}
+              >
+                {item.label}
+              </a>
+            ))}
 
             <div className="mobile-divider"></div>
             <div className="mobile-controls">

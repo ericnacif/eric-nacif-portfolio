@@ -104,7 +104,7 @@ const Footer = () => {
   return (
     <footer id="contato" className="main-footer">
       <div className="container">
-        <motion.div 
+        <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -145,7 +145,7 @@ const Footer = () => {
                 </a>
             ))}
             </div>
-            
+
             <div className="footer-copy">
                 <p>© {new Date().getFullYear()} Eric Nacif. {language === 'pt' ? 'Todos os direitos reservados.' : (language === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.')}</p>
             </div>
