@@ -6,26 +6,23 @@ import {
   SiInstagram, SiGithub, SiLinkedin, SiGmail
 } from 'react-icons/si';
 
-import logoBlue from '../../assets/images/logo-blue.png'; // Verifique o caminho da imagem
+import logoBlue from '../../assets/images/logo-blue.png';
 
 const structuredStack = {
   pt: {
     title: "Sobre Mim",
-    // TEXTO REDUZIDO AQUI
     paragraph1: "Olá, sou o Eric. Desenvolvedor Full Stack focado em interfaces simples e eficientes.",
     paragraph2: "Com base sólida em PHP e JavaScript, crio produtos digitais completos — do banco de dados à experiência mobile. Valorizo código limpo, performance e, acima de tudo, soluções que funcionam.",
     cta: "Vamos construir algo juntos?",
   },
   en: {
     title: "About Me",
-    // TEXTO REDUZIDO AQUI
     paragraph1: "Hi, I'm Eric. Full Stack Developer focused on simple and efficient interfaces.",
     paragraph2: "With a solid foundation in PHP and JavaScript, I build complete digital products — from database to mobile experience. I value clean code, performance, and above all, solutions that work.",
     cta: "Let's build something together?",
   },
   es: {
     title: "Sobre Mí",
-    // TEXTO REDUZIDO AQUI
     paragraph1: "Hola, soy Eric. Desarrollador Full Stack enfocado en interfaces simples y eficientes.",
     paragraph2: "Con una base sólida en PHP y JavaScript, creo productos digitales completos. Valoro el código limpio, el rendimiento y, sobre todo, las soluciones que funcionan.",
     cta: "¿Construimos algo juntos?",
@@ -68,6 +65,7 @@ const About = () => {
 
         <motion.h2
           className="section-title"
+          key={language} /* <--- CORREÇÃO AQUI: Força a recriação ao mudar o idioma */
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.8 }}

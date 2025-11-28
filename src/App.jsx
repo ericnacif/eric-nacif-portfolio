@@ -10,6 +10,7 @@ import Cursor from './components/Cursor/Cursor';
 import BackToTop from './components/BackToTop';
 import Preloader from './components/Preloader/Preloader';
 import ScrollProgress from './components/ScrollProgress/ScrollProgress';
+import WhatsAppButton from './components/WhatsAppButton/WhatsAppButton';
 // REMOVIDO: import NoiseOverlay from './components/NoiseOverlay/NoiseOverlay';
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
       </main>
       <Footer />
       <BackToTop />
+      <WhatsAppButton />
     </>
   );
 }
