@@ -14,7 +14,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // 2800ms: Ritmo perfeito entre texto dinâmico e destaque da logo
     const timer = setTimeout(() => {
       setIsLoading(false);
       window.scrollTo(0, 0);
@@ -35,7 +34,7 @@ function App() {
       <main>
         <Hero />
         <About />
-        <Projects />    {/* Projetos agora é a penúltima seção */}
+        <Projects />
       </main>
       <Footer />
       <BackToTop />

@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'; // Adicionado 'useState' e 'useEffect'
 import { motion } from 'framer-motion';
 import './Hero.css';
 import { useLanguage } from '../../context/LanguageContext';
 
+const HERO_ENTRY_DELAY_SECONDS = 3.0; // Definimos o atraso para 3.0s, que é maior que 2.8s do Preloader.
+
 const Hero = () => {
   const { language } = useLanguage();
+  const [isMounted, setIsMounted] = useState(false); // Novo estado para rastrear se o componente já foi montado
+
+  useEffect(() => {
+    // Roda apenas uma vez no carregamento inicial do componente
+    if (!isMounted) {
+      setIsMounted(true);
+    }
+  }, [isMounted]);
 
   const texts = {
     pt: "desenvolvedor full stack",
@@ -21,11 +31,15 @@ const Hero = () => {
     if (secondSpace !== -1) breakIndex = secondSpace;
   }
 
+  // Condição: Se for a primeira montagem, aplica o delay (Ex: 3.0s). Se não for, o delay é 0.
+  const currentDelay = isMounted ? 0 : HERO_ENTRY_DELAY_SECONDS;
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: (i = 1) => ({
       opacity: 1,
-      transition: { staggerChildren: 0.04, delayChildren: 0.1 },
+      // Aplicamos o delay de forma CONDICIONAL
+      transition: { staggerChildren: 0.04, delayChildren: currentDelay },
     }),
   };
 
@@ -46,12 +60,11 @@ const Hero = () => {
     <section id="home" className="hero-section">
       <div className="container hero-container">
 
-        {/* NOME REMOVIDO DAQUI (Agora está no Header) */}
-
         <motion.h1
           className="hero-title"
           variants={containerVariants}
           initial="hidden"
+          // O key={language} garante que a animação seja reexecutada a cada troca de idioma
           animate="visible"
           key={language}
           aria-label={text}
