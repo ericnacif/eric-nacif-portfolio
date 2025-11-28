@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ProjectCard from '../../components/ProjectCard/ProjectCard';
 import './Projects.css';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
+import RedirectLoader from '../../components/RedirectLoader/RedirectLoader'; // <--- Import Novo
 
 // Imagens
 import certificafeImg from '../../assets/images/project-certificafe.png';
@@ -11,10 +12,14 @@ import engelmigImg from '../../assets/images/project-engelmig.png';
 const Projects = () => {
   const { language } = useLanguage();
 
+  // Estado para controlar o Loading de Redirecionamento
+  const [isRedirecting, setIsRedirecting] = useState(false);
+
   const projectsData = [
     {
       id: "certificafe",
       image: certificafeImg,
+      url: "https://certificafe.com.br/",
       tags: ["PHP", "Laravel", "JavaScript", "React Native", "Blade", "API"],
       translations: {
         pt: {
@@ -49,6 +54,7 @@ const Projects = () => {
     {
       id: "engelmig",
       image: engelmigImg,
+      url: "https://www.engelmig.com.br/",
       tags: ["WordPress", "HTML", "CSS", "JavaScript"],
       translations: {
         pt: {
@@ -88,6 +94,24 @@ const Projects = () => {
     es: "Proyectos Seleccionados"
   };
 
+  const redirectMessages = {
+    pt: "Redirecionando...",
+    en: "Redirecting...",
+    es: "Redireccionando..."
+  };
+
+  // Função que intercepta o clique e mostra o loader
+  const handleProjectClick = (e, url) => {
+    e.preventDefault(); // Impede abrir o link imediatamente
+    setIsRedirecting(true); // Mostra a tela branca com logo
+
+    // Espera 2 segundos e abre o link
+    setTimeout(() => {
+      window.open(url, '_blank', 'noopener,noreferrer');
+      setIsRedirecting(false); // Esconde a tela
+    }, 2000);
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -102,43 +126,54 @@ const Projects = () => {
   };
 
   return (
-    <motion.section
-      id="projetos"
-      className="container"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-    >
-      <motion.h2
-        className="section-title"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.5 }}
-      >
-        {sectionTitle[language] || sectionTitle.pt}
-      </motion.h2>
+    <>
+      {/* Componente de Loading Condicional */}
+      <AnimatePresence>
+        {isRedirecting && (
+          <RedirectLoader text={redirectMessages[language] || redirectMessages.pt} />
+        )}
+      </AnimatePresence>
 
-      <motion.div
-        className="projects-grid"
-        variants={containerVariants}
+      <motion.section
+        id="projetos"
+        className="container"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
       >
-        {projectsData.map((project, index) => {
-          const currentLangData = project.translations[language] || project.translations.pt;
+        <motion.h2
+          className="section-title"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5 }}
+        >
+          {sectionTitle[language] || sectionTitle.pt}
+        </motion.h2>
 
-          return (
-            /* ADICIONADO: className 'project-card-wrapper' para forçar altura */
-            <motion.div key={index} variants={itemVariants} className="project-card-wrapper">
-              <ProjectCard
-                {...currentLangData}
-                image={project.image}
-                tags={project.tags}
-              />
-            </motion.div>
-          );
-        })}
-      </motion.div>
-    </motion.section>
+        <motion.div
+          className="projects-grid"
+          variants={containerVariants}
+        >
+          {projectsData.map((project, index) => {
+            const currentLangData = project.translations[language] || project.translations.pt;
+
+            return (
+              <motion.div key={index} variants={itemVariants} className="project-card-wrapper">
+                <ProjectCard
+                  {...currentLangData}
+                  image={project.image}
+                  tags={project.tags}
+                  url={project.url}
+                  // Passamos a função de clique customizada
+                  onClick={(e) => handleProjectClick(e, project.url)}
+                />
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </motion.section>
+    </>
   );
 };
 
