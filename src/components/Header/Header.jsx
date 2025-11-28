@@ -4,12 +4,51 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaSun, FaMoon, FaBars, FaTimes, FaGlobe, FaDownload } from 'react-icons/fa';
 
 import logoBlue from '../../assets/images/logo-blue.png';
-import logoGray from '../../assets/images/logo-gray.png'; // Garanta que existe
+import logoGray from '../../assets/images/logo-gray.png';
 import cvPt from '../../assets/docs/cv-pt.pdf';
 import cvEn from '../../assets/docs/cv-en.pdf';
 
 import { useLanguage } from '../../context/LanguageContext';
 import { useTheme } from '../../context/ThemeContext';
+
+// Componente ScrambleText (Mantido)
+const ScrambleText = ({ text, className }) => {
+  const [displayText, setDisplayText] = useState(text);
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+
+  const scramble = () => {
+    let iteration = 0;
+    const interval = setInterval(() => {
+      setDisplayText((prev) =>
+        text
+          .split("")
+          .map((letter, index) => {
+            if (index < iteration) {
+              return text[index];
+            }
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join("")
+      );
+
+      if (iteration >= text.length) {
+        clearInterval(interval);
+      }
+
+      iteration += 1 / 3;
+    }, 30);
+  };
+
+  return (
+    <span
+      className={className}
+      onMouseEnter={scramble}
+      style={{ minWidth: '120px', display: 'inline-block' }}
+    >
+      {displayText}
+    </span>
+  );
+};
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,7 +61,6 @@ const Header = () => {
   const menuRef = useRef(null);
   const menuBtnRef = useRef(null);
 
-  // Seleciona a logo baseada no tema
   const logoSrc = theme === 'dark' ? logoGray : logoBlue;
 
   const navItems = [
@@ -34,6 +72,31 @@ const Header = () => {
   const getCvLink = () => {
     if (language === 'pt') return cvPt;
     return cvEn;
+  };
+
+  // --- NOVA FUNÇÃO DE SCROLL SUAVE ---
+  const handleScrollTo = (e, id) => {
+    e.preventDefault(); // Impede o pulo seco padrão
+
+    let targetId = id;
+    if (id === 'home') targetId = 'hero'; // Ajuste caso use 'home'
+
+    const element = document.getElementById(targetId);
+
+    if (element) {
+      // Calcula a posição descontando a altura do header (aprox 80px)
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth" // Aqui acontece a mágica
+      });
+
+      setActiveSection(targetId);
+      setIsMenuOpen(false); // Fecha o menu mobile se estiver aberto
+    }
   };
 
   useEffect(() => {
@@ -112,9 +175,14 @@ const Header = () => {
           {isMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        <a href="#hero" className="header-logo-link" onClick={() => { setActiveSection('hero'); closeMenu(); }}>
+        {/* Logo também usa o scroll suave para voltar ao topo */}
+        <a
+          href="#hero"
+          className="header-logo-link"
+          onClick={(e) => handleScrollTo(e, 'hero')}
+        >
           <img src={logoSrc} alt="Logo" className="header-logo-img" />
-          <span className="header-logo-text">Eric Nacif</span>
+          <ScrambleText text="ERIC NACIF" className="header-logo-text" />
         </a>
 
         <nav className="desktop-nav">
@@ -125,7 +193,7 @@ const Header = () => {
                 key={item.id}
                 href={`#${item.id}`}
                 className={`nav-item ${isActive ? 'active' : ''}`}
-                onClick={() => setActiveSection(item.id)}
+                onClick={(e) => handleScrollTo(e, item.id)} /* <--- AQUI */
               >
                 {isActive && (
                   <motion.div
@@ -224,7 +292,7 @@ const Header = () => {
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                onClick={closeMenu}
+                onClick={(e) => handleScrollTo(e, item.id)} /* <--- AQUI NO MOBILE TAMBÉM */
                 className={activeSection === item.id ? 'active' : ''}
               >
                 <AnimatePresence mode="wait">
