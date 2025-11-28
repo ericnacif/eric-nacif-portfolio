@@ -6,8 +6,39 @@
     text-align: center;
     background-color: var(--bg-color);
     padding: 20px;
+    position: relative;
+    /* Para posicionar o header absolute */
 }
 
+/* --- ESTILO DO HEADER SIMPLES --- */
+.simple-header {
+    position: absolute;
+    top: 40px;
+    /* Distância do topo */
+    left: 50%;
+    transform: translateX(-50%);
+    /* Centraliza exato */
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.simple-logo-img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
+.simple-logo-text {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent-color);
+}
+
+/* --- CONTEÚDO RESTAURADO (Glitch) --- */
 .not-found-content h1 {
     font-size: clamp(80px, 15vw, 150px);
     font-family: var(--font-display);

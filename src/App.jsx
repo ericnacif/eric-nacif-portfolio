@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // <--- Importante
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
 import Header from './components/Header/Header';
@@ -13,46 +13,55 @@ import Preloader from './components/Preloader/Preloader';
 import ScrollProgress from './components/ScrollProgress/ScrollProgress';
 import WhatsAppButton from './components/WhatsAppButton/WhatsAppButton';
 import EasterEgg from './components/EasterEgg/EasterEgg';
-import NotFound from './pages/NotFound/NotFound'; // <--- Importante
+import NotFound from './pages/NotFound/NotFound';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      window.scrollTo(0, 0);
-    }, 2800);
-    return () => clearTimeout(timer);
-  }, []);
+  // Componente interno para agrupar a página Home e sua lógica de Load
+  const Home = () => {
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+        window.scrollTo(0, 0);
+      }, 2800);
+      return () => clearTimeout(timer);
+    }, []);
+
+    return (
+      <>
+        <AnimatePresence mode="wait">
+          {isLoading && <Preloader key="preloader" />}
+        </AnimatePresence>
+
+        <Header />
+
+        <main>
+          <Hero />
+          <About />
+          <Projects />
+        </main>
+
+        <Footer />
+        <BackToTop />
+        <WhatsAppButton />
+      </>
+    );
+  };
 
   return (
     <Router>
+      {/* Componentes Globais que rodam em tudo (não visualmente intrusivos) */}
       <Cursor />
       <ScrollProgress />
       <EasterEgg />
-      <WhatsAppButton />
-      <BackToTop />
-
-      {/* Componentes Globais que aparecem em TODAS as páginas */}
-      <Header />
-
-      <AnimatePresence mode="wait">
-        {isLoading && <Preloader key="preloader" />}
-      </AnimatePresence>
 
       <Routes>
-        {/* ROTA DA PÁGINA PRINCIPAL */}
-        <Route path="/" element={
-          <main>
-            <Hero />
-            <About />
-            <Projects />
-            <Footer /> {/* Footer só na home se quiser, ou tire daqui e ponha fora do Routes */}
-          </main>
-        } />
+        {/* ROTA HOME: Contém Header, Whats, Preloader, etc. */}
+        <Route path="/" element={<Home />} />
 
-        {/* ROTA DE PÁGINA 404 */}
+        {/* ROTA 404: Limpa, só com o conteúdo do NotFound.jsx */}
         <Route path="*" element={<NotFound />} />
       </Routes>
 

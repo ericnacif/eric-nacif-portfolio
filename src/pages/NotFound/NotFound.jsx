@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom'; // Importante para voltar sem recarregar
+import { Link } from 'react-router-dom';
 import './NotFound.css';
 import { useLanguage } from '../../context/LanguageContext';
+import logoBlue from '../../assets/images/logo-blue.png'; // Importando a logo
 
 const NotFound = () => {
     const { language } = useLanguage();
@@ -32,6 +33,13 @@ const NotFound = () => {
 
     return (
         <section className="not-found-section">
+
+            {/* --- CABEÇALHO SIMPLIFICADO (Só Logo + Nome) --- */}
+            <div className="simple-header">
+                <img src={logoBlue} alt="Logo" className="simple-logo-img" />
+                <span className="simple-logo-text">Eric Nacif</span>
+            </div>
+
             <motion.div
                 className="not-found-content"
                 initial={{ opacity: 0, y: 20 }}
