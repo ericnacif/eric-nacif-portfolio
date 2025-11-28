@@ -1,7 +1,6 @@
 .main-footer {
   padding: 80px 0 40px 0;
   text-align: center;
-  border-top: 1px solid var(--border-color);
   background-color: var(--bg-color);
 }
 
@@ -225,7 +224,6 @@
 .footer-copy {
   font-size: 13px;
   color: var(--gray-color);
-  border-top: 1px solid var(--border-color);
   padding-top: 32px;
   max-width: 600px;
   margin: 0 auto;

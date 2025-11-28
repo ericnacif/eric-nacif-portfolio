@@ -83,6 +83,19 @@ const Projects = () => {
     }, 2000);
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100 } },
+  };
+
   return (
     <>
       <AnimatePresence>
@@ -91,41 +104,43 @@ const Projects = () => {
         )}
       </AnimatePresence>
 
-      <motion.section
-        id="projetos"
-        className="container"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-      >
-        <AnimatePresence mode="wait">
-          <motion.h2
-            className="section-title"
-            key={language}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-          >
-            {sectionTitle[language] || sectionTitle.pt}
-          </motion.h2>
-        </AnimatePresence>
+      <section id="projetos" className="projects-section-blue">
 
-        {/* GRUPO DE CARDS COM TRANSIÇÃO SUAVE */}
-        <AnimatePresence mode="wait">
+        {/* ONDA SUPERIOR */}
+        <div className="custom-shape-divider-top">
+          <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="shape-fill"></path>
+          </svg>
+        </div>
+
+        <div className="container relative-z">
+          <AnimatePresence mode="wait">
+            <motion.h2
+              className="section-title white-title"
+              key={language}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5 }}
+            >
+              {sectionTitle[language] || sectionTitle.pt}
+            </motion.h2>
+          </AnimatePresence>
+
           <motion.div
             className="projects-grid"
-            key={language} // Troca todo o grid suavemente ao mudar língua
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
+            key={language}
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
           >
             {projectsData.map((project, index) => {
               const currentLangData = project.translations[language] || project.translations.pt;
 
               return (
-                <div key={index} className="project-card-wrapper">
+                <motion.div key={index} variants={itemVariants} className="project-card-wrapper">
                   <ProjectCard
                     {...currentLangData}
                     image={project.image}
@@ -133,12 +148,20 @@ const Projects = () => {
                     url={project.url}
                     onClick={(e) => handleProjectClick(e, project.url)}
                   />
-                </div>
+                </motion.div>
               );
             })}
           </motion.div>
-        </AnimatePresence>
-      </motion.section>
+        </div>
+
+        {/* ONDA INFERIOR */}
+        <div className="custom-shape-divider-bottom">
+          <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="shape-fill"></path>
+          </svg>
+        </div>
+
+      </section>
     </>
   );
 };

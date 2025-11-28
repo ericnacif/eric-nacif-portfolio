@@ -1,27 +1,73 @@
-/* TÍTULO DE SEÇÃO (Mantendo consistência com o About) */
-.section-title {
-  font-family: var(--font-display);
-  /* Ajustado de clamp(42px, 6vw, 64px) para: */
-  font-size: clamp(36px, 5vw, 52px);
-  font-weight: 700;
-  color: var(--text-color);
-  margin-bottom: 40px;
+/* CONTAINER PRINCIPAL AZUL */
+.projects-section-blue {
   position: relative;
-  padding-bottom: 15px;
-  text-align: left;
-}
-
-.section-title::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 60px;
-  height: 4px;
   background-color: var(--accent-color);
-  border-radius: 2px;
+  padding: 150px 0;
+  margin-top: 60px;
+  margin-bottom: 0;
 }
 
+.relative-z {
+  position: relative;
+  z-index: 2;
+}
+
+.white-title {
+  color: #ffffff !important;
+}
+
+.white-title::after {
+  background-color: #ffffff !important;
+}
+
+/* --- ONDA SUPERIOR --- */
+.custom-shape-divider-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-top svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 120px;
+  /* ALTERAÇÃO: Removido o rotate(180deg) para inverter a curva verticalmente */
+  transform: rotate(0deg);
+}
+
+.custom-shape-divider-top .shape-fill {
+  fill: var(--bg-color);
+}
+
+/* --- ONDA INFERIOR --- */
+.custom-shape-divider-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-bottom svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 120px;
+  /* ALTERAÇÃO: Adicionado rotate(180deg) para inverter a curva verticalmente */
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom .shape-fill {
+  fill: var(--bg-color);
+}
+
+
+/* --- GRID --- */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -35,10 +81,26 @@
   flex-direction: column;
 }
 
+/* CARDS NO FUNDO AZUL */
+.projects-section-blue .project-card {
+  background-color: var(--card-bg);
+  border: none;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsividade */
 @media (max-width: 768px) {
+  .projects-section-blue {
+    padding: 100px 0;
+  }
+
   .projects-grid {
     grid-template-columns: 1fr;
     gap: 32px;
-    align-items: stretch;
+  }
+
+  .custom-shape-divider-top svg,
+  .custom-shape-divider-bottom svg {
+    height: 60px;
   }
 }
