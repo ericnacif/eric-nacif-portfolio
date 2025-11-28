@@ -1,29 +1,41 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// 1. Cria o Contexto
+// Importe as imagens para usar como favicon
+import logoBlue from '../assets/images/logo-blue.png';
+import logoGray from '../assets/images/logo-gray.png';
+
 const ThemeContext = createContext();
 
-// 2. Cria o Provedor
 export const ThemeProvider = ({ children }) => {
-  // Pega o tema do localStorage ou usa 'light' como padrão
-  const [theme, setTheme] = useState(
-    localStorage.getItem('theme') || 'light'
-  );
+  const [theme, setTheme] = useState('dark');
 
-  // Efeito que roda quando o 'theme' muda
   useEffect(() => {
-    // 1. Salva a escolha no localStorage
-    localStorage.setItem('theme', theme);
-    // 2. Adiciona/Remove o atributo [data-theme] do <html>
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme) {
+      setTheme(storedTheme);
+    } else {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(prefersDark ? 'dark' : 'light');
+    }
+  }, []);
+
+  // Efeito para aplicar classe no HTML e trocar o FAVICON
+  useEffect(() => {
+    // 1. Atualiza atributo do HTML
     document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+
+    // 2. Troca o Favicon Dinamicamente
+    const favicon = document.querySelector("link[rel*='icon']");
+    if (favicon) {
+      favicon.href = theme === 'dark' ? logoGray : logoBlue;
+    }
   }, [theme]);
 
-  // Função para trocar o tema
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
-  // 3. Fornece o tema e a função para os componentes filhos
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
@@ -31,5 +43,4 @@ export const ThemeProvider = ({ children }) => {
   );
 };
 
-// 4. Hook customizado para facilitar o uso
 export const useTheme = () => useContext(ThemeContext);

@@ -15,9 +15,11 @@ import WhatsAppButton from './components/WhatsAppButton/WhatsAppButton';
 import EasterEgg from './components/EasterEgg/EasterEgg';
 import NotFound from './pages/NotFound/NotFound';
 
+// 1. IMPORTAR AQUI
+import PrintRedirect from './components/PrintRedirect/PrintRedirect';
+
 function App() {
 
-  // Componente interno para agrupar a página Home e sua lógica de Load
   const Home = () => {
     const [isLoading, setIsLoading] = useState(true);
 
@@ -52,16 +54,15 @@ function App() {
 
   return (
     <Router>
-      {/* Componentes Globais que rodam em tudo (não visualmente intrusivos) */}
       <Cursor />
       <ScrollProgress />
       <EasterEgg />
 
-      <Routes>
-        {/* ROTA HOME: Contém Header, Whats, Preloader, etc. */}
-        <Route path="/" element={<Home />} />
+      {/* 2. ADICIONAR AQUI (Funciona em todo o site) */}
+      <PrintRedirect />
 
-        {/* ROTA 404: Limpa, só com o conteúdo do NotFound.jsx */}
+      <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 
