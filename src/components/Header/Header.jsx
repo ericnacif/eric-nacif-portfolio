@@ -4,20 +4,26 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaSun, FaMoon, FaBars, FaTimes, FaGlobe, FaDownload } from 'react-icons/fa';
 
 import logoBlue from '../../assets/images/logo-blue.png';
+import logoGray from '../../assets/images/logo-gray.png'; // Garanta que existe
 import cvPt from '../../assets/docs/cv-pt.pdf';
 import cvEn from '../../assets/docs/cv-en.pdf';
 
 import { useLanguage } from '../../context/LanguageContext';
+import { useTheme } from '../../context/ThemeContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [theme, setTheme] = useState('light');
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
 
   const { language, changeLanguage, t } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
+
   const menuRef = useRef(null);
   const menuBtnRef = useRef(null);
+
+  // Seleciona a logo baseada no tema
+  const logoSrc = theme === 'dark' ? logoGray : logoBlue;
 
   const navItems = [
     { id: 'sobre', label: t.nav?.about || "Sobre" },
@@ -64,20 +70,6 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    const stored = localStorage.getItem('theme');
-    const initial = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    setTheme(initial);
-    document.documentElement.setAttribute('data-theme', initial);
-  }, []);
-
-  const toggleTheme = () => {
-    const next = theme === 'dark' ? 'light' : 'dark';
-    setTheme(next);
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-  };
-
-  useEffect(() => {
     if (!isMenuOpen) return;
     const onKeyDown = (e) => { if (e.key === 'Escape') setIsMenuOpen(false); };
     const onPointerDown = (e) => {
@@ -121,7 +113,7 @@ const Header = () => {
         </button>
 
         <a href="#hero" className="header-logo-link" onClick={() => { setActiveSection('hero'); closeMenu(); }}>
-          <img src={logoBlue} alt="Logo" className="header-logo-img" />
+          <img src={logoSrc} alt="Logo" className="header-logo-img" />
           <span className="header-logo-text">Eric Nacif</span>
         </a>
 
@@ -139,9 +131,6 @@ const Header = () => {
                   <motion.div
                     className="nav-pill-bg"
                     layoutId="navPill"
-                    /* ALTERADO PARA MOVIMENTO FLUIDO */
-                    /* stiffness 300 = rápido e responsivo */
-                    /* damping 30 = para suavemente sem tremer */
                     transition={{
                       type: "spring",
                       stiffness: 300,

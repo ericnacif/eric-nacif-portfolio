@@ -78,27 +78,21 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-
-    /* ESTADO INICIAL (TOPO): Transparente e sem bordas */
     background-color: transparent;
     padding: 0;
     border-radius: 0;
     border: none;
-
-    /* Transição suave para quando o fundo aparecer */
     transition: all 0.4s ease;
 }
 
-/* ESTADO SCROLLED: Ganha a forma de cápsula */
+/* ESTADO SCROLLED */
 .main-header.scrolled .desktop-nav {
     background-color: rgba(0, 0, 0, 0.05);
-    /* Fundo sutil */
     padding: 4px;
     border-radius: 50px;
     border: 1px solid var(--border-color);
 }
 
-/* Ajuste de cor para modo Dark/Light no container scrolled */
 [data-theme="dark"] .main-header.scrolled .desktop-nav {
     background-color: rgba(255, 255, 255, 0.05);
 }
@@ -124,9 +118,7 @@
     color: var(--text-color);
 }
 
-/* --- COMPORTAMENTO DO ATIVO (TOPO vs SCROLLED) --- */
-
-/* 1. NO TOPO: Usa o sublinhado/bolinha "antigo" */
+/* --- ATIVO (TOPO vs SCROLLED) --- */
 .main-header:not(.scrolled) .nav-item.active {
     color: var(--accent-color);
 }
@@ -141,43 +133,35 @@
     border-radius: 50%;
 }
 
-/* 2. NO SCROLLED: Usa a cor da pílula */
 .main-header.scrolled .nav-item.active {
     color: var(--accent-color);
 }
 
-/* Esconde a bolinha quando estiver rolando, pois teremos a pílula */
 .main-header.scrolled .nav-item.active::after {
     display: none;
 }
 
-
-/* --- A PÍLULA FLUTUANTE --- */
+/* --- A PÍLULA FLUTUANTE (USANDO RGB PARA CORRETA COR) --- */
 .nav-pill-bg {
     position: absolute;
     inset: 0;
-    background-color: rgba(41, 82, 255, 0.1);
+
+    /* Isso garante que no Dark fique Cinza translúcido e no Light Azul translúcido */
+    background-color: rgba(var(--accent-rgb), 0.15);
+
     border-radius: 30px;
     z-index: -1;
-
-    /* POR PADRÃO: Escondida (transparente) no topo */
     opacity: 0;
-    /* transform: scale(0.8);  <-- REMOVIDO */
-
-    /* IMPORTANTE: REMOVIDO transition para não conflitar com o JS */
 }
 
-/* MOSTRA A PÍLULA APENAS QUANDO SCROLLED */
 .main-header.scrolled .nav-pill-bg {
     opacity: 1;
-    /* transform: scale(1); <-- REMOVIDO */
 }
 
 .nav-text {
     position: relative;
     z-index: 2;
 }
-
 
 /* --- CONTROLES --- */
 .header-controls {

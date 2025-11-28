@@ -1,14 +1,19 @@
 import React from 'react';
 import './About.css';
-import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
+// Importamos o hook do tema
+import { useTheme } from '../../context/ThemeContext';
 import {
   SiInstagram, SiGithub, SiLinkedin, SiGmail
 } from 'react-icons/si';
 
 import logoBlue from '../../assets/images/logo-blue.png';
+// IMPORTANTE: Certifique-se de que esta imagem existe
+import logoGray from '../../assets/images/logo-gray.png';
 
 const structuredStack = {
+  // ... (conteúdo do structuredStack permanece igual) ...
   pt: {
     title: "Sobre Mim",
     paragraph1: "Olá, sou o Eric. Desenvolvedor Full Stack focado em interfaces simples e eficientes.",
@@ -31,15 +36,22 @@ const structuredStack = {
 
 const About = () => {
   const { language } = useLanguage();
+  // Usamos o hook para saber qual é o tema atual
+  const { theme } = useTheme();
   const t = structuredStack[language] || structuredStack.pt;
 
+  // Lógica para escolher a logo correta
+  const logoSrc = theme === 'dark' ? logoGray : logoBlue;
+
   const socialLinks = [
+    // ... (socialLinks permanecem iguais) ...
     { name: "LinkedIn", url: "https://www.linkedin.com/in/eric-nacif-956930324/", icon: <SiLinkedin /> },
     { name: "GitHub", url: "https://github.com/ericnacif", icon: <SiGithub /> },
     { name: "Instagram", url: "https://www.instagram.com/nacif_/", icon: <SiInstagram /> },
     { name: "Email", url: "mailto:naciferic7@gmail.com", icon: <SiGmail /> }
   ];
 
+  // ... (variants permanecem iguais) ...
   const textContainerVariants = {
     visible: {
       transition: { staggerChildren: 0.04 }
@@ -58,6 +70,7 @@ const About = () => {
       transition: { duration: 0.6, ease: "easeOut", delay: 0.3 }
     }
   };
+  // ... (fim das variants) ...
 
   return (
     <section id="sobre" className="about-section">
@@ -79,11 +92,10 @@ const About = () => {
         </motion.h2>
 
         <div className="about-text-area">
-          {/* ANIMAÇÃO SUAVE DE TROCA DE TEXTO AQUI */}
           <div className="about-content-left">
             <AnimatePresence mode="wait">
               <motion.div
-                key={language} // O segredo: muda a key ao mudar a língua
+                key={language}
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -5 }}
@@ -96,8 +108,9 @@ const About = () => {
           </div>
 
           <div className="about-image-right">
+            {/* Usamos a variável logoSrc aqui */}
             <motion.img
-              src={logoBlue}
+              src={logoSrc}
               alt="Eric Nacif Logo"
               className="about-logo"
               initial="hidden"

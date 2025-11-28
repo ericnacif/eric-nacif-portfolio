@@ -4,6 +4,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    /* Usa a variável global para sincronizar com o tema */
     background-color: var(--bg-color);
     z-index: 99999;
     display: flex;
@@ -12,13 +13,10 @@
     overflow: hidden;
 }
 
-[data-theme="dark"] .preloader-overlay {
-    background-color: #050505;
-}
-
-[data-theme="light"] .preloader-overlay {
-    background-color: #ffffff;
-}
+/* REMOVIDO: Regras fixas de [data-theme] pois var(--bg-color) já cuida disso */
+/* [data-theme="dark"] .preloader-overlay { ... }
+[data-theme="light"] .preloader-overlay { ... }
+*/
 
 .preloader-content {
     display: flex;
@@ -26,7 +24,6 @@
     justify-content: center;
     width: 100%;
     height: 300px;
-    /* Aumentei a área para caber a logo maior */
     position: relative;
     overflow: visible;
 }
@@ -42,10 +39,8 @@
     gap: 4px;
 }
 
-/* LOGO MAIOR */
 .preloader-logo {
     width: 180px;
-    /* Aumentei de 130px para 180px */
     height: auto;
     object-fit: contain;
     display: block;
@@ -70,6 +65,4 @@
     .preloader-logo {
         width: 140px;
     }
-
-    /* Ajuste proporcional para mobile */
 }

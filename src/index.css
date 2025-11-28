@@ -1,5 +1,5 @@
 /* =========================================
-   1. IMPORTS (DEVEM FICAR NA PRIMEIRA LINHA)
+   1. IMPORTS
    ========================================= */
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&display=swap');
 @import url('https://fonts.cdnfonts.com/css/glacial-indifference');
@@ -19,34 +19,62 @@
    3. VARIÁVEIS GLOBAIS
    ========================================= */
 :root {
-  /* Cores */
-  --color-black: #050505;
-  --color-gray: #a6a6a6;
-  --color-white: #fff8f8;
-  --color-accent: #2952FF;
+  /* --- TEMA DARK (Padrão: Preto 100% + Cinza) --- */
 
-  /* Tema Dark (Padrão) */
-  --bg-color: var(--color-black);
-  --text-color: var(--color-white);
-  --text-secondary: var(--color-gray);
-  --accent-color: var(--color-accent);
+  /* Fundo: Preto Absoluto */
+  --bg-color: #000000;
+
+  /* Texto: Branco */
+  --text-color: #ffffff;
+
+  /* Texto Secundário: Cinza claro */
+  --text-secondary: #e0e0e0;
+
+  /* Cards: Quase preto, levemente mais claro para separar */
   --card-bg: #121212;
+
+  /* Bordas: Cinza escuro */
   --border-color: #333333;
-  --shadow-color: rgba(255, 255, 255, 0.05);
+
+  /* Sombras */
+  --shadow-color: rgba(255, 255, 255, 0.1);
+
+  /* COR DE DESTAQUE: Cinza #a6a6a6 */
+  --accent-color: #a6a6a6;
+
+  /* COR RGB (Para transparências): 166, 166, 166 */
+  --accent-rgb: 166, 166, 166;
 
   /* Tipografia */
   --font-main: 'Cocomat Pro', 'Manrope', sans-serif;
   --font-display: 'Cocomat Pro', sans-serif;
 }
 
-/* Tema Light */
+/* --- TEMA LIGHT (Fundo Claro + Azul) --- */
 [data-theme="light"] {
-  --bg-color: var(--color-white);
-  --text-color: var(--color-black);
+  /* Fundo Branco Suave */
+  --bg-color: #fff8f8;
+
+  /* Texto Preto */
+  --text-color: #050505;
+
+  /* Texto Secundário Escuro */
   --text-secondary: #555555;
+
+  /* Cards Brancos */
   --card-bg: #ffffff;
+
+  /* Bordas Claras */
   --border-color: #e0e0e0;
+
+  /* Sombras */
   --shadow-color: rgba(0, 0, 0, 0.07);
+
+  /* COR DE DESTAQUE: Azul #2952FF */
+  --accent-color: #2952FF;
+
+  /* COR RGB (Para transparências): 41, 82, 255 */
+  --accent-rgb: 41, 82, 255;
 }
 
 /* =========================================
@@ -129,6 +157,7 @@ svg {
   transition: filter 0.3s ease;
 }
 
+/* Ajuste dos ícones sociais */
 [data-theme="light"] .social-icons img {
   filter: brightness(0);
 }

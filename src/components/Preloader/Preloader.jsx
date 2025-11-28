@@ -1,17 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Preloader.css';
+
+// 1. Importando as logos
 import logoBlue from '../../assets/images/logo-blue.png';
+import logoGray from '../../assets/images/logo-gray.png';
+
+// 2. Importando o Hook de Tema
+import { useTheme } from '../../context/ThemeContext';
 
 const steps = ["Olá", "Hello", "Hola", "logo"];
 
 const Preloader = () => {
     const [index, setIndex] = useState(0);
 
+    // 3. Pegando o tema atual
+    const { theme } = useTheme();
+
+    // 4. Definindo qual logo usar
+    const logoSrc = theme === 'dark' ? logoGray : logoBlue;
+
     useEffect(() => {
         if (index === steps.length - 1) return;
 
-        // Reduzido para 500ms (Mais dinâmico, sem ser rápido demais)
         const delay = 500;
 
         const timeout = setTimeout(() => {
@@ -37,7 +48,7 @@ const Preloader = () => {
         initial: { opacity: 0, scale: 0.9 },
         animate: { opacity: 1, scale: 1.3, transition: { duration: 0.8, ease: "easeOut" } },
         exit: {
-            scale: 40, // Expansão gigante
+            scale: 40,
             opacity: 0,
             transition: { duration: 0.8, ease: "easeInOut" }
         }
@@ -55,7 +66,7 @@ const Preloader = () => {
                     {steps[index] === "logo" ? (
                         <motion.img
                             key="logo"
-                            src={logoBlue}
+                            src={logoSrc} /* <--- AQUI A MUDANÇA */
                             alt="Logo"
                             className="preloader-logo"
                             variants={logoAnimation}
@@ -69,7 +80,7 @@ const Preloader = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.25 }} // Transição um pouco mais ágil
+                            transition={{ duration: 0.25 }}
                             className="preloader-text"
                         >
                             {steps[index]}

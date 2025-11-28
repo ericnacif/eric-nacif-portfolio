@@ -6,19 +6,20 @@ import './BackToTop.css';
 const BackToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isRaised, setIsRaised] = useState(false);
-  const footerRef = useRef(null);
 
-  const toggleVisibility = () => {
-    setIsVisible(window.scrollY > 400);
-  };
-
+  // Função de scroll
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
+    // Função para mostrar/esconder
+    const toggleVisibility = () => {
+      setIsVisible(window.scrollY > 400);
+    };
+
     window.addEventListener('scroll', toggleVisibility);
-    
+
     // Observer para levantar o botão quando chegar no footer
     const observer = new IntersectionObserver(
       ([entry]) => setIsRaised(entry.isIntersecting),
@@ -29,8 +30,8 @@ const BackToTop = () => {
     if (footer) observer.observe(footer);
 
     return () => {
-        window.removeEventListener('scroll', toggleVisibility);
-        if (footer) observer.unobserve(footer);
+      window.removeEventListener('scroll', toggleVisibility);
+      if (footer) observer.unobserve(footer);
     };
   }, []);
 
