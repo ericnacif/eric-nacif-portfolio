@@ -14,6 +14,9 @@ const Header = () => {
   const [theme, setTheme] = useState('light');
   const [showLangMenu, setShowLangMenu] = useState(false);
 
+  // NOVO: Estado para guardar qual seção está visível no momento
+  const [activeSection, setActiveSection] = useState('');
+
   const { language, changeLanguage, t } = useLanguage();
   const menuRef = useRef(null);
   const menuBtnRef = useRef(null);
@@ -23,6 +26,7 @@ const Header = () => {
     return cvEn;
   };
 
+  // Efeito de Scroll (Sombra no Header)
   useEffect(() => {
     const header = document.querySelector('.main-header');
     const onScroll = () => {
@@ -35,6 +39,32 @@ const Header = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // NOVO: Lógica de Scroll Spy (Detecta seção ativa)
+  useEffect(() => {
+    const sections = document.querySelectorAll('section[id]'); // Pega todas as seções que têm ID
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.3 // Ativa quando 30% da seção estiver visível
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+    };
+  }, []);
+
+  // Theme Logic
   useEffect(() => {
     const stored = localStorage.getItem('theme');
     const initial = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -49,6 +79,7 @@ const Header = () => {
     localStorage.setItem('theme', next);
   };
 
+  // Menu Mobile Logic
   useEffect(() => {
     if (!isMenuOpen) return;
     const onKeyDown = (e) => { if (e.key === 'Escape') setIsMenuOpen(false); };
@@ -86,16 +117,34 @@ const Header = () => {
           {isMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        {/* LOGO + NOME (ATUALIZADO) */}
+        {/* LOGO + NOME */}
         <a href="#home" className="header-logo-link" onClick={closeMenu}>
           <img src={logoBlue} alt="Logo" className="header-logo-img" />
           <span className="header-logo-text">Eric Nacif</span>
         </a>
 
         <nav className="desktop-nav">
-          <a href="#projetos">{t.nav.projects}</a>
-          <a href="#sobre">{t.nav.about}</a>
-          <a href="#contato">{t.nav.contact}</a>
+          {/* Lógica condicional adicionada no className */}
+          <a
+            href="#projetos"
+            className={activeSection === 'projetos' ? 'active' : ''}
+          >
+            {t.nav.projects}
+          </a>
+
+          <a
+            href="#sobre"
+            className={activeSection === 'sobre' ? 'active' : ''}
+          >
+            {t.nav.about}
+          </a>
+
+          <a
+            href="#contato"
+            className={activeSection === 'contato' ? 'active' : ''}
+          >
+            {t.nav.contact}
+          </a>
         </nav>
 
         <div className="header-controls">
@@ -138,9 +187,31 @@ const Header = () => {
             ref={menuRef}
             initial="hidden" animate="visible" exit="exit" variants={panelVariants}
           >
-            <a href="#projetos" onClick={closeMenu}>{t.nav.projects}</a>
-            <a href="#sobre" onClick={closeMenu}>{t.nav.about}</a>
-            <a href="#contato" onClick={closeMenu}>{t.nav.contact}</a>
+            {/* Também adicionei a classe active no menu mobile */}
+            <a
+              href="#projetos"
+              onClick={closeMenu}
+              className={activeSection === 'projetos' ? 'active' : ''}
+            >
+              {t.nav.projects}
+            </a>
+
+            <a
+              href="#sobre"
+              onClick={closeMenu}
+              className={activeSection === 'sobre' ? 'active' : ''}
+            >
+              {t.nav.about}
+            </a>
+
+            <a
+              href="#contato"
+              onClick={closeMenu}
+              className={activeSection === 'contato' ? 'active' : ''}
+            >
+              {t.nav.contact}
+            </a>
+
             <div className="mobile-divider"></div>
             <div className="mobile-controls">
               <div className="mobile-lang">

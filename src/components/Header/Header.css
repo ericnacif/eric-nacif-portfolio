@@ -98,6 +98,8 @@
 }
 
 .desktop-nav a {
+    position: relative;
+    /* Necessário para o underline animado */
     text-decoration: none;
     color: var(--text-secondary);
     font-size: 15px;
@@ -110,6 +112,28 @@
 .desktop-nav a:hover {
     color: var(--accent-color);
 }
+
+/* NOVO: ESTILO PARA LINK ATIVO (Scroll Spy) */
+.desktop-nav a.active {
+    color: var(--accent-color);
+    /* Fica Azul */
+}
+
+/* NOVO: Linha/Ponto embaixo do link ativo */
+.desktop-nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    /* Bolinha */
+    /* Se preferir linha, use: width: 100%; height: 2px; border-radius: 2px; */
+}
+
 
 /* --- CONTROLES (Direita) --- */
 .header-controls {
@@ -246,6 +270,14 @@
     font-size: 18px;
     text-align: center;
     padding: 12px;
+    /* Transição para o active */
+    transition: color 0.3s ease;
+}
+
+/* NOVO: Link ativo no mobile */
+.mobile-menu-floating a.active {
+    color: var(--accent-color);
+    font-weight: 700;
 }
 
 .mobile-divider {
