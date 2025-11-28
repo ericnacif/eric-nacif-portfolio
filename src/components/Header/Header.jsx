@@ -19,7 +19,7 @@ const Header = () => {
   const menuRef = useRef(null);
   const menuBtnRef = useRef(null);
 
-  // DEFINIÇÃO DOS ITENS DO MENU (Nova Ordem: Sobre -> Projetos -> Contato)
+  // Nav Items
   const navItems = [
     { id: 'sobre', label: t.nav?.about || "Sobre" },
     { id: 'projetos', label: t.nav?.projects || "Projetos" },
@@ -43,21 +43,18 @@ const Header = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // --- SCROLL SPY (Detector de Seção) ---
+  // Scroll Spy
   useEffect(() => {
-    // Observa sections E o footer
     const sections = document.querySelectorAll('section[id], footer#contato');
-
     const observerOptions = {
       root: null,
-      rootMargin: '-30% 0px -40% 0px', // Ajuste para trocar o foco mais no meio da tela
+      rootMargin: '-30% 0px -40% 0px',
       threshold: 0
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // Se for Hero, remove a pílula ou marca hero
           if (entry.target.id === 'hero') setActiveSection('hero');
           else setActiveSection(entry.target.id);
         }
@@ -100,11 +97,17 @@ const Header = () => {
 
   const closeMenu = () => setIsMenuOpen(false);
 
-  // Variants para o menu mobile
   const panelVariants = {
     hidden: { opacity: 0, y: -12, scale: 0.98 },
     visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 260, damping: 24 } },
     exit: { opacity: 0, y: -12, scale: 0.98, transition: { duration: 0.15 } },
+  };
+
+  // Variantes para a animação do texto
+  const textVariants = {
+    hidden: { opacity: 0, y: 5 },
+    visible: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -5 }
   };
 
   return (
@@ -120,13 +123,12 @@ const Header = () => {
           {isMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        {/* LOGO */}
         <a href="#hero" className="header-logo-link" onClick={() => { setActiveSection('hero'); closeMenu(); }}>
           <img src={logoBlue} alt="Logo" className="header-logo-img" />
           <span className="header-logo-text">Eric Nacif</span>
         </a>
 
-        {/* --- DESKTOP NAV (COM ANIMAÇÃO DE PÍLULA) --- */}
+        {/* DESKTOP NAV */}
         <nav className="desktop-nav">
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
@@ -144,7 +146,21 @@ const Header = () => {
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
-                <span className="nav-text">{item.label}</span>
+
+                {/* AQUI ESTÁ A ANIMAÇÃO DO TEXTO */}
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={language} // Troca a chave quando muda a língua
+                    className="nav-text"
+                    variants={textVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    transition={{ duration: 0.2 }}
+                  >
+                    {item.label}
+                  </motion.span>
+                </AnimatePresence>
               </a>
             )
           })}
@@ -153,7 +169,20 @@ const Header = () => {
         <div className="header-controls">
           <div className="lang-switcher" onMouseEnter={() => setShowLangMenu(true)} onMouseLeave={() => setShowLangMenu(false)}>
             <button className="lang-btn">
-              <FaGlobe /> <span className="current-lang">{language.toUpperCase()}</span>
+              {/* Animação também no texto do seletor de língua */}
+              <FaGlobe />
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={language}
+                  className="current-lang"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {language.toUpperCase()}
+                </motion.span>
+              </AnimatePresence>
             </button>
             <AnimatePresence>
               {showLangMenu && (
@@ -176,7 +205,18 @@ const Header = () => {
           </button>
 
           <a href={getCvLink()} download className="cv-button" title={t.cvBtn}>
-            <span className="cv-text">{t.cvBtn}</span>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={language}
+                className="cv-text"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {t.cvBtn}
+              </motion.span>
+            </AnimatePresence>
             <FaDownload className="cv-icon" />
           </a>
         </div>
@@ -190,7 +230,6 @@ const Header = () => {
             ref={menuRef}
             initial="hidden" animate="visible" exit="exit" variants={panelVariants}
           >
-            {/* MAP DO MOBILE COM A MESMA ORDEM */}
             {navItems.map((item) => (
               <a
                 key={item.id}
@@ -198,7 +237,18 @@ const Header = () => {
                 onClick={closeMenu}
                 className={activeSection === item.id ? 'active' : ''}
               >
-                {item.label}
+                {/* Animação também no menu mobile */}
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={language}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {item.label}
+                  </motion.span>
+                </AnimatePresence>
               </a>
             ))}
 
@@ -210,7 +260,12 @@ const Header = () => {
                 <button onClick={() => changeLanguage('es')} className={language === 'es' ? 'active' : ''}>ES</button>
               </div>
               <a href={getCvLink()} download className="mobile-cv-btn">
-                {t.cvBtn} <FaDownload />
+                <AnimatePresence mode="wait">
+                  <motion.span key={language} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                    {t.cvBtn}
+                  </motion.span>
+                </AnimatePresence>
+                <FaDownload />
               </a>
             </div>
           </motion.nav>

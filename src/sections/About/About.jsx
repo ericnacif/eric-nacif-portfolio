@@ -1,6 +1,6 @@
 import React from 'react';
 import './About.css';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence
 import { useLanguage } from '../../context/LanguageContext';
 import {
   SiInstagram, SiGithub, SiLinkedin, SiGmail
@@ -65,7 +65,7 @@ const About = () => {
 
         <motion.h2
           className="section-title"
-          key={language} /* <--- CORREÇÃO AQUI: Força a recriação ao mudar o idioma */
+          key={language}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.8 }}
@@ -79,9 +79,20 @@ const About = () => {
         </motion.h2>
 
         <div className="about-text-area">
+          {/* ANIMAÇÃO SUAVE DE TROCA DE TEXTO AQUI */}
           <div className="about-content-left">
-            <p className="intro-text">{t.paragraph1}</p>
-            <p className="detail-text">{t.paragraph2}</p>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={language} // O segredo: muda a key ao mudar a língua
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -5 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                <p className="intro-text">{t.paragraph1}</p>
+                <p className="detail-text">{t.paragraph2}</p>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
           <div className="about-image-right">
@@ -98,7 +109,19 @@ const About = () => {
         </div>
 
         <div className="about-footer">
-          <span className="cta-text">{t.cta}</span>
+          <AnimatePresence mode="wait">
+            <motion.span
+              className="cta-text"
+              key={language}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {t.cta}
+            </motion.span>
+          </AnimatePresence>
+
           <div className="social-icons-row">
             {socialLinks.map((link, i) => (
               <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label={link.name}>
