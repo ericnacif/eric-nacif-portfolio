@@ -135,7 +135,6 @@
     content: '';
     position: absolute;
     bottom: 0;
-    /* Ajuste a posição conforme gosto */
     width: 6px;
     height: 6px;
     background-color: var(--accent-color);
@@ -163,14 +162,15 @@
 
     /* POR PADRÃO: Escondida (transparente) no topo */
     opacity: 0;
-    transform: scale(0.8);
-    transition: all 0.4s ease;
+    /* transform: scale(0.8);  <-- REMOVIDO */
+
+    /* IMPORTANTE: REMOVIDO transition para não conflitar com o JS */
 }
 
 /* MOSTRA A PÍLULA APENAS QUANDO SCROLLED */
 .main-header.scrolled .nav-pill-bg {
     opacity: 1;
-    transform: scale(1);
+    /* transform: scale(1); <-- REMOVIDO */
 }
 
 .nav-text {

@@ -19,7 +19,6 @@ const Header = () => {
   const menuRef = useRef(null);
   const menuBtnRef = useRef(null);
 
-  // Nav Items
   const navItems = [
     { id: 'sobre', label: t.nav?.about || "Sobre" },
     { id: 'projetos', label: t.nav?.projects || "Projetos" },
@@ -43,7 +42,6 @@ const Header = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Scroll Spy
   useEffect(() => {
     const sections = document.querySelectorAll('section[id], footer#contato');
     const observerOptions = {
@@ -103,7 +101,6 @@ const Header = () => {
     exit: { opacity: 0, y: -12, scale: 0.98, transition: { duration: 0.15 } },
   };
 
-  // Variantes para a animação do texto
   const textVariants = {
     hidden: { opacity: 0, y: 5 },
     visible: { opacity: 1, y: 0 },
@@ -128,7 +125,6 @@ const Header = () => {
           <span className="header-logo-text">Eric Nacif</span>
         </a>
 
-        {/* DESKTOP NAV */}
         <nav className="desktop-nav">
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
@@ -143,14 +139,20 @@ const Header = () => {
                   <motion.div
                     className="nav-pill-bg"
                     layoutId="navPill"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    /* ALTERADO PARA MOVIMENTO FLUIDO */
+                    /* stiffness 300 = rápido e responsivo */
+                    /* damping 30 = para suavemente sem tremer */
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 30
+                    }}
                   />
                 )}
 
-                {/* AQUI ESTÁ A ANIMAÇÃO DO TEXTO */}
                 <AnimatePresence mode="wait">
                   <motion.span
-                    key={language} // Troca a chave quando muda a língua
+                    key={language}
                     className="nav-text"
                     variants={textVariants}
                     initial="hidden"
@@ -169,7 +171,6 @@ const Header = () => {
         <div className="header-controls">
           <div className="lang-switcher" onMouseEnter={() => setShowLangMenu(true)} onMouseLeave={() => setShowLangMenu(false)}>
             <button className="lang-btn">
-              {/* Animação também no texto do seletor de língua */}
               <FaGlobe />
               <AnimatePresence mode="wait">
                 <motion.span
@@ -237,7 +238,6 @@ const Header = () => {
                 onClick={closeMenu}
                 className={activeSection === item.id ? 'active' : ''}
               >
-                {/* Animação também no menu mobile */}
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={language}
