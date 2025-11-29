@@ -54,6 +54,9 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  
+  // Alteração: Estado para detectar se é mobile
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const { language, changeLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
@@ -74,28 +77,36 @@ const Header = () => {
     return cvEn;
   };
 
-  // --- NOVA FUNÇÃO DE SCROLL SUAVE ---
+  // Alteração: Monitorar redimensionamento da tela para atualizar isMobile
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // --- FUNÇÃO DE SCROLL SUAVE ---
   const handleScrollTo = (e, id) => {
-    e.preventDefault(); // Impede o pulo seco padrão
+    e.preventDefault(); 
 
     let targetId = id;
-    if (id === 'home') targetId = 'hero'; // Ajuste caso use 'home'
+    if (id === 'home') targetId = 'hero'; 
 
     const element = document.getElementById(targetId);
 
     if (element) {
-      // Calcula a posição descontando a altura do header (aprox 80px)
       const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: "smooth" // Aqui acontece a mágica
+        behavior: "smooth"
       });
 
       setActiveSection(targetId);
-      setIsMenuOpen(false); // Fecha o menu mobile se estiver aberto
+      setIsMenuOpen(false); 
     }
   };
 
@@ -175,7 +186,6 @@ const Header = () => {
           {isMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        {/* Logo também usa o scroll suave para voltar ao topo */}
         <a
           href="#hero"
           className="header-logo-link"
@@ -193,7 +203,7 @@ const Header = () => {
                 key={item.id}
                 href={`#${item.id}`}
                 className={`nav-item ${isActive ? 'active' : ''}`}
-                onClick={(e) => handleScrollTo(e, item.id)} /* <--- AQUI */
+                onClick={(e) => handleScrollTo(e, item.id)}
               >
                 {isActive && (
                   <motion.div
@@ -258,9 +268,12 @@ const Header = () => {
             </AnimatePresence>
           </div>
 
-          <button className="theme-toggle" onClick={toggleTheme} aria-label="Alterar Tema">
-            {theme === 'dark' ? <FaMoon /> : <FaSun />}
-          </button>
+          {/* Alteração: Renderiza o botão SOMENTE se não for mobile */}
+          {!isMobile && (
+            <button className="theme-toggle" onClick={toggleTheme} aria-label="Alterar Tema">
+              {theme === 'dark' ? <FaMoon /> : <FaSun />}
+            </button>
+          )}
 
           <a href={getCvLink()} download className="cv-button" title={t.cvBtn}>
             <AnimatePresence mode="wait">
@@ -292,7 +305,7 @@ const Header = () => {
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                onClick={(e) => handleScrollTo(e, item.id)} /* <--- AQUI NO MOBILE TAMBÉM */
+                onClick={(e) => handleScrollTo(e, item.id)}
                 className={activeSection === item.id ? 'active' : ''}
               >
                 <AnimatePresence mode="wait">

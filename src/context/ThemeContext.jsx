@@ -7,23 +7,19 @@ import logoGray from '../assets/images/logo-gray.png';
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('dark');
+  // Alteração: Inicia sempre como 'light' fixo, ignorando preferências salvas
+  const [theme, setTheme] = useState('light');
 
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme) {
-      setTheme(storedTheme);
-    } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setTheme(prefersDark ? 'dark' : 'light');
-    }
-  }, []);
+  // Removi o useEffect que carregava o tema do localStorage ou sistema.
+  // Isso garante que sempre inicie 'light'.
 
   // Efeito para aplicar classe no HTML e trocar o FAVICON
   useEffect(() => {
     // 1. Atualiza atributo do HTML
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+    
+    // Opcional: Salvar no localStorage foi removido/comentado pois sempre queremos reiniciar em light
+    // localStorage.setItem('theme', theme); 
 
     // 2. Troca o Favicon Dinamicamente
     const favicon = document.querySelector("link[rel*='icon']");
