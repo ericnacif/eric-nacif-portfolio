@@ -13,7 +13,6 @@ import WhatsAppButton from './components/WhatsAppButton/WhatsAppButton';
 import BackToTop from './components/BackToTop';
 import NotFound from './pages/NotFound/NotFound';
 
-// 1. IMPORTAR AQUI
 import GoogleAnalyticsTracker from './components/GoogleAnalyticsTracker';
 
 // Lazy Loading
