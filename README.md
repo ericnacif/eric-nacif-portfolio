@@ -93,6 +93,4 @@ LinkedIn: linkedin.com/in/eric-nacif-956930324
 E-mail: naciferic7@gmail.com
 
 GitHub: @ericnacif
-
-<p align="center"> Desenvolvido com 💙 e muito café por Eric Nacif. </p>
 ```
