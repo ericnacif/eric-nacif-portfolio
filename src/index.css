@@ -20,60 +20,27 @@
    ========================================= */
 :root {
   /* --- TEMA DARK (Padrão: Preto 100% + Cinza) --- */
-
-  /* Fundo: Preto Absoluto */
   --bg-color: #000000;
-
-  /* Texto: Branco */
   --text-color: #ffffff;
-
-  /* Texto Secundário: Cinza claro */
   --text-secondary: #e0e0e0;
-
-  /* Cards: Quase preto, levemente mais claro para separar */
   --card-bg: #121212;
-
-  /* Bordas: Cinza escuro */
   --border-color: #333333;
-
-  /* Sombras */
   --shadow-color: rgba(255, 255, 255, 0.1);
-
-  /* COR DE DESTAQUE: Cinza #a6a6a6 */
   --accent-color: #a6a6a6;
-
-  /* COR RGB (Para transparências): 166, 166, 166 */
   --accent-rgb: 166, 166, 166;
-
-  /* Tipografia */
   --font-main: 'Cocomat Pro', 'Manrope', sans-serif;
   --font-display: 'Cocomat Pro', sans-serif;
 }
 
 /* --- TEMA LIGHT (Fundo Claro + Azul) --- */
 [data-theme="light"] {
-  /* Fundo Branco Suave */
   --bg-color: #fff8f8;
-
-  /* Texto Preto */
   --text-color: #050505;
-
-  /* Texto Secundário Escuro */
   --text-secondary: #555555;
-
-  /* Cards Brancos */
   --card-bg: #ffffff;
-
-  /* Bordas Claras */
   --border-color: #e0e0e0;
-
-  /* Sombras */
   --shadow-color: rgba(0, 0, 0, 0.07);
-
-  /* COR DE DESTAQUE: Azul #2952FF */
   --accent-color: #2952FF;
-
-  /* COR RGB (Para transparências): 41, 82, 255 */
   --accent-rgb: 41, 82, 255;
 }
 
@@ -100,12 +67,7 @@ body {
   overflow-x: hidden;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: 700;
   color: inherit;
@@ -135,8 +97,7 @@ h6 {
   border-radius: 2px;
 }
 
-img,
-svg {
+img, svg {
   display: block;
   max-width: 100%;
 }
@@ -157,7 +118,6 @@ svg {
   transition: filter 0.3s ease;
 }
 
-/* Ajuste dos ícones sociais */
 [data-theme="light"] .social-icons img {
   filter: brightness(0);
 }
@@ -171,4 +131,14 @@ body:not([data-theme="light"]) .social-icons img {
   .container {
     padding: 72px 20px;
   }
+}
+
+/* =========================================
+   5. UTILS / FLOATERS Z-INDEX
+   ========================================= */
+/* Garante que botões flutuantes fiquem acima de tudo (incluindo o footer e a linha) */
+.back-to-top,
+div[class*="WhatsApp"],
+div[class*="BackToTop"] {
+  z-index: 9999 !important;
 }

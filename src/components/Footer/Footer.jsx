@@ -2,15 +2,21 @@ import React, { useState, useEffect } from 'react';
 import './Footer.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
-import { SiFigma, SiLinkedin, SiInstagram, SiGithub } from 'react-icons/si';
-import { FiLoader, FiCheck } from 'react-icons/fi'; // Ícones para o botão
+import { useTheme } from '../../context/ThemeContext';
+import { SiLinkedin, SiInstagram, SiGithub } from 'react-icons/si';
+import { FiLoader, FiCheck, FiMapPin } from 'react-icons/fi';
+
+import logoBlue from '../../assets/images/logo-blue.png';
+import logoGray from '../../assets/images/logo-gray.png';
 
 const Footer = () => {
   const { language } = useLanguage();
-  const [status, setStatus] = useState("idle"); // idle, sending, success, error
+  const { theme } = useTheme();
+  const [status, setStatus] = useState("idle");
   const [greetingKey, setGreetingKey] = useState("morning");
 
-  // Detecta o horário para a Saudação Inteligente
+  const logoSrc = theme === 'dark' ? logoGray : logoBlue;
+
   useEffect(() => {
     const hour = new Date().getHours();
     if (hour >= 5 && hour < 12) setGreetingKey("morning");
@@ -27,8 +33,10 @@ const Footer = () => {
       },
       subtitle: "Deixe sua mensagem abaixo e entrarei em contato.",
       labels: { name: "Seu Nome", email: "Seu E-mail", message: "Sua Mensagem" },
-      button: { default: "Enviar Mensagem", sending: "", success: "Enviado!" }, // Texto vazio no sending pois usa ícone
-      error: "Erro ao enviar. Tente novamente."
+      button: { default: "Enviar Mensagem", sending: "", success: "Enviado!" },
+      error: "Erro ao enviar. Tente novamente.",
+      location: "Brasil 🇧🇷",
+      copyright: "Todos os direitos reservados."
     },
     en: {
       greetings: {
@@ -39,7 +47,9 @@ const Footer = () => {
       subtitle: "Leave your message below and I'll get in touch.",
       labels: { name: "Your Name", email: "Your Email", message: "Your Message" },
       button: { default: "Send Message", sending: "", success: "Sent!" },
-      error: "Error sending. Please try again."
+      error: "Error sending. Please try again.",
+      location: "Brazil 🇧🇷",
+      copyright: "All rights reserved."
     },
     es: {
       greetings: {
@@ -50,23 +60,24 @@ const Footer = () => {
       subtitle: "Deja tu mensaje abajo y me pondré en contacto.",
       labels: { name: "Tu Nombre", email: "Tu Correo", message: "Tu Mensaje" },
       button: { default: "Enviar Mensaje", sending: "", success: "¡Enviado!" },
-      error: "Error al enviar. Inténtalo de nuevo."
+      error: "Error al enviar. Inténtalo de nuevo.",
+      location: "Brasil 🇧🇷",
+      copyright: "Todos los derechos reservados."
     }
   };
 
   const t = content[language] || content.pt;
 
+  // Removido o ícone de e-mail conforme solicitado
   const socialLinks = [
     { href: "https://www.linkedin.com/in/eric-nacif-956930324/", icon: <SiLinkedin />, alt: "LinkedIn" },
     { href: "https://github.com/ericnacif", icon: <SiGithub />, alt: "GitHub" },
     { href: "https://www.instagram.com/nacif_/", icon: <SiInstagram />, alt: "Instagram" },
-    { href: "https://www.figma.com/@nacif_eric", icon: <SiFigma />, alt: "Figma" },
   ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("sending");
-
     const form = e.target;
     const data = new FormData(form);
 
@@ -80,7 +91,6 @@ const Footer = () => {
       if (response.ok) {
         setStatus("success");
         form.reset();
-        // Volta para o estado inicial após 3 segundos
         setTimeout(() => setStatus("idle"), 3000);
       } else {
         setStatus("error");
@@ -94,14 +104,16 @@ const Footer = () => {
 
   return (
     <footer id="contato" className="main-footer">
-      <div className="container">
+      <div className="container footer-container">
+        
+        {/* --- SESSÃO DO FORMULÁRIO (CTA) --- */}
         <motion.div
+          className="footer-cta-section"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          {/* SAUDAÇÃO INTELIGENTE ANIMADA */}
           <AnimatePresence mode="wait">
             <motion.h2
               className="section-title greeting-title"
@@ -119,14 +131,11 @@ const Footer = () => {
 
           <form className="contact-form minimal-form" onSubmit={handleSubmit}>
             <div className="form-row">
-              {/* INPUT UNDERLINE NAME */}
               <div className="input-group-minimal">
                 <input type="text" name="name" id="name" required disabled={status === "sending" || status === "success"} placeholder=" " />
                 <label htmlFor="name">{t.labels.name}</label>
                 <span className="underline-bar"></span>
               </div>
-
-              {/* INPUT UNDERLINE EMAIL */}
               <div className="input-group-minimal">
                 <input type="email" name="email" id="email" required disabled={status === "sending" || status === "success"} placeholder=" " />
                 <label htmlFor="email">{t.labels.email}</label>
@@ -134,57 +143,37 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* TEXTAREA UNDERLINE */}
             <div className="input-group-minimal full-width">
               <textarea name="message" id="message" rows="1" required disabled={status === "sending" || status === "success"} placeholder=" "></textarea>
               <label htmlFor="message">{t.labels.message}</label>
               <span className="underline-bar"></span>
             </div>
 
-            {/* BOTÃO METAMORFOSE */}
             <div className="button-wrapper">
               <motion.button
                 type="submit"
                 className={`morph-btn ${status}`}
                 disabled={status === "sending" || status === "success"}
-                layout // Importante para animar a mudança de largura/forma
+                layout
                 transition={{ duration: 0.4, type: "spring", stiffness: 100 }}
               >
                 <AnimatePresence mode="wait">
                   {status === "idle" && (
-                    <motion.span
-                      key="text"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    >
+                    <motion.span key="text" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                       {t.button.default}
                     </motion.span>
                   )}
-
                   {status === "sending" && (
-                    <motion.div
-                      key="loader"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      exit={{ scale: 0 }}
-                    >
+                    <motion.div key="loader" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}>
                       <FiLoader className="spinner-icon" />
                     </motion.div>
                   )}
-
                   {status === "success" && (
-                    <motion.div
-                      key="success"
-                      className="success-content"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                    >
+                    <motion.div key="success" className="success-content" initial={{ scale: 0 }} animate={{ scale: 1 }}>
                       <FiCheck size={24} />
                       <span>{t.button.success}</span>
                     </motion.div>
                   )}
-
                   {status === "error" && (
                     <motion.span key="error">{t.error}</motion.span>
                   )}
@@ -192,26 +181,42 @@ const Footer = () => {
               </motion.button>
             </div>
           </form>
-
-          <div className="footer-socials">
-            {socialLinks.map((link, index) => (
-              <a
-                key={index}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-social-link"
-                aria-label={link.alt}
-              >
-                {link.icon}
-              </a>
-            ))}
-          </div>
-
-          <div className="footer-copy">
-            <p>© {new Date().getFullYear()} Eric Nacif. {language === 'pt' ? 'Todos os direitos reservados.' : 'All rights reserved.'}</p>
-          </div>
         </motion.div>
+
+        {/* --- DIVISOR --- */}
+        <div className="footer-divider"></div>
+
+        {/* --- SESSÃO INFERIOR (Sem Links de Navegação) --- */}
+        <div className="footer-bottom">
+            <div className="footer-brand">
+                <img src={logoSrc} alt="Logo" className="footer-logo" />
+                <p className="footer-location">
+                    <FiMapPin style={{ marginRight: '6px' }} /> 
+                    {t.location}
+                </p>
+            </div>
+
+            <div className="footer-socials-bottom">
+                {socialLinks.map((link, index) => (
+                <a
+                    key={index}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-social-link"
+                    aria-label={link.alt}
+                >
+                    {link.icon}
+                </a>
+                ))}
+            </div>
+        </div>
+
+        {/* --- COPYRIGHT (Colado no fim) --- */}
+        <div className="footer-copyright">
+          <p>© {new Date().getFullYear()} Eric Nacif. {t.copyright}</p>
+        </div>
+
       </div>
     </footer>
   );
