@@ -1,20 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import './Hero.css';
 import { useLanguage } from '../../context/LanguageContext';
-// REMOVIDO: import NoiseOverlay from '../../components/NoiseOverlay/NoiseOverlay';
-
-const HERO_ENTRY_DELAY_SECONDS = 3.0;
 
 const Hero = () => {
   const { language } = useLanguage();
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    if (!isMounted) {
-      setIsMounted(true);
-    }
-  }, [isMounted]);
 
   const texts = {
     pt: "desenvolvedor full stack",
@@ -31,14 +21,17 @@ const Hero = () => {
     if (secondSpace !== -1) breakIndex = secondSpace;
   }
 
-  const currentDelay = isMounted ? 0 : HERO_ENTRY_DELAY_SECONDS;
-
+  // Otimização: Delay reduzido para 0.5s após o Preloader para melhorar a sensação de velocidade
+  // (Antes era 3.0s fixo, o que é muito lento para SEO/LCP)
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: (i = 1) => ({
+    visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.04, delayChildren: currentDelay },
-    }),
+      transition: { 
+        staggerChildren: 0.04, 
+        delayChildren: 0.2 // Reduzido para aparecer mais rápido
+      },
+    },
   };
 
   const letterVariants = {
@@ -55,8 +48,7 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="hero-section">
-      {/* REMOVIDO: <NoiseOverlay /> */}
+    <section id="home" className="hero-section" style={{ minHeight: '100vh' }}>
       <div className="container hero-container">
 
         <motion.h1
@@ -66,6 +58,8 @@ const Hero = () => {
           animate="visible"
           key={language}
           aria-label={text}
+          // will-change ajuda o navegador a preparar a GPU para a animação
+          style={{ willChange: 'opacity, transform' }} 
         >
           {letters.map((letter, index) => (
             <React.Fragment key={index}>

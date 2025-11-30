@@ -15,4 +15,27 @@ export default defineConfig({
       exportAsDefault: true,
     }),
   ],
+  build: {
+    // Reduz o tamanho final removendo espaços e comentários
+    minify: 'terser',
+    rollupOptions: {
+      output: {
+        // Code Splitting: Divide bibliotecas pesadas em arquivos separados
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            // React Core fica num arquivo separado (cacheável)
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
+              return 'react-vendor';
+            }
+            // Framer Motion é pesado, separamos para não travar o carregamento inicial
+            if (id.includes('framer-motion')) {
+              return 'framer-motion';
+            }
+            // Outras libs
+            return 'vendor';
+          }
+        },
+      },
+    },
+  },
 });
