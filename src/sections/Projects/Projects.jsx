@@ -83,6 +83,24 @@ const Projects = () => {
     }, 2000);
   };
 
+  // --- VARIANTES PARA EFEITO CASCATA DO TÍTULO (CORRIGIDO) ---
+  const textContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+        opacity: 1,
+        transition: { staggerChildren: 0.04 }
+    },
+    exit: { 
+        opacity: 0, 
+        transition: { duration: 0.2 } // Sai rápido para não sobrepor
+    }
+  };
+
+  const letterVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -114,17 +132,23 @@ const Projects = () => {
         </div>
 
         <div className="container relative-z">
+          
+          {/* TÍTULO COM EFEITO CASCATA (CORRIGIDO COM MODE WAIT) */}
           <AnimatePresence mode="wait">
             <motion.h2
-              className="section-title white-title"
-              key={language}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.5 }}
+                className="section-title white-title"
+                key={language}
+                variants={textContainerVariants}
+                initial="hidden"
+                whileInView="visible"
+                exit="exit"
+                viewport={{ once: true, amount: 0.5 }}
             >
-              {sectionTitle[language] || sectionTitle.pt}
+                {Array.from(sectionTitle[language] || sectionTitle.pt).map((char, index) => (
+                    <motion.span key={index} variants={letterVariants} style={{ display: 'inline-block' }}>
+                        {char === ' ' ? '\u00A0' : char}
+                    </motion.span>
+                ))}
             </motion.h2>
           </AnimatePresence>
 

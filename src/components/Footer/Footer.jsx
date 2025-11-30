@@ -13,12 +13,10 @@ const Footer = () => {
   const { language } = useLanguage();
   const { theme } = useTheme();
   
-  // Estados do Formulário Controlado
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   
-  // Estados de UI
   const [status, setStatus] = useState("idle");
   const [greetingKey, setGreetingKey] = useState("morning");
   const [suggestions, setSuggestions] = useState([]);
@@ -27,7 +25,6 @@ const Footer = () => {
   const logoSrc = theme === 'dark' ? logoGray : logoBlue;
   const suggestionsRef = useRef(null);
 
-  // Lista de domínios comuns
   const commonDomains = ["gmail.com", "outlook.com", "hotmail.com", "icloud.com", "yahoo.com"];
 
   useEffect(() => {
@@ -46,11 +43,10 @@ const Footer = () => {
       },
       subtitle: "Deixe sua mensagem abaixo e entrarei em contato.",
       labels: { name: "Seu Nome", email: "Seu E-mail", message: "Sua Mensagem" },
-      // Mensagem padrão inicial
       defaultMessage: "Olá Eric! Vi seu portfólio e gostaria de conversar sobre um projeto...",
       button: { default: "Enviar Mensagem", sending: "", success: "Enviado!" },
       error: "Erro ao enviar. Tente novamente.",
-      location: "Brasil",
+      location: "Brasil 🇧🇷",
       copyright: "Todos os direitos reservados."
     },
     en: {
@@ -64,7 +60,7 @@ const Footer = () => {
       defaultMessage: "Hi Eric! I saw your portfolio and would like to talk about a project...",
       button: { default: "Send Message", sending: "", success: "Sent!" },
       error: "Error sending. Please try again.",
-      location: "Brazil",
+      location: "Brazil 🇧🇷",
       copyright: "All rights reserved."
     },
     es: {
@@ -78,16 +74,14 @@ const Footer = () => {
       defaultMessage: "¡Hola Eric! Vi tu portafolio y me gustaría hablar sobre un proyecto...",
       button: { default: "Enviar Mensaje", sending: "", success: "¡Enviado!" },
       error: "Error al enviar. Inténtalo de nuevo.",
-      location: "Brasil",
+      location: "Brasil 🇧🇷",
       copyright: "Todos los derechos reservados."
     }
   };
 
   const t = content[language] || content.pt;
 
-  // Atualiza a mensagem padrão quando troca o idioma (se o usuário ainda não digitou nada diferente)
   useEffect(() => {
-    // Verifica se a mensagem atual é vazia ou igual a uma mensagem padrão de outro idioma
     const currentIsDefault = Object.values(content).some(c => c.defaultMessage === message) || message === "";
     if (currentIsDefault) {
       setMessage(t.defaultMessage);
@@ -100,17 +94,14 @@ const Footer = () => {
     { href: "https://www.instagram.com/nacif_/", icon: <SiInstagram />, alt: "Instagram" },
   ];
 
-  // --- LÓGICA DE AUTOCOMPLETE DE E-MAIL ---
   const handleEmailChange = (e) => {
     const val = e.target.value;
     setEmail(val);
 
     if (val.includes('@')) {
       const [user, domainPart] = val.split('@');
-      // Filtra domínios que combinam com o que foi digitado após o @
       const filtered = commonDomains.filter(d => d.startsWith(domainPart));
       
-      // Só mostra se houver sugestões e se o domínio ainda não estiver completo
       if (filtered.length > 0 && !commonDomains.includes(domainPart)) {
         setSuggestions(filtered);
         setShowSuggestions(true);
@@ -128,7 +119,6 @@ const Footer = () => {
     setShowSuggestions(false);
   };
 
-  // Fecha sugestões ao clicar fora
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (suggestionsRef.current && !suggestionsRef.current.contains(event.target)) {
@@ -144,7 +134,6 @@ const Footer = () => {
     e.preventDefault();
     setStatus("sending");
     
-    // Cria FormData manualmente para garantir que os estados controlados sejam enviados
     const data = new FormData();
     data.append("name", name);
     data.append("email", email);
@@ -159,7 +148,6 @@ const Footer = () => {
 
       if (response.ok) {
         setStatus("success");
-        // Limpa campos, mas mantendo a mensagem padrão após o reset
         setName("");
         setEmail("");
         setMessage(t.defaultMessage); 
@@ -174,11 +162,28 @@ const Footer = () => {
     }
   };
 
+  // --- ALTERAÇÃO AQUI: Aumentei a velocidade do stagger ---
+  const textContainerVariants = {
+    visible: { 
+        transition: { staggerChildren: 0.015 } // Antes era 0.04 (agora é muito mais rápido)
+    }
+  };
+  
+  const letterVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0 }
+  };
+
+  const fadeVariants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 }
+  };
+
   return (
     <footer id="contato" className="main-footer">
       <div className="container footer-container">
         
-        {/* --- SESSÃO DO FORMULÁRIO (CTA) --- */}
         <motion.div
           className="footer-cta-section"
           initial={{ opacity: 0, y: 30 }}
@@ -186,20 +191,35 @@ const Footer = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <AnimatePresence mode="wait">
-            <motion.h2
-              className="section-title greeting-title"
-              key={language + greetingKey}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.5 }}
-            >
-              {t.greetings[greetingKey]}
-            </motion.h2>
-          </AnimatePresence>
+          {/* Saudação com efeito cascata RÁPIDO */}
+          <motion.h2
+            className="section-title greeting-title"
+            key={language + greetingKey}
+            variants={textContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {Array.from(t.greetings[greetingKey]).map((char, index) => (
+                <motion.span key={index} variants={letterVariants} style={{ display: 'inline-block' }}>
+                    {char === ' ' ? '\u00A0' : char}
+                </motion.span>
+            ))}
+          </motion.h2>
 
-          <p className="footer-subtitle">{t.subtitle}</p>
+          <AnimatePresence mode="wait">
+            <motion.p 
+                key={language}
+                className="footer-subtitle"
+                variants={fadeVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.2 }}
+            >
+                {t.subtitle}
+            </motion.p>
+          </AnimatePresence>
 
           <form className="contact-form minimal-form" onSubmit={handleSubmit}>
             <div className="form-row">
@@ -214,11 +234,22 @@ const Footer = () => {
                   disabled={status === "sending" || status === "success"} 
                   placeholder=" " 
                 />
-                <label htmlFor="name">{t.labels.name}</label>
+                
+                <AnimatePresence mode="wait">
+                    <motion.label 
+                        htmlFor="name"
+                        key={language}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        {t.labels.name}
+                    </motion.label>
+                </AnimatePresence>
                 <span className="underline-bar"></span>
               </div>
 
-              {/* Input de Email com Autocomplete */}
               <div className="input-group-minimal" ref={suggestionsRef}>
                 <input 
                   type="email" 
@@ -229,12 +260,23 @@ const Footer = () => {
                   required 
                   disabled={status === "sending" || status === "success"} 
                   placeholder=" " 
-                  autoComplete="off" // Desativa autocomplete do navegador para usar o nosso
+                  autoComplete="off"
                 />
-                <label htmlFor="email">{t.labels.email}</label>
+                
+                <AnimatePresence mode="wait">
+                    <motion.label 
+                        htmlFor="email"
+                        key={language}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        {t.labels.email}
+                    </motion.label>
+                </AnimatePresence>
                 <span className="underline-bar"></span>
                 
-                {/* Dropdown de Sugestões */}
                 <AnimatePresence>
                   {showSuggestions && (
                     <motion.ul 
@@ -256,17 +298,36 @@ const Footer = () => {
             </div>
 
             <div className="input-group-minimal full-width">
-              <textarea 
-                name="message" 
-                id="message" 
-                rows="1" 
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                required 
-                disabled={status === "sending" || status === "success"} 
-                placeholder=" "
-              ></textarea>
-              <label htmlFor="message">{t.labels.message}</label>
+              <AnimatePresence mode="wait">
+                <motion.textarea 
+                    key={language} 
+                    name="message" 
+                    id="message" 
+                    rows="1" 
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    required 
+                    disabled={status === "sending" || status === "success"} 
+                    placeholder=" "
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                />
+              </AnimatePresence>
+              
+              <AnimatePresence mode="wait">
+                <motion.label 
+                    htmlFor="message"
+                    key={language}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                >
+                    {t.labels.message}
+                </motion.label>
+              </AnimatePresence>
               <span className="underline-bar"></span>
             </div>
 
@@ -280,7 +341,12 @@ const Footer = () => {
               >
                 <AnimatePresence mode="wait">
                   {status === "idle" && (
-                    <motion.span key="text" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                    <motion.span 
+                        key={`text-${language}`} 
+                        initial={{ opacity: 0 }} 
+                        animate={{ opacity: 1 }} 
+                        exit={{ opacity: 0 }}
+                    >
                       {t.button.default}
                     </motion.span>
                   )}
@@ -292,11 +358,17 @@ const Footer = () => {
                   {status === "success" && (
                     <motion.div key="success" className="success-content" initial={{ scale: 0 }} animate={{ scale: 1 }}>
                       <FiCheck size={24} />
-                      <span>{t.button.success}</span>
+                      <motion.span
+                        key={`success-${language}`}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                      >
+                        {t.button.success}
+                      </motion.span>
                     </motion.div>
                   )}
                   {status === "error" && (
-                    <motion.span key="error">{t.error}</motion.span>
+                    <motion.span key={`error-${language}`}>{t.error}</motion.span>
                   )}
                 </AnimatePresence>
               </motion.button>
@@ -304,17 +376,26 @@ const Footer = () => {
           </form>
         </motion.div>
 
-        {/* --- DIVISOR --- */}
         <div className="footer-divider"></div>
 
-        {/* --- SESSÃO INFERIOR --- */}
         <div className="footer-bottom">
             <div className="footer-brand">
                 <img src={logoSrc} alt="Logo" className="footer-logo" />
-                <p className="footer-location">
-                    <FiMapPin style={{ marginRight: '6px' }} /> 
-                    {t.location}
-                </p>
+                
+                <AnimatePresence mode="wait">
+                    <motion.p 
+                        className="footer-location"
+                        key={language}
+                        variants={fadeVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.2 }}
+                    >
+                        <FiMapPin style={{ marginRight: '6px' }} /> 
+                        {t.location}
+                    </motion.p>
+                </AnimatePresence>
             </div>
 
             <div className="footer-socials-bottom">
@@ -333,9 +414,19 @@ const Footer = () => {
             </div>
         </div>
 
-        {/* --- COPYRIGHT --- */}
         <div className="footer-copyright">
-          <p>© {new Date().getFullYear()} Eric Nacif. {t.copyright}</p>
+          <AnimatePresence mode="wait">
+            <motion.p
+                key={language}
+                variants={fadeVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.2 }}
+            >
+                © {new Date().getFullYear()} Eric Nacif. {t.copyright}
+            </motion.p>
+          </AnimatePresence>
         </div>
 
       </div>

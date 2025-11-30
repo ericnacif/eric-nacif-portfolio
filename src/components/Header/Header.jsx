@@ -11,45 +11,6 @@ import cvEn from '../../assets/docs/cv-en.pdf';
 import { useLanguage } from '../../context/LanguageContext';
 import { useTheme } from '../../context/ThemeContext';
 
-// Componente ScrambleText (Mantido)
-const ScrambleText = ({ text, className }) => {
-  const [displayText, setDisplayText] = useState(text);
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
-
-  const scramble = () => {
-    let iteration = 0;
-    const interval = setInterval(() => {
-      setDisplayText((prev) =>
-        text
-          .split("")
-          .map((letter, index) => {
-            if (index < iteration) {
-              return text[index];
-            }
-            return chars[Math.floor(Math.random() * chars.length)];
-          })
-          .join("")
-      );
-
-      if (iteration >= text.length) {
-        clearInterval(interval);
-      }
-
-      iteration += 1 / 3;
-    }, 30);
-  };
-
-  return (
-    <span
-      className={className}
-      onMouseEnter={scramble}
-      style={{ minWidth: '120px', display: 'inline-block' }}
-    >
-      {displayText}
-    </span>
-  );
-};
-
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLangMenu, setShowLangMenu] = useState(false);
@@ -61,8 +22,6 @@ const Header = () => {
 
   const menuRef = useRef(null);
   const menuBtnRef = useRef(null);
-  
-  // Referência para guardar o observer e não recriá-lo à toa
   const observerRef = useRef(null);
 
   const logoSrc = theme === 'dark' ? logoGray : logoBlue;
@@ -86,12 +45,10 @@ const Header = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // --- SCROLL SPY CORRIGIDO PARA LAZY LOADING ---
   useEffect(() => {
-    // 1. Configuração do IntersectionObserver
     const observerOptions = {
       root: null,
-      rootMargin: '-30% 0px -40% 0px', // Ajuste a "mira" do scroll spy
+      rootMargin: '-30% 0px -40% 0px',
       threshold: 0
     };
 
@@ -106,7 +63,6 @@ const Header = () => {
 
     observerRef.current = new IntersectionObserver(handleIntersect, observerOptions);
 
-    // 2. Função que busca as seções e as conecta ao observer
     const observeSections = () => {
       const sections = document.querySelectorAll('section[id], footer#contato');
       sections.forEach((section) => {
@@ -114,15 +70,12 @@ const Header = () => {
       });
     };
 
-    // Tenta observar imediatamente (para o que já existe, ex: Hero)
     observeSections();
 
-    // 3. MutationObserver: Vigia o HTML para ver se novas seções (Lazy Loaded) apareceram
     const mutationObserver = new MutationObserver(() => {
-      observeSections(); // Se o HTML mudar, tenta reconectar as seções novas
+      observeSections();
     });
 
-    // Começa a vigiar o corpo da página por mudanças nos filhos (childList)
     mutationObserver.observe(document.body, { childList: true, subtree: true });
 
     return () => {
@@ -131,15 +84,12 @@ const Header = () => {
     };
   }, []);
 
-  // --- FUNÇÃO DE SCROLL SUAVE ---
   const handleScrollTo = (e, id) => {
     e.preventDefault(); 
-
     let targetId = id;
     if (id === 'home') targetId = 'hero'; 
 
     const element = document.getElementById(targetId);
-
     if (element) {
       const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
@@ -150,7 +100,6 @@ const Header = () => {
         behavior: "smooth"
       });
 
-      // Atualiza manualmente para dar feedback instantâneo ao clique
       setActiveSection(targetId);
       setIsMenuOpen(false); 
     }
@@ -184,18 +133,31 @@ const Header = () => {
     };
   }, [isMenuOpen]);
 
-  const closeMenu = () => setIsMenuOpen(false);
-
   const panelVariants = {
     hidden: { opacity: 0, y: -12, scale: 0.98 },
     visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 260, damping: 24 } },
     exit: { opacity: 0, y: -12, scale: 0.98, transition: { duration: 0.15 } },
   };
 
-  const textVariants = {
+  // Variantes copiadas do About.jsx
+  const textContainerVariants = {
+    visible: { transition: { staggerChildren: 0.04 } }
+  };
+  const letterVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0 }
+  };
+
+  const navTextVariants = {
     hidden: { opacity: 0, y: 5 },
     visible: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -5 }
+  };
+
+  const iconSwitchVariants = {
+    initial: { scale: 0.5, opacity: 0, rotate: -90 },
+    animate: { scale: 1, opacity: 1, rotate: 0 },
+    exit: { scale: 0.5, opacity: 0, rotate: 90 }
   };
 
   return (
@@ -216,8 +178,25 @@ const Header = () => {
           className="header-logo-link"
           onClick={(e) => handleScrollTo(e, 'hero')}
         >
-          <img src={logoSrc} alt="Logo" className="header-logo-img" />
-          <ScrambleText text="ERIC NACIF" className="header-logo-text" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <img src={logoSrc} alt="Logo" className="header-logo-img" />
+            
+            {/* Efeito de letras cascata no nome */}
+            <motion.span 
+              className="header-logo-text"
+              key={language} // Reinicia animação ao mudar idioma (mesmo que o nome não mude, faz o efeito acontecer)
+              variants={textContainerVariants}
+              initial="hidden"
+              animate="visible"
+              style={{ display: 'flex' }} // Importante para manter as letras na linha
+            >
+              {Array.from("ERIC NACIF").map((char, index) => (
+                <motion.span key={index} variants={letterVariants}>
+                  {char === ' ' ? '\u00A0' : char}
+                </motion.span>
+              ))}
+            </motion.span>
+          </div>
         </a>
 
         <nav className="desktop-nav">
@@ -234,11 +213,7 @@ const Header = () => {
                   <motion.div
                     className="nav-pill-bg"
                     layoutId="navPill"
-                    transition={{
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 30
-                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
 
@@ -246,7 +221,7 @@ const Header = () => {
                   <motion.span
                     key={language}
                     className="nav-text"
-                    variants={textVariants}
+                    variants={navTextVariants}
                     initial="hidden"
                     animate="visible"
                     exit="exit"
@@ -262,28 +237,34 @@ const Header = () => {
 
         <div className="header-controls">
           <div className="lang-switcher" onMouseEnter={() => setShowLangMenu(true)} onMouseLeave={() => setShowLangMenu(false)}>
-            <button className="lang-btn">
+            <motion.button 
+                className="lang-btn"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+            >
               <FaGlobe />
               <AnimatePresence mode="wait">
                 <motion.span
                   key={language}
                   className="current-lang"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
                   transition={{ duration: 0.2 }}
                 >
                   {language.toUpperCase()}
                 </motion.span>
               </AnimatePresence>
-            </button>
+            </motion.button>
+
             <AnimatePresence>
               {showLangMenu && (
                 <motion.div
                   className="lang-dropdown"
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 5 }}
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
                 >
                   <button onClick={() => changeLanguage('pt')} className={language === 'pt' ? 'active' : ''}>PT</button>
                   <button onClick={() => changeLanguage('en')} className={language === 'en' ? 'active' : ''}>EN</button>
@@ -294,12 +275,37 @@ const Header = () => {
           </div>
 
           {!isMobile && (
-            <button className="theme-toggle" onClick={toggleTheme} aria-label="Alterar Tema">
-              {theme === 'dark' ? <FaMoon /> : <FaSun />}
-            </button>
+            <motion.button 
+                className="theme-toggle" 
+                onClick={toggleTheme} 
+                aria-label="Alterar Tema"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                    key={theme}
+                    variants={iconSwitchVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.2 }}
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    {theme === 'dark' ? <FaMoon /> : <FaSun />}
+                </motion.div>
+              </AnimatePresence>
+            </motion.button>
           )}
 
-          <a href={getCvLink()} download className="cv-button" title={t.cvBtn}>
+          <motion.a 
+            href={getCvLink()} 
+            download 
+            className="cv-button" 
+            title={t.cvBtn}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <AnimatePresence mode="wait">
               <motion.span
                 key={language}
@@ -313,7 +319,7 @@ const Header = () => {
               </motion.span>
             </AnimatePresence>
             <FaDownload className="cv-icon" />
-          </a>
+          </motion.a>
         </div>
       </div>
 
