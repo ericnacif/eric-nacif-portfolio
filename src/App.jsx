@@ -2,7 +2,6 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
-// Componentes Críticos (Carregados Imediatamente para LCP rápido)
 import Header from './components/Header/Header';
 import Hero from './sections/Hero/Hero';
 import Preloader from './components/Preloader/Preloader';
@@ -14,7 +13,7 @@ import WhatsAppButton from './components/WhatsAppButton/WhatsAppButton';
 import BackToTop from './components/BackToTop';
 import NotFound from './pages/NotFound/NotFound';
 
-// Lazy Loading: Carrega estas seções apenas quando necessário (Reduz Payload)
+// Lazy Loading
 const About = React.lazy(() => import('./sections/About/About'));
 const Projects = React.lazy(() => import('./sections/Projects/Projects'));
 const Footer = React.lazy(() => import('./components/Footer/Footer'));
@@ -25,11 +24,26 @@ function App() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-      const timer = setTimeout(() => {
+      // Otimização: Remove o preloader assim que a página carregar completamente
+      // ou após um timeout máximo de segurança (1.5s em vez de 2.8s)
+      const handleLoad = () => {
         setIsLoading(false);
         window.scrollTo(0, 0);
-      }, 2800);
-      return () => clearTimeout(timer);
+      };
+
+      // Se a página já estiver carregada, remove logo
+      if (document.readyState === 'complete') {
+        setTimeout(handleLoad, 800); // Pequeno delay só para a animação fluir
+      } else {
+        window.addEventListener('load', handleLoad);
+        // Fallback de segurança: se o load falhar, remove em 2s máximo
+        const fallbackTimer = setTimeout(handleLoad, 2000); 
+        
+        return () => {
+          window.removeEventListener('load', handleLoad);
+          clearTimeout(fallbackTimer);
+        };
+      }
     }, []);
 
     return (
@@ -38,24 +52,26 @@ function App() {
           {isLoading && <Preloader key="preloader" />}
         </AnimatePresence>
 
-        <Header />
+        {/* Renderiza o Header e Hero imediatamente, mesmo atrás do preloader, 
+            para o navegador já ir montando o layout (Melhora LCP) */}
+        <div style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease' }}>
+            <Header />
+            <main>
+            <Hero />
+            
+            <Suspense fallback={<div style={{ height: '50px' }}></div>}>
+                <About />
+                <Projects />
+            </Suspense>
+            </main>
 
-        <main>
-          <Hero />
-          
-          {/* Suspense protege o carregamento das partes pesadas sem travar a tela */}
-          <Suspense fallback={<div style={{ height: '100px' }}></div>}>
-            <About />
-            <Projects />
-          </Suspense>
-        </main>
-
-        <Suspense fallback={null}>
-          <Footer />
-        </Suspense>
-        
-        <BackToTop />
-        <WhatsAppButton />
+            <Suspense fallback={null}>
+            <Footer />
+            </Suspense>
+            
+            <BackToTop />
+            <WhatsAppButton />
+        </div>
       </>
     );
   };
@@ -65,8 +81,6 @@ function App() {
       <Cursor />
       <ScrollProgress />
       <EasterEgg />
-
-      {/* 2. ADICIONAR AQUI (Funciona em todo o site) */}
       <PrintRedirect />
 
       <Routes>
