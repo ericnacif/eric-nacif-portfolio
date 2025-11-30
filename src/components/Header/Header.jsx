@@ -54,8 +54,6 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-  
-  // Alteração: Estado para detectar se é mobile
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const { language, changeLanguage, t } = useLanguage();
@@ -63,6 +61,9 @@ const Header = () => {
 
   const menuRef = useRef(null);
   const menuBtnRef = useRef(null);
+  
+  // Referência para guardar o observer e não recriá-lo à toa
+  const observerRef = useRef(null);
 
   const logoSrc = theme === 'dark' ? logoGray : logoBlue;
 
@@ -77,13 +78,57 @@ const Header = () => {
     return cvEn;
   };
 
-  // Alteração: Monitorar redimensionamento da tela para atualizar isMobile
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // --- SCROLL SPY CORRIGIDO PARA LAZY LOADING ---
+  useEffect(() => {
+    // 1. Configuração do IntersectionObserver
+    const observerOptions = {
+      root: null,
+      rootMargin: '-30% 0px -40% 0px', // Ajuste a "mira" do scroll spy
+      threshold: 0
+    };
+
+    const handleIntersect = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (entry.target.id === 'hero') setActiveSection('hero');
+          else setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    observerRef.current = new IntersectionObserver(handleIntersect, observerOptions);
+
+    // 2. Função que busca as seções e as conecta ao observer
+    const observeSections = () => {
+      const sections = document.querySelectorAll('section[id], footer#contato');
+      sections.forEach((section) => {
+        observerRef.current.observe(section);
+      });
+    };
+
+    // Tenta observar imediatamente (para o que já existe, ex: Hero)
+    observeSections();
+
+    // 3. MutationObserver: Vigia o HTML para ver se novas seções (Lazy Loaded) apareceram
+    const mutationObserver = new MutationObserver(() => {
+      observeSections(); // Se o HTML mudar, tenta reconectar as seções novas
+    });
+
+    // Começa a vigiar o corpo da página por mudanças nos filhos (childList)
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      if (observerRef.current) observerRef.current.disconnect();
+      mutationObserver.disconnect();
+    };
   }, []);
 
   // --- FUNÇÃO DE SCROLL SUAVE ---
@@ -105,6 +150,7 @@ const Header = () => {
         behavior: "smooth"
       });
 
+      // Atualiza manualmente para dar feedback instantâneo ao clique
       setActiveSection(targetId);
       setIsMenuOpen(false); 
     }
@@ -120,27 +166,6 @@ const Header = () => {
     onScroll();
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  useEffect(() => {
-    const sections = document.querySelectorAll('section[id], footer#contato');
-    const observerOptions = {
-      root: null,
-      rootMargin: '-30% 0px -40% 0px',
-      threshold: 0
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (entry.target.id === 'hero') setActiveSection('hero');
-          else setActiveSection(entry.target.id);
-        }
-      });
-    }, observerOptions);
-
-    sections.forEach((section) => observer.observe(section));
-    return () => sections.forEach((section) => observer.unobserve(section));
   }, []);
 
   useEffect(() => {
@@ -268,7 +293,6 @@ const Header = () => {
             </AnimatePresence>
           </div>
 
-          {/* Alteração: Renderiza o botão SOMENTE se não for mobile */}
           {!isMobile && (
             <button className="theme-toggle" onClick={toggleTheme} aria-label="Alterar Tema">
               {theme === 'dark' ? <FaMoon /> : <FaSun />}

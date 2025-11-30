@@ -7,43 +7,32 @@
     margin: 0 auto;
 }
 
-/* --- ÁREA PRINCIPAL (Alterada para Flex) --- */
+/* --- ÁREA PRINCIPAL --- */
 .about-text-area {
     margin-bottom: 60px;
     display: flex;
-    /* Alinha o topo do texto com o topo da imagem */
     align-items: flex-start;
-    /* Espaço entre o texto e a imagem */
     gap: 60px;
 }
 
-/* Coluna de Texto (Esquerda) */
 .about-content-left {
-    /* Ocupa mais espaço (ex: 60-70%) */
     flex: 2;
 }
 
-/* Coluna de Imagem (Direita) */
 .about-image-right {
-    /* Ocupa o espaço restante */
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    /* Garante alinhamento no topo */
     padding-top: 10px;
-    /* Pequeno ajuste fino para alinhar visualmente com a altura da fonte do primeiro parágrafo */
 }
 
-/* Estilo da Logo */
 .about-logo {
     width: 100%;
     height: auto;
-    /* Define um tamanho máximo para a logo não ficar exagerada */
     max-width: 220px;
     object-fit: contain;
 }
-
 
 /* TÍTULO DE SEÇÃO */
 .section-title {
@@ -68,7 +57,7 @@
     border-radius: 2px;
 }
 
-/* TEXTO INTRODUTÓRIO */
+/* TEXTOS */
 .intro-text {
     font-size: clamp(22px, 3.5vw, 28px);
     font-weight: 400;
@@ -79,12 +68,10 @@
     text-align: justify;
 }
 
-/* TEXTO DETALHE */
 .detail-text {
     font-size: clamp(16px, 2vw, 18px);
     line-height: 1.8;
     color: var(--text-secondary);
-    /* max-width removido aqui, pois o container pai agora controla a largura */
     text-align: justify;
 }
 
@@ -125,57 +112,128 @@
     transform: translateY(-3px);
 }
 
+/* --- NOVO: Título da Tech Stack --- */
+.tech-stack-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-align: center;
+    opacity: 0.8;
+}
+
+/* --- INFINITE TECH MARQUEE --- */
+.tech-marquee-wrapper {
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 40px;
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 10%,
+        black 90%,
+        transparent
+    );
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 10%,
+        black 90%,
+        transparent
+    );
+}
+
+.tech-track {
+    display: flex;
+    gap: 4rem;
+    width: max-content;
+    animation: scroll 30s linear infinite;
+    padding: 1rem 0;
+}
+
+.tech-track:hover {
+    animation-play-state: paused;
+}
+
+.tech-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.tech-item:hover {
+    color: var(--accent-color);
+}
+
+.tech-icon {
+    font-size: 2.5rem;
+}
+
+.tech-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: var(--font-display);
+}
+
+@keyframes scroll {
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+
 /* --- RESPONSIVIDADE --- */
 @media (max-width: 900px) {
-
-    /* Em tablets menores, diminui o gap */
     .about-text-area {
         gap: 30px;
     }
-
     .about-logo {
         max-width: 180px;
     }
 }
 
 @media (max-width: 768px) {
-
-    /* Muda para coluna única no mobile */
     .about-text-area {
         flex-direction: column;
         gap: 40px;
         align-items: center;
-        /* Centraliza no mobile */
     }
-
-    /* No mobile, coloca a imagem acima do texto (opcional) */
     .about-image-right {
         order: -1;
         width: 100%;
         justify-content: center;
         padding-top: 0;
     }
-
     .about-content-left {
         width: 100%;
     }
-
     .about-logo {
         max-width: 150px;
-        /* Logo menor no mobile */
     }
-
     .about-footer {
         flex-direction: column;
         align-items: flex-start;
         gap: 24px;
     }
-
     .detail-text {
         font-size: 15px;
     }
-
     .cta-text {
         font-size: 16px;
+    }
+    
+    /* Ajustes Marquee Mobile */
+    .tech-track {
+        gap: 2.5rem;
+        animation-duration: 20s;
+    }
+    .tech-icon {
+        font-size: 2rem;
     }
 }

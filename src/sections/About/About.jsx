@@ -2,56 +2,71 @@ import React from 'react';
 import './About.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
-// Importamos o hook do tema
 import { useTheme } from '../../context/ThemeContext';
 import {
-  SiInstagram, SiGithub, SiLinkedin, SiGmail
+  SiInstagram, SiGithub, SiLinkedin, SiGmail,
+  SiPhp, SiLaravel, SiJavascript, SiReact, SiTypescript, 
+  SiNodedotjs, SiDocker, SiMysql, SiGit, SiTailwindcss, 
+  SiMongodb, SiNextdotjs, SiVuedotjs
 } from 'react-icons/si';
 
 import logoBlue from '../../assets/images/logo-blue.png';
-// IMPORTANTE: Certifique-se de que esta imagem existe
 import logoGray from '../../assets/images/logo-gray.png';
 
 const structuredStack = {
-  // ... (conteúdo do structuredStack permanece igual) ...
   pt: {
     title: "Sobre Mim",
-    paragraph1: "Olá, sou o Eric. Desenvolvedor Full Stack focado em interfaces simples e eficientes.",
-    paragraph2: "Com base sólida em PHP e JavaScript, crio produtos digitais completos — do banco de dados à experiência mobile. Valorizo código limpo, performance e, acima de tudo, soluções que funcionam.",
+    paragraph1: "Desenvolvedor Full Stack com sólida expertise em PHP, Laravel e JavaScript, especializado em arquiteturas web escaláveis e aplicações móveis com React Native.",
+    paragraph2: "Possuo forte proficiência em gestão de dados (SQL e MongoDB) e foco em boas práticas de código para entregar soluções robustas em projetos desafiadores.",
     cta: "Vamos construir algo juntos?",
+    techTitle: "Minha Tech Stack" // Título adicionado
   },
   en: {
     title: "About Me",
-    paragraph1: "Hi, I'm Eric. Full Stack Developer focused on simple and efficient interfaces.",
-    paragraph2: "With a solid foundation in PHP and JavaScript, I build complete digital products — from database to mobile experience. I value clean code, performance, and above all, solutions that work.",
+    paragraph1: "Full Stack Developer with solid expertise in PHP, Laravel, and JavaScript, specializing in scalable web architectures and mobile applications with React Native.",
+    paragraph2: "I have strong proficiency in data management (SQL and MongoDB) and focus on code best practices to deliver robust solutions in challenging projects.",
     cta: "Let's build something together?",
+    techTitle: "My Tech Stack" // Título adicionado
   },
   es: {
     title: "Sobre Mí",
-    paragraph1: "Hola, soy Eric. Desarrollador Full Stack enfocado en interfaces simples y eficientes.",
-    paragraph2: "Con una base sólida en PHP y JavaScript, creo productos digitales completos. Valoro el código limpio, el rendimiento y, sobre todo, las soluciones que funcionan.",
+    paragraph1: "Desarrollador Full Stack con sólida experiencia en PHP, Laravel y JavaScript, especializado en arquitecturas web escalables y aplicaciones móviles con React Native.",
+    paragraph2: "Tengo una fuerte competencia en gestión de datos (SQL y MongoDB) y me enfoco en las mejores prácticas de código para entregar soluciones robustas.",
     cta: "¿Construimos algo juntos?",
+    techTitle: "Mi Tech Stack" // Título adicionado
   }
 };
 
+const technologies = [
+  { name: "PHP", icon: <SiPhp /> },
+  { name: "Laravel", icon: <SiLaravel /> },
+  { name: "JavaScript", icon: <SiJavascript /> },
+  { name: "React / Native", icon: <SiReact /> },
+  { name: "Next.js", icon: <SiNextdotjs /> },
+  { name: "Vue.js", icon: <SiVuedotjs /> },
+  { name: "TypeScript", icon: <SiTypescript /> },
+  { name: "Node.js", icon: <SiNodedotjs /> },
+  { name: "MongoDB", icon: <SiMongodb /> },
+  { name: "SQL", icon: <SiMysql /> },
+  { name: "Docker", icon: <SiDocker /> },
+  { name: "Git", icon: <SiGit /> },
+  { name: "Tailwind", icon: <SiTailwindcss /> },
+];
+
 const About = () => {
   const { language } = useLanguage();
-  // Usamos o hook para saber qual é o tema atual
   const { theme } = useTheme();
   const t = structuredStack[language] || structuredStack.pt;
 
-  // Lógica para escolher a logo correta
   const logoSrc = theme === 'dark' ? logoGray : logoBlue;
 
   const socialLinks = [
-    // ... (socialLinks permanecem iguais) ...
     { name: "LinkedIn", url: "https://www.linkedin.com/in/eric-nacif-956930324/", icon: <SiLinkedin /> },
     { name: "GitHub", url: "https://github.com/ericnacif", icon: <SiGithub /> },
     { name: "Instagram", url: "https://www.instagram.com/nacif_/", icon: <SiInstagram /> },
     { name: "Email", url: "mailto:naciferic7@gmail.com", icon: <SiGmail /> }
   ];
 
-  // ... (variants permanecem iguais) ...
   const textContainerVariants = {
     visible: {
       transition: { staggerChildren: 0.04 }
@@ -70,7 +85,6 @@ const About = () => {
       transition: { duration: 0.6, ease: "easeOut", delay: 0.3 }
     }
   };
-  // ... (fim das variants) ...
 
   return (
     <section id="sobre" className="about-section">
@@ -108,7 +122,6 @@ const About = () => {
           </div>
 
           <div className="about-image-right">
-            {/* Usamos a variável logoSrc aqui */}
             <motion.img
               src={logoSrc}
               alt="Eric Nacif Logo"
@@ -120,6 +133,22 @@ const About = () => {
             />
           </div>
         </div>
+
+        {/* --- Título da Tech Stack --- */}
+        <h3 className="tech-stack-title">{t.techTitle}</h3>
+
+        {/* --- TECH MARQUEE START --- */}
+        <div className="tech-marquee-wrapper">
+            <div className="tech-track">
+                {[...technologies, ...technologies].map((tech, index) => (
+                    <div className="tech-item" key={index}>
+                        <span className="tech-icon">{tech.icon}</span>
+                        <span className="tech-name">{tech.name}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+        {/* --- TECH MARQUEE END --- */}
 
         <div className="about-footer">
           <AnimatePresence mode="wait">
