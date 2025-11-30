@@ -46,7 +46,7 @@ const Footer = () => {
       defaultMessage: "Olá Eric! Vi seu portfólio e gostaria de conversar sobre um projeto...",
       button: { default: "Enviar Mensagem", sending: "", success: "Enviado!" },
       error: "Erro ao enviar. Tente novamente.",
-      location: "Brasil 🇧🇷",
+      location: "Brasil",
       copyright: "Todos os direitos reservados."
     },
     en: {
@@ -60,7 +60,7 @@ const Footer = () => {
       defaultMessage: "Hi Eric! I saw your portfolio and would like to talk about a project...",
       button: { default: "Send Message", sending: "", success: "Sent!" },
       error: "Error sending. Please try again.",
-      location: "Brazil 🇧🇷",
+      location: "Brazil",
       copyright: "All rights reserved."
     },
     es: {
@@ -74,7 +74,7 @@ const Footer = () => {
       defaultMessage: "¡Hola Eric! Vi tu portafolio y me gustaría hablar sobre un proyecto...",
       button: { default: "Enviar Mensaje", sending: "", success: "¡Enviado!" },
       error: "Error al enviar. Inténtalo de nuevo.",
-      location: "Brasil 🇧🇷",
+      location: "Brasil",
       copyright: "Todos los derechos reservados."
     }
   };

@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './Hero.css';
 import { useLanguage } from '../../context/LanguageContext';
 
 const Hero = () => {
   const { language } = useLanguage();
+  // Estado para controlar se é o carregamento inicial ou apenas troca de idioma
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+
+  useEffect(() => {
+    // O Preloader dura 2.8s. Definimos 3.0s aqui para garantir que 
+    // a flag só mude depois que a animação inicial tiver começado/terminado.
+    const timer = setTimeout(() => {
+      setIsInitialLoad(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const texts = {
     pt: "desenvolvedor full stack",
@@ -21,15 +33,16 @@ const Hero = () => {
     if (secondSpace !== -1) breakIndex = secondSpace;
   }
 
-  // Otimização: Delay reduzido para 0.5s após o Preloader para melhorar a sensação de velocidade
-  // (Antes era 3.0s fixo, o que é muito lento para SEO/LCP)
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: { 
         staggerChildren: 0.04, 
-        delayChildren: 0.2 // Reduzido para aparecer mais rápido
+        // LÓGICA DE DELAY INTELIGENTE:
+        // Se for o load inicial (com preloader), espera 2.9s.
+        // Se for navegação/troca de idioma, espera apenas 0.2s.
+        delayChildren: isInitialLoad ? 2.9 : 0.2 
       },
     },
   };
@@ -58,7 +71,6 @@ const Hero = () => {
           animate="visible"
           key={language}
           aria-label={text}
-          // will-change ajuda o navegador a preparar a GPU para a animação
           style={{ willChange: 'opacity, transform' }} 
         >
           {letters.map((letter, index) => (

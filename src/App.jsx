@@ -2,6 +2,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
+// Componentes Críticos
 import Header from './components/Header/Header';
 import Hero from './sections/Hero/Hero';
 import Preloader from './components/Preloader/Preloader';
@@ -12,10 +13,9 @@ import PrintRedirect from './components/PrintRedirect/PrintRedirect';
 import WhatsAppButton from './components/WhatsAppButton/WhatsAppButton';
 import BackToTop from './components/BackToTop';
 import NotFound from './pages/NotFound/NotFound';
-
 import GoogleAnalyticsTracker from './components/GoogleAnalyticsTracker';
 
-// Lazy Loading
+// Lazy Loading (Mantendo a otimização de peso)
 const About = React.lazy(() => import('./sections/About/About'));
 const Projects = React.lazy(() => import('./sections/Projects/Projects'));
 const Footer = React.lazy(() => import('./components/Footer/Footer'));
@@ -26,22 +26,14 @@ function App() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-      const handleLoad = () => {
+      // CORREÇÃO: Tempo fixo de 2.8s
+      // Garante que a animação (Olá -> Hello -> Hola -> Logo) toque inteira
+      const timer = setTimeout(() => {
         setIsLoading(false);
         window.scrollTo(0, 0);
-      };
+      }, 2800);
 
-      if (document.readyState === 'complete') {
-        setTimeout(handleLoad, 800);
-      } else {
-        window.addEventListener('load', handleLoad);
-        const fallbackTimer = setTimeout(handleLoad, 2000); 
-        
-        return () => {
-          window.removeEventListener('load', handleLoad);
-          clearTimeout(fallbackTimer);
-        };
-      }
+      return () => clearTimeout(timer);
     }, []);
 
     return (
@@ -50,6 +42,7 @@ function App() {
           {isLoading && <Preloader key="preloader" />}
         </AnimatePresence>
 
+        {/* O conteúdo aparece suavemente após o preloader sair */}
         <div style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease' }}>
             <Header />
             <main>
@@ -74,9 +67,9 @@ function App() {
 
   return (
     <Router>
-      {/* 2. ADICIONAR AQUI (Dentro do Router) */}
       <GoogleAnalyticsTracker />
-
+      {/* Removido o PageTitleHandler */}
+      
       <Cursor />
       <ScrollProgress />
       <EasterEgg />
