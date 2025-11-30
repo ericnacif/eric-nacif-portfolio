@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
   <meta name="theme-color" content="#0a192f" />
 
   <title>Eric Nacif | Desenvolvedor Full Stack</title>
@@ -13,7 +14,7 @@
   <meta name="description"
     content="Portfólio de Eric Nacif. Desenvolvedor Full Stack especializado em PHP, Laravel, React Native e soluções web escaláveis." />
   <meta name="keywords"
-    content="Eric Nacif, Desenvolvedor Full Stack, PHP, Laravel, React Native, JavaScript, Web Developer" />
+    content="Eric Nacif, Desenvolvedor Full Stack, PHP, Laravel, React Native, JavaScript, Web Developer, Manhuaçu" />
   <meta name="author" content="Eric Nacif" />
 
   <meta property="og:type" content="website" />
@@ -32,16 +33,30 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    // Removemos a linha 'config' daqui pois o React (GoogleAnalyticsTracker) vai cuidar disso
-    // gtag('config', 'G-XXXXXXXXXX'); 
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Eric Nacif",
+      "url": "https://ericnacif.dev",
+      "image": "https://ericnacif.dev/og-image.png",
+      "jobTitle": "Full Stack Developer",
+      "alumniOf": "UNIFACIG",
+      "gender": "Male",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Manhuaçu",
+        "addressRegion": "MG",
+        "addressCountry": "BR"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/eric-nacif-956930324/",
+        "https://github.com/ericnacif",
+        "https://www.instagram.com/nacif_/"
+      ],
+      "knowsAbout": ["PHP", "Laravel", "React", "React Native", "JavaScript", "SQL"]
+    }
   </script>
-
 </head>
 
 <body>
