@@ -141,4 +141,47 @@ body:not([data-theme="light"]) .social-icons img {
 div[class*="WhatsApp"],
 div[class*="BackToTop"] {
   z-index: 9999 !important;
+}/* ... (Mantenha todo o código anterior) ... */
+
+/* =========================================
+   6. POLIMENTO VISUAL (SCROLLBAR & SELECTION)
+   ========================================= */
+
+/* --- SCROLLBAR PERSONALIZADA --- */
+/* Funciona em Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 5px;
+  border: 2px solid var(--bg-color); /* Cria um espaço entre a barra e o fundo */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--accent-color);
+}
+
+/* Para Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--bg-color);
+}
+
+/* --- SELEÇÃO DE TEXTO PERSONALIZADA --- */
+::selection {
+  background: var(--accent-color); /* Fundo da seleção na cor do tema */
+  color: #ffffff; /* Texto branco para contraste */
+  text-shadow: none;
+}
+
+/* Compatibilidade com Firefox */
+::-moz-selection {
+  background: var(--accent-color);
+  color: #ffffff;
 }

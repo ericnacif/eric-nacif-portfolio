@@ -1,27 +1,42 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FiExternalLink } from 'react-icons/fi';
 import './ProjectCard.css';
 
 const ProjectCard = ({ title, description, tags, image, url, onClick }) => {
+  const cardRef = useRef(null);
 
-  // Função interna para lidar com o clique
   const handleClick = (e) => {
     if (onClick) {
-      e.preventDefault(); // Impede o link padrão
+      e.preventDefault(); 
       onClick(e);
     }
   };
 
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Atualiza variáveis CSS locais para o efeito Spotlight
+    cardRef.current.style.setProperty('--mouse-x', `${x}px`);
+    cardRef.current.style.setProperty('--mouse-y', `${y}px`);
+  };
+
   return (
     <motion.a
+      ref={cardRef}
       href={url}
-      onClick={handleClick} // Usa a função interna
-      className="project-card"
+      onClick={handleClick}
+      onMouseMove={handleMouseMove}
+      className="project-card spotlight-card" // Adicionei a classe spotlight-card
       whileHover={{ y: -8 }}
       transition={{ type: 'spring', stiffness: 300 }}
     >
-      {/* ... (resto do código igual) ... */}
+      {/* Camada do Spotlight (Brilho) */}
+      <div className="spotlight-overlay" />
+
       <div className="card-image-wrapper">
         <img src={image} alt={title} className="project-image" loading="lazy" />
         <div className="card-overlay">

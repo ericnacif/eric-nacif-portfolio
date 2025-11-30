@@ -13,6 +13,9 @@ import WhatsAppButton from './components/WhatsAppButton/WhatsAppButton';
 import BackToTop from './components/BackToTop';
 import NotFound from './pages/NotFound/NotFound';
 
+// 1. IMPORTAR AQUI
+import GoogleAnalyticsTracker from './components/GoogleAnalyticsTracker';
+
 // Lazy Loading
 const About = React.lazy(() => import('./sections/About/About'));
 const Projects = React.lazy(() => import('./sections/Projects/Projects'));
@@ -24,19 +27,15 @@ function App() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-      // Otimização: Remove o preloader assim que a página carregar completamente
-      // ou após um timeout máximo de segurança (1.5s em vez de 2.8s)
       const handleLoad = () => {
         setIsLoading(false);
         window.scrollTo(0, 0);
       };
 
-      // Se a página já estiver carregada, remove logo
       if (document.readyState === 'complete') {
-        setTimeout(handleLoad, 800); // Pequeno delay só para a animação fluir
+        setTimeout(handleLoad, 800);
       } else {
         window.addEventListener('load', handleLoad);
-        // Fallback de segurança: se o load falhar, remove em 2s máximo
         const fallbackTimer = setTimeout(handleLoad, 2000); 
         
         return () => {
@@ -52,8 +51,6 @@ function App() {
           {isLoading && <Preloader key="preloader" />}
         </AnimatePresence>
 
-        {/* Renderiza o Header e Hero imediatamente, mesmo atrás do preloader, 
-            para o navegador já ir montando o layout (Melhora LCP) */}
         <div style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease' }}>
             <Header />
             <main>
@@ -78,6 +75,9 @@ function App() {
 
   return (
     <Router>
+      {/* 2. ADICIONAR AQUI (Dentro do Router) */}
+      <GoogleAnalyticsTracker />
+
       <Cursor />
       <ScrollProgress />
       <EasterEgg />
