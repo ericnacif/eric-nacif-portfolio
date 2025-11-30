@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Footer.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
@@ -12,10 +12,23 @@ import logoGray from '../../assets/images/logo-gray.png';
 const Footer = () => {
   const { language } = useLanguage();
   const { theme } = useTheme();
+  
+  // Estados do Formulário Controlado
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  
+  // Estados de UI
   const [status, setStatus] = useState("idle");
   const [greetingKey, setGreetingKey] = useState("morning");
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const logoSrc = theme === 'dark' ? logoGray : logoBlue;
+  const suggestionsRef = useRef(null);
+
+  // Lista de domínios comuns
+  const commonDomains = ["gmail.com", "outlook.com", "hotmail.com", "icloud.com", "yahoo.com"];
 
   useEffect(() => {
     const hour = new Date().getHours();
@@ -33,9 +46,11 @@ const Footer = () => {
       },
       subtitle: "Deixe sua mensagem abaixo e entrarei em contato.",
       labels: { name: "Seu Nome", email: "Seu E-mail", message: "Sua Mensagem" },
+      // Mensagem padrão inicial
+      defaultMessage: "Olá Eric! Vi seu portfólio e gostaria de conversar sobre um projeto...",
       button: { default: "Enviar Mensagem", sending: "", success: "Enviado!" },
       error: "Erro ao enviar. Tente novamente.",
-      location: "Brasil 🇧🇷",
+      location: "Brasil",
       copyright: "Todos os direitos reservados."
     },
     en: {
@@ -46,9 +61,10 @@ const Footer = () => {
       },
       subtitle: "Leave your message below and I'll get in touch.",
       labels: { name: "Your Name", email: "Your Email", message: "Your Message" },
+      defaultMessage: "Hi Eric! I saw your portfolio and would like to talk about a project...",
       button: { default: "Send Message", sending: "", success: "Sent!" },
       error: "Error sending. Please try again.",
-      location: "Brazil 🇧🇷",
+      location: "Brazil",
       copyright: "All rights reserved."
     },
     es: {
@@ -59,27 +75,80 @@ const Footer = () => {
       },
       subtitle: "Deja tu mensaje abajo y me pondré en contacto.",
       labels: { name: "Tu Nombre", email: "Tu Correo", message: "Tu Mensaje" },
+      defaultMessage: "¡Hola Eric! Vi tu portafolio y me gustaría hablar sobre un proyecto...",
       button: { default: "Enviar Mensaje", sending: "", success: "¡Enviado!" },
       error: "Error al enviar. Inténtalo de nuevo.",
-      location: "Brasil 🇧🇷",
+      location: "Brasil",
       copyright: "Todos los derechos reservados."
     }
   };
 
   const t = content[language] || content.pt;
 
-  // Removido o ícone de e-mail conforme solicitado
+  // Atualiza a mensagem padrão quando troca o idioma (se o usuário ainda não digitou nada diferente)
+  useEffect(() => {
+    // Verifica se a mensagem atual é vazia ou igual a uma mensagem padrão de outro idioma
+    const currentIsDefault = Object.values(content).some(c => c.defaultMessage === message) || message === "";
+    if (currentIsDefault) {
+      setMessage(t.defaultMessage);
+    }
+  }, [language]);
+
   const socialLinks = [
     { href: "https://www.linkedin.com/in/eric-nacif-956930324/", icon: <SiLinkedin />, alt: "LinkedIn" },
     { href: "https://github.com/ericnacif", icon: <SiGithub />, alt: "GitHub" },
     { href: "https://www.instagram.com/nacif_/", icon: <SiInstagram />, alt: "Instagram" },
   ];
 
+  // --- LÓGICA DE AUTOCOMPLETE DE E-MAIL ---
+  const handleEmailChange = (e) => {
+    const val = e.target.value;
+    setEmail(val);
+
+    if (val.includes('@')) {
+      const [user, domainPart] = val.split('@');
+      // Filtra domínios que combinam com o que foi digitado após o @
+      const filtered = commonDomains.filter(d => d.startsWith(domainPart));
+      
+      // Só mostra se houver sugestões e se o domínio ainda não estiver completo
+      if (filtered.length > 0 && !commonDomains.includes(domainPart)) {
+        setSuggestions(filtered);
+        setShowSuggestions(true);
+      } else {
+        setShowSuggestions(false);
+      }
+    } else {
+      setShowSuggestions(false);
+    }
+  };
+
+  const handleDomainSelect = (domain) => {
+    const user = email.split('@')[0];
+    setEmail(`${user}@${domain}`);
+    setShowSuggestions(false);
+  };
+
+  // Fecha sugestões ao clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("sending");
-    const form = e.target;
-    const data = new FormData(form);
+    
+    // Cria FormData manualmente para garantir que os estados controlados sejam enviados
+    const data = new FormData();
+    data.append("name", name);
+    data.append("email", email);
+    data.append("message", message);
 
     try {
       const response = await fetch("https://formspree.io/f/movpajdd", {
@@ -90,7 +159,10 @@ const Footer = () => {
 
       if (response.ok) {
         setStatus("success");
-        form.reset();
+        // Limpa campos, mas mantendo a mensagem padrão após o reset
+        setName("");
+        setEmail("");
+        setMessage(t.defaultMessage); 
         setTimeout(() => setStatus("idle"), 3000);
       } else {
         setStatus("error");
@@ -132,19 +204,68 @@ const Footer = () => {
           <form className="contact-form minimal-form" onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="input-group-minimal">
-                <input type="text" name="name" id="name" required disabled={status === "sending" || status === "success"} placeholder=" " />
+                <input 
+                  type="text" 
+                  name="name" 
+                  id="name" 
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required 
+                  disabled={status === "sending" || status === "success"} 
+                  placeholder=" " 
+                />
                 <label htmlFor="name">{t.labels.name}</label>
                 <span className="underline-bar"></span>
               </div>
-              <div className="input-group-minimal">
-                <input type="email" name="email" id="email" required disabled={status === "sending" || status === "success"} placeholder=" " />
+
+              {/* Input de Email com Autocomplete */}
+              <div className="input-group-minimal" ref={suggestionsRef}>
+                <input 
+                  type="email" 
+                  name="email" 
+                  id="email" 
+                  value={email}
+                  onChange={handleEmailChange}
+                  required 
+                  disabled={status === "sending" || status === "success"} 
+                  placeholder=" " 
+                  autoComplete="off" // Desativa autocomplete do navegador para usar o nosso
+                />
                 <label htmlFor="email">{t.labels.email}</label>
                 <span className="underline-bar"></span>
+                
+                {/* Dropdown de Sugestões */}
+                <AnimatePresence>
+                  {showSuggestions && (
+                    <motion.ul 
+                      className="email-suggestions"
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      {suggestions.map((domain) => (
+                        <li key={domain} onClick={() => handleDomainSelect(domain)}>
+                          <span className="suggestion-user">{email.split('@')[0]}@</span>
+                          <span className="suggestion-domain">{domain}</span>
+                        </li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
 
             <div className="input-group-minimal full-width">
-              <textarea name="message" id="message" rows="1" required disabled={status === "sending" || status === "success"} placeholder=" "></textarea>
+              <textarea 
+                name="message" 
+                id="message" 
+                rows="1" 
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                required 
+                disabled={status === "sending" || status === "success"} 
+                placeholder=" "
+              ></textarea>
               <label htmlFor="message">{t.labels.message}</label>
               <span className="underline-bar"></span>
             </div>
@@ -186,7 +307,7 @@ const Footer = () => {
         {/* --- DIVISOR --- */}
         <div className="footer-divider"></div>
 
-        {/* --- SESSÃO INFERIOR (Sem Links de Navegação) --- */}
+        {/* --- SESSÃO INFERIOR --- */}
         <div className="footer-bottom">
             <div className="footer-brand">
                 <img src={logoSrc} alt="Logo" className="footer-logo" />
@@ -212,7 +333,7 @@ const Footer = () => {
             </div>
         </div>
 
-        {/* --- COPYRIGHT (Colado no fim) --- */}
+        {/* --- COPYRIGHT --- */}
         <div className="footer-copyright">
           <p>© {new Date().getFullYear()} Eric Nacif. {t.copyright}</p>
         </div>
