@@ -85,9 +85,9 @@ const Header = () => {
   }, []);
 
   const handleScrollTo = (e, id) => {
-    e.preventDefault(); 
+    e.preventDefault();
     let targetId = id;
-    if (id === 'home') targetId = 'hero'; 
+    if (id === 'home') targetId = 'hero';
 
     const element = document.getElementById(targetId);
     if (element) {
@@ -101,7 +101,7 @@ const Header = () => {
       });
 
       setActiveSection(targetId);
-      setIsMenuOpen(false); 
+      setIsMenuOpen(false);
     }
   };
 
@@ -179,10 +179,15 @@ const Header = () => {
           onClick={(e) => handleScrollTo(e, 'hero')}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <img src={logoSrc} alt="Logo" className="header-logo-img" />
-            
+            <img
+              src={logoSrc}
+              alt="Logo"
+              className="header-logo-img"
+              width="40"
+              height="40" />
+
             {/* Efeito de letras cascata no nome */}
-            <motion.span 
+            <motion.span
               className="header-logo-text"
               key={language} // Reinicia animação ao mudar idioma (mesmo que o nome não mude, faz o efeito acontecer)
               variants={textContainerVariants}
@@ -237,10 +242,10 @@ const Header = () => {
 
         <div className="header-controls">
           <div className="lang-switcher" onMouseEnter={() => setShowLangMenu(true)} onMouseLeave={() => setShowLangMenu(false)}>
-            <motion.button 
-                className="lang-btn"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+            <motion.button
+              className="lang-btn"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               <FaGlobe />
               <AnimatePresence mode="wait">
@@ -275,33 +280,33 @@ const Header = () => {
           </div>
 
           {!isMobile && (
-            <motion.button 
-                className="theme-toggle" 
-                onClick={toggleTheme} 
-                aria-label="Alterar Tema"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+            <motion.button
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label="Alterar Tema"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
-                    key={theme}
-                    variants={iconSwitchVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ duration: 0.2 }}
-                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  key={theme}
+                  variants={iconSwitchVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  transition={{ duration: 0.2 }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 >
-                    {theme === 'dark' ? <FaMoon /> : <FaSun />}
+                  {theme === 'dark' ? <FaMoon /> : <FaSun />}
                 </motion.div>
               </AnimatePresence>
             </motion.button>
           )}
 
-          <motion.a 
-            href={getCvLink()} 
-            download 
-            className="cv-button" 
+          <motion.a
+            href={getCvLink()}
+            download
+            className="cv-button"
             title={t.cvBtn}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

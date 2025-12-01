@@ -42,12 +42,13 @@
 
 @media (max-width: 768px) {
     .hero-section {
-        min-height: 70vh;
+        min-height: 85vh;
     }
 
     .hero-title {
         font-size: clamp(32px, 11vw, 56px);
         line-height: 1.2;
+        min-height: 140px;
     }
 
     .mobile-break {
