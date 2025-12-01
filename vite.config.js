@@ -11,14 +11,15 @@ export default defineConfig({
       svgrOptions: {},
       exportAsDefault: true,
     }),
-    // Comprime os arquivos (Gzip) reduzindo o tamanho em até 70%
+    // MELHORIA: Brotli comprime mais que Gzip (ótimo para 4G/Mobile)
     viteCompression({
-      algorithm: 'gzip',
-      ext: '.gz',
+      algorithm: 'brotliCompress',
+      ext: '.br',
     }),
   ],
   build: {
-    minify: 'terser',
+    minify: 'terser', // Agora vai funcionar com o comando acima
+    cssCodeSplit: true, // Garante que o CSS carregue sob demanda
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -29,9 +30,9 @@ export default defineConfig({
             if (id.includes('framer-motion')) {
               return 'framer-motion';
             }
-            if (id.includes('lottie')) { // Se usar Lottie, separa também
-               return 'lottie';
-            }
+            // Se tiver lottie instalado, descomente abaixo:
+            // if (id.includes('lottie')) return 'lottie';
+
             return 'vendor';
           }
         },
