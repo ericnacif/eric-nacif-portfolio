@@ -24,29 +24,25 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // 1. Separa o React Core (Necessário para iniciar)
-          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom') || id.includes('node_modules/scheduler')) {
-            return 'react-core';
+          // OTIMIZAÇÃO DE CADEIA:
+          // Agrupa React e Router juntos. É melhor baixar um arquivo médio de uma vez
+          // do que ficar abrindo várias conexões pequenas (Waterfall).
+          if (id.includes('node_modules/react') ||
+            id.includes('node_modules/react-dom') ||
+            id.includes('node_modules/react-router') ||
+            id.includes('node_modules/react-router-dom') ||
+            id.includes('node_modules/scheduler')) {
+            return 'react-vendor';
           }
 
-          // 2. Separa o Router (Navegação)
-          if (id.includes('node_modules/react-router') || id.includes('node_modules/react-router-dom')) {
-            return 'react-router';
-          }
-
-          // 3. Separa o Framer Motion (Pesado, animações)
+          // Framer Motion continua separado pois é grande e nem sempre crítico no frame 0
           if (id.includes('node_modules/framer-motion')) {
             return 'framer-motion';
           }
 
-          // 4. Separa os Ícones (Geralmente grande parte do código não usado vem daqui)
+          // Ícones separados (carregam sob demanda se possível)
           if (id.includes('node_modules/react-icons')) {
             return 'react-icons';
-          }
-
-          // 5. Outras dependências (Vendor genérico)
-          if (id.includes('node_modules')) {
-            return 'vendor';
           }
         },
       },
