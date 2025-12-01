@@ -14,7 +14,7 @@
    2. VARIÁVEIS GLOBAIS
    ========================================= */
 :root {
-  /* --- TEMA DARK --- */
+  /* --- TEMA DARK (Contraste ok) --- */
   --bg-color: #000000;
   --text-color: #ffffff;
   --text-secondary: #e0e0e0;
@@ -27,11 +27,14 @@
   --font-display: 'Cocomat Pro', sans-serif;
 }
 
-/* --- TEMA LIGHT --- */
+/* --- TEMA LIGHT (Ajustado para Acessibilidade) --- */
 [data-theme="light"] {
   --bg-color: #fff8f8;
   --text-color: #050505;
-  --text-secondary: #555555;
+
+  /* MUDANÇA: De #555555 para #333333 (Mais escuro para passar no teste) */
+  --text-secondary: #333333;
+
   --card-bg: #ffffff;
   --border-color: #e0e0e0;
   --shadow-color: rgba(0, 0, 0, 0.07);
@@ -73,7 +76,7 @@ h6 {
   font-weight: 700;
   color: inherit;
 
-  /* CORREÇÃO: Impede quebra de palavras no meio em qualquer título */
+  /* CORREÇÃO: Impede quebra de palavras no meio */
   overflow-wrap: normal;
   word-break: keep-all;
   hyphens: none;
@@ -89,9 +92,6 @@ h6 {
   display: inline-block;
 
   /* --- CORREÇÃO DEFINITIVA (Fluidez) --- */
-  /* Min: 24px (legível em mobile pequeno) */
-  /* Ideal: 6vw (6% da largura da tela - cresce suavemente) */
-  /* Max: 48px (tamanho desktop) */
   font-size: clamp(24px, 6vw, 48px);
 
   font-weight: 700;
