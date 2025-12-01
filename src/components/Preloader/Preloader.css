@@ -1,22 +1,21 @@
 .preloader-overlay {
     height: 100vh;
+    /* Para mobile moderno, garante tela cheia sem barra de endereço atrapalhar */
+    height: 100dvh;
     width: 100vw;
     position: fixed;
     top: 0;
     left: 0;
-    /* Usa a variável global para sincronizar com o tema */
     background-color: var(--bg-color);
     z-index: 99999;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-}
 
-/* REMOVIDO: Regras fixas de [data-theme] pois var(--bg-color) já cuida disso */
-/* [data-theme="dark"] .preloader-overlay { ... }
-[data-theme="light"] .preloader-overlay { ... }
-*/
+    /* OTIMIZAÇÃO: Avisa o navegador que isso vai se mover */
+    will-change: transform;
+}
 
 .preloader-content {
     display: flex;
@@ -42,6 +41,7 @@
 .preloader-logo {
     width: 180px;
     height: auto;
+    /* Mantém proporção baseada no width */
     object-fit: contain;
     display: block;
     transform-origin: center center;
@@ -64,5 +64,7 @@
 
     .preloader-logo {
         width: 140px;
+        /* Garante ajuste no mobile */
+        height: auto;
     }
 }

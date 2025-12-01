@@ -2,40 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Preloader.css';
 
-// 1. Importando as logos
 import logoBlue from '../../assets/images/logo-blue.png';
 import logoGray from '../../assets/images/logo-gray.png';
 
-// 2. Importando o Hook de Tema
 import { useTheme } from '../../context/ThemeContext';
 
 const steps = ["Olá", "Hello", "Hola", "logo"];
 
 const Preloader = () => {
     const [index, setIndex] = useState(0);
-
-    // 3. Pegando o tema atual
     const { theme } = useTheme();
-
-    // 4. Definindo qual logo usar
     const logoSrc = theme === 'dark' ? logoGray : logoBlue;
 
     useEffect(() => {
         if (index === steps.length - 1) return;
-
         const delay = 500;
-
         const timeout = setTimeout(() => {
             setIndex((prev) => prev + 1);
         }, delay);
-
         return () => clearTimeout(timeout);
     }, [index]);
 
+    // --- CORREÇÃO DO CLS AQUI ---
+    // Trocamos 'top' por 'y'. O Framer Motion usa transform: translateY automaticamente.
     const slideUp = {
-        initial: { top: 0 },
+        initial: { y: 0 },
         exit: {
-            top: "-100vh",
+            y: "-100vh",
             transition: {
                 duration: 0.8,
                 ease: [0.76, 0, 0.24, 1],
@@ -66,9 +59,12 @@ const Preloader = () => {
                     {steps[index] === "logo" ? (
                         <motion.img
                             key="logo"
-                            src={logoSrc} /* <--- AQUI A MUDANÇA */
+                            src={logoSrc}
                             alt="Logo"
                             className="preloader-logo"
+                            // Adicione width/height para o navegador reservar espaço
+                            width="180"
+                            height="180"
                             variants={logoAnimation}
                             initial="initial"
                             animate="animate"
