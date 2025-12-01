@@ -6,7 +6,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import RedirectLoader from '../../components/RedirectLoader/RedirectLoader';
 
 // Imagens
-import certificafeImg from '../../assets/images/project-certificafe.png';
+import certificafeImg from '../../assets/images/project-certificafe.jpg';
 import engelmigImg from '../../assets/images/project-engelmig.png';
 
 const Projects = () => {
@@ -86,12 +86,12 @@ const Projects = () => {
   // --- VARIANTES PARA EFEITO CASCATA DO TÍTULO (CORRIGIDO) ---
   const textContainerVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
         opacity: 1,
         transition: { staggerChildren: 0.04 }
     },
-    exit: { 
-        opacity: 0, 
+    exit: {
+        opacity: 0,
         transition: { duration: 0.2 } // Sai rápido para não sobrepor
     }
   };
@@ -132,7 +132,7 @@ const Projects = () => {
         </div>
 
         <div className="container relative-z">
-          
+
           {/* TÍTULO COM EFEITO CASCATA (CORRIGIDO COM MODE WAIT) */}
           <AnimatePresence mode="wait">
             <motion.h2
