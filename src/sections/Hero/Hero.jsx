@@ -61,7 +61,7 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="hero-section" style={{ minHeight: '100vh' }}>
+    <section id="home" className="hero-section">
       <div className="container hero-container">
 
         <motion.h1
