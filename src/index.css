@@ -9,7 +9,7 @@
    ========================================= */
 @font-face {
   font-family: 'Cocomat Pro';
-  src: url('./assets/fonts/cocomat-pro-regular.ttf') format('truetype');
+  src: url('/fonts/cocomat-pro-regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -67,7 +67,12 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   font-weight: 700;
   color: inherit;
@@ -97,7 +102,8 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 2px;
 }
 
-img, svg {
+img,
+svg {
   display: block;
   max-width: 100%;
 }
@@ -141,7 +147,9 @@ body:not([data-theme="light"]) .social-icons img {
 div[class*="WhatsApp"],
 div[class*="BackToTop"] {
   z-index: 9999 !important;
-}/* ... (Mantenha todo o código anterior) ... */
+}
+
+/* ... (Mantenha todo o código anterior) ... */
 
 /* =========================================
    6. POLIMENTO VISUAL (SCROLLBAR & SELECTION)
@@ -160,7 +168,8 @@ div[class*="BackToTop"] {
 ::-webkit-scrollbar-thumb {
   background-color: var(--border-color);
   border-radius: 5px;
-  border: 2px solid var(--bg-color); /* Cria um espaço entre a barra e o fundo */
+  border: 2px solid var(--bg-color);
+  /* Cria um espaço entre a barra e o fundo */
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -175,8 +184,10 @@ html {
 
 /* --- SELEÇÃO DE TEXTO PERSONALIZADA --- */
 ::selection {
-  background: var(--accent-color); /* Fundo da seleção na cor do tema */
-  color: #ffffff; /* Texto branco para contraste */
+  background: var(--accent-color);
+  /* Fundo da seleção na cor do tema */
+  color: #ffffff;
+  /* Texto branco para contraste */
   text-shadow: none;
 }
 
