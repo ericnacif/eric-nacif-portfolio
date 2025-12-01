@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Preloader.css';
 
-// REMOVIDO: Imports de imagem
-
 import { useTheme } from '../../context/ThemeContext';
 
 const steps = ["Olá", "Hello", "Hola", "logo"];
@@ -11,12 +9,15 @@ const steps = ["Olá", "Hello", "Hola", "logo"];
 const Preloader = () => {
     const [index, setIndex] = useState(0);
     const { theme } = useTheme();
-    // CORREÇÃO: Caminhos absolutos (strings)
     const logoSrc = theme === 'dark' ? '/logo-gray.webp' : '/logo-blue.webp';
 
     useEffect(() => {
         if (index === steps.length - 1) return;
-        const delay = 500;
+
+        // AJUSTE: Aumentado para 700ms.
+        // Isso dá tempo suficiente para ler cada palavra com calma.
+        const delay = 700;
+
         const timeout = setTimeout(() => {
             setIndex((prev) => prev + 1);
         }, delay);
@@ -39,7 +40,7 @@ const Preloader = () => {
         initial: { opacity: 0, scale: 0.9 },
         animate: { opacity: 1, scale: 1.3, transition: { duration: 0.8, ease: "easeOut" } },
         exit: {
-            scale: 40,
+            scale: 20,
             opacity: 0,
             transition: { duration: 0.8, ease: "easeInOut" }
         }
@@ -73,7 +74,7 @@ const Preloader = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.25 }}
+                            transition={{ duration: 0.5 }} // Transição um pouco mais suave
                             className="preloader-text"
                         >
                             {steps[index]}
