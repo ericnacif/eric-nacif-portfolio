@@ -35,7 +35,6 @@
   display: block;
   width: calc(100% + 1.3px);
   height: 120px;
-  /* ALTERAÇÃO: Removido o rotate(180deg) para inverter a curva verticalmente */
   transform: rotate(0deg);
 }
 
@@ -58,14 +57,12 @@
   display: block;
   width: calc(100% + 1.3px);
   height: 120px;
-  /* ALTERAÇÃO: Adicionado rotate(180deg) para inverter a curva verticalmente */
   transform: rotate(180deg);
 }
 
 .custom-shape-divider-bottom .shape-fill {
   fill: var(--bg-color);
 }
-
 
 /* --- GRID --- */
 .projects-grid {
@@ -102,5 +99,18 @@
   .custom-shape-divider-top svg,
   .custom-shape-divider-bottom svg {
     height: 60px;
+  }
+
+  /* CORREÇÃO ESPECÍFICA PARA TÍTULO QUEBRADO */
+  .projects-section-blue .section-title,
+  .projects-section-blue h2,
+  .projects-section-blue .white-title {
+    font-size: clamp(24px, 8vw, 36px) !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+    hyphens: none !important;
+    line-height: 1.2 !important;
+    width: 100%;
+    padding: 0 10px;
   }
 }

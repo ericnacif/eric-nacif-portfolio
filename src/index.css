@@ -1,14 +1,9 @@
 /* =========================================
-   1. IMPORTS
-   ========================================= */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&display=swap');
-@import url('https://fonts.cdnfonts.com/css/glacial-indifference');
-
-/* =========================================
-   2. FONTES LOCAIS
+   1. FONTES LOCAIS (Carregamento Otimizado)
    ========================================= */
 @font-face {
   font-family: 'Cocomat Pro';
+  /* Aponta para a pasta public/fonts para cache eficiente */
   src: url('/fonts/cocomat-pro-regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
@@ -16,10 +11,10 @@
 }
 
 /* =========================================
-   3. VARIÁVEIS GLOBAIS
+   2. VARIÁVEIS GLOBAIS
    ========================================= */
 :root {
-  /* --- TEMA DARK (Padrão: Preto 100% + Cinza) --- */
+  /* --- TEMA DARK --- */
   --bg-color: #000000;
   --text-color: #ffffff;
   --text-secondary: #e0e0e0;
@@ -32,7 +27,7 @@
   --font-display: 'Cocomat Pro', sans-serif;
 }
 
-/* --- TEMA LIGHT (Fundo Claro + Azul) --- */
+/* --- TEMA LIGHT --- */
 [data-theme="light"] {
   --bg-color: #fff8f8;
   --text-color: #050505;
@@ -45,7 +40,7 @@
 }
 
 /* =========================================
-   4. RESET & GLOBAL
+   3. RESET & GLOBAL
    ========================================= */
 * {
   margin: 0;
@@ -67,6 +62,7 @@ body {
   overflow-x: hidden;
 }
 
+/* --- TIPOGRAFIA FLUIDA & SEGURA --- */
 h1,
 h2,
 h3,
@@ -76,6 +72,11 @@ h6 {
   font-family: var(--font-display);
   font-weight: 700;
   color: inherit;
+
+  /* CORREÇÃO: Impede quebra de palavras no meio em qualquer título */
+  overflow-wrap: normal;
+  word-break: keep-all;
+  hyphens: none;
 }
 
 .container {
@@ -86,10 +87,17 @@ h6 {
 
 .section-title {
   display: inline-block;
-  font-size: clamp(32px, 5vw, 48px);
+
+  /* --- CORREÇÃO DEFINITIVA (Fluidez) --- */
+  /* Min: 24px (legível em mobile pequeno) */
+  /* Ideal: 6vw (6% da largura da tela - cresce suavemente) */
+  /* Max: 48px (tamanho desktop) */
+  font-size: clamp(24px, 6vw, 48px);
+
   font-weight: 700;
   margin-bottom: 64px;
   position: relative;
+  line-height: 1.2;
 }
 
 .section-title::after {
@@ -140,23 +148,17 @@ body:not([data-theme="light"]) .social-icons img {
 }
 
 /* =========================================
-   5. UTILS / FLOATERS Z-INDEX
+   4. UTILS / FLOATERS Z-INDEX
    ========================================= */
-/* Garante que botões flutuantes fiquem acima de tudo (incluindo o footer e a linha) */
 .back-to-top,
 div[class*="WhatsApp"],
 div[class*="BackToTop"] {
   z-index: 9999 !important;
 }
 
-/* ... (Mantenha todo o código anterior) ... */
-
 /* =========================================
-   6. POLIMENTO VISUAL (SCROLLBAR & SELECTION)
+   5. POLIMENTO VISUAL
    ========================================= */
-
-/* --- SCROLLBAR PERSONALIZADA --- */
-/* Funciona em Chrome, Edge, Safari */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -169,30 +171,32 @@ div[class*="BackToTop"] {
   background-color: var(--border-color);
   border-radius: 5px;
   border: 2px solid var(--bg-color);
-  /* Cria um espaço entre a barra e o fundo */
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--accent-color);
 }
 
-/* Para Firefox */
 html {
   scrollbar-width: thin;
   scrollbar-color: var(--border-color) var(--bg-color);
 }
 
-/* --- SELEÇÃO DE TEXTO PERSONALIZADA --- */
 ::selection {
   background: var(--accent-color);
-  /* Fundo da seleção na cor do tema */
   color: #ffffff;
-  /* Texto branco para contraste */
   text-shadow: none;
 }
 
-/* Compatibilidade com Firefox */
 ::-moz-selection {
   background: var(--accent-color);
   color: #ffffff;
+}
+
+/* =========================================
+   6. PERFORMANCE (LCP)
+   ========================================= */
+section:not(.hero-section) {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 1000px;
 }
