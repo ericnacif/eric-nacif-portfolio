@@ -30,6 +30,7 @@
     "terser": "^5.44.1",
     "vite": "^7.1.7",
     "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
     "vite-plugin-svgr": "^4.5.0"
   }
 }

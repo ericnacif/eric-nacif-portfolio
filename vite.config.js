@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import viteCompression from 'vite-plugin-compression';
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'; // <--- Importado aqui
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,6 +12,9 @@ export default defineConfig({
       svgrOptions: {},
       exportAsDefault: true,
     }),
+    // OTIMIZAÇÃO: Injeta o CSS no JS para evitar render-blocking (solicitação de rede extra)
+    cssInjectedByJsPlugin(),
+
     // MELHORIA: Brotli comprime mais que Gzip (ótimo para 4G/Mobile)
     viteCompression({
       algorithm: 'brotliCompress',
@@ -18,8 +22,8 @@ export default defineConfig({
     }),
   ],
   build: {
-    minify: 'terser', // Agora vai funcionar com o comando acima
-    cssCodeSplit: true, // Garante que o CSS carregue sob demanda
+    minify: 'terser',
+    cssCodeSplit: true,
     rollupOptions: {
       output: {
         manualChunks(id) {
