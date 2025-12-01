@@ -25,12 +25,12 @@ function App() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-      // TIMER FINAL: 2.5 segundos
-      // Tempo total para o preloader rodar e sair de cena.
+      // TIMER FINAL: 2.7 segundos
+      // Dá tempo suficiente para o ciclo de 600ms rodar e a saída acontecer suavemente.
       const timer = setTimeout(() => {
         setIsLoading(false);
         window.scrollTo(0, 0);
-      }, 2500);
+      }, 2700);
 
       return () => clearTimeout(timer);
     }, []);

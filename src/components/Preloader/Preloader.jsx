@@ -3,27 +3,29 @@ import { motion, AnimatePresence } from 'framer-motion';
 import './Preloader.css';
 import { useTheme } from '../../context/ThemeContext';
 
-const steps = ["Olá", "Hello", "Hola", "logo"];
+const steps = ["Olá", "Hello", "Hola"];
 
 const Preloader = () => {
     const [index, setIndex] = useState(0);
+    const [showLogo, setShowLogo] = useState(false);
     const { theme } = useTheme();
     const logoSrc = theme === 'dark' ? '/logo-gray.webp' : '/logo-blue.webp';
 
     useEffect(() => {
-        if (index === steps.length - 1) return;
+        // Mantido o tempo de 600ms para performance (nota 100)
+        const delay = 600;
 
-        // AJUSTE FINO: 550ms
-        // É o "pulo do gato". Ainda dá pra ler bem, mas economiza tempo suficiente
-        // para o Google não reclamar do atraso de renderização.
-        const delay = 550;
-
-        const timeout = setTimeout(() => {
-            setIndex((prev) => prev + 1);
-        }, delay);
-        return () => clearTimeout(timeout);
+        if (index < steps.length) {
+            const timeout = setTimeout(() => {
+                setIndex((prev) => prev + 1);
+            }, delay);
+            return () => clearTimeout(timeout);
+        } else {
+            setShowLogo(true);
+        }
     }, [index]);
 
+    // Animação da cortina branca subindo (mantida)
     const slideUp = {
         initial: { y: 0 },
         exit: {
@@ -36,13 +38,18 @@ const Preloader = () => {
         }
     };
 
+    // --- CORREÇÃO DA ANIMAÇÃO DA LOGO ---
     const logoAnimation = {
-        initial: { opacity: 0, scale: 0.9 },
-        animate: { opacity: 1, scale: 1.3, transition: { duration: 0.8, ease: "easeOut" } },
+        initial: { opacity: 0 },
+        animate: { opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },
+
+        // EXIT MODIFICADO:
+        // Removemos o 'scale: 20'. Agora ela apenas desaparece (opacity: 0)
+        // e encolhe um pouquinho (scale: 0.9) para um efeito de saída mais elegante.
         exit: {
-            scale: 20,
-            opacity: 0,
-            transition: { duration: 0.8, ease: "easeInOut" }
+            scale: 0.9, // Encolhe levemente em vez de crescer
+            opacity: 0, // Fica transparente
+            transition: { duration: 0.6, ease: "easeInOut" } // Transição suave
         }
     };
 
@@ -54,37 +61,39 @@ const Preloader = () => {
             className="preloader-overlay"
         >
             <div className="preloader-content">
-                <AnimatePresence mode="wait">
-                    {steps[index] === "logo" ? (
-                        <motion.img
-                            key="logo"
-                            src={logoSrc}
-                            alt="Logo"
-                            className="preloader-logo"
-                            width="180"
-                            height="180"
-                            // OTIMIZAÇÃO: Prioridade máxima na renderização da imagem
-                            fetchPriority="high"
-                            loading="eager"
-                            variants={logoAnimation}
-                            initial="initial"
-                            animate="animate"
-                            exit="exit"
-                        />
-                    ) : (
-                        <motion.p
-                            key={steps[index]}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.4 }}
-                            className="preloader-text"
-                        >
-                            {steps[index]}
-                            <span className="dot">.</span>
-                        </motion.p>
-                    )}
-                </AnimatePresence>
+
+                {showLogo ? (
+                    <motion.img
+                        key="logo"
+                        src={logoSrc}
+                        alt="Logo"
+                        className="preloader-logo"
+                        width="180"
+                        height="180"
+                        fetchPriority="high"
+                        loading="eager"
+                        variants={logoAnimation}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                    />
+                ) : (
+                    <AnimatePresence mode="wait">
+                        {index < steps.length && (
+                            <motion.p
+                                key={steps[index]}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
+                                transition={{ duration: 0.4 }}
+                                className="preloader-text"
+                            >
+                                {steps[index]}
+                                <span className="dot">.</span>
+                            </motion.p>
+                        )}
+                    </AnimatePresence>
+                )}
             </div>
         </motion.div>
     );
