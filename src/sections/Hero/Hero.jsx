@@ -9,7 +9,7 @@ const Hero = () => {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
-    // O Preloader dura 2.8s. Definimos 3.0s aqui para garantir que 
+    // O Preloader dura 2.8s. Definimos 3.0s aqui para garantir que
     // a flag só mude depois que a animação inicial tiver começado/terminado.
     const timer = setTimeout(() => {
       setIsInitialLoad(false);
@@ -37,12 +37,12 @@ const Hero = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { 
-        staggerChildren: 0.04, 
+      transition: {
+        staggerChildren: 0.04,
         // LÓGICA DE DELAY INTELIGENTE:
         // Se for o load inicial (com preloader), espera 2.9s.
         // Se for navegação/troca de idioma, espera apenas 0.2s.
-        delayChildren: isInitialLoad ? 2.9 : 0.2 
+        delayChildren: isInitialLoad ? 2.9 : 0.2
       },
     },
   };
@@ -71,7 +71,7 @@ const Hero = () => {
           animate="visible"
           key={language}
           aria-label={text}
-          style={{ willChange: 'opacity, transform' }} 
+          style={{ willChange: 'opacity, transform' }}
         >
           {letters.map((letter, index) => (
             <React.Fragment key={index}>

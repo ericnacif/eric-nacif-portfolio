@@ -48,12 +48,10 @@
     .hero-title {
         font-size: clamp(32px, 11vw, 56px);
         line-height: 1.2;
-        min-height: 140px;
+        min-height: 2.6em;
     }
 
     .mobile-break {
         display: block;
-        content: "";
-        margin-top: 8px;
     }
 }
