@@ -25,12 +25,12 @@ function App() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-      // TIMER FINAL: 2.7 segundos
-      // Dá tempo suficiente para o ciclo de 600ms rodar e a saída acontecer suavemente.
+      // TIMER FINAL: 2.3 segundos
+      // Tempo otimizado para fechar o ciclo de 500ms e transições
       const timer = setTimeout(() => {
         setIsLoading(false);
         window.scrollTo(0, 0);
-      }, 2700);
+      }, 2300);
 
       return () => clearTimeout(timer);
     }, []);

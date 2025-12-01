@@ -12,8 +12,11 @@ const Preloader = () => {
     const logoSrc = theme === 'dark' ? '/logo-gray.webp' : '/logo-blue.webp';
 
     useEffect(() => {
-        // Mantido o tempo de 600ms para performance (nota 100)
-        const delay = 600;
+        // AJUSTE FINAL: 500ms
+        // Matemática: 3 palavras * 0.5s = 1.5s de texto.
+        // Com o tempo de carregamento da página (~0.5s), totalizamos 2.0s.
+        // Isso coloca o LCP dentro da meta verde (< 2.5s) com folga.
+        const delay = 500;
 
         if (index < steps.length) {
             const timeout = setTimeout(() => {
@@ -25,7 +28,6 @@ const Preloader = () => {
         }
     }, [index]);
 
-    // Animação da cortina branca subindo (mantida)
     const slideUp = {
         initial: { y: 0 },
         exit: {
@@ -38,18 +40,13 @@ const Preloader = () => {
         }
     };
 
-    // --- CORREÇÃO DA ANIMAÇÃO DA LOGO ---
     const logoAnimation = {
         initial: { opacity: 0 },
-        animate: { opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },
-
-        // EXIT MODIFICADO:
-        // Removemos o 'scale: 20'. Agora ela apenas desaparece (opacity: 0)
-        // e encolhe um pouquinho (scale: 0.9) para um efeito de saída mais elegante.
+        animate: { opacity: 1, transition: { duration: 0.5, ease: "easeOut" } }, // Animação mais rápida (0.5s)
         exit: {
-            scale: 0.9, // Encolhe levemente em vez de crescer
-            opacity: 0, // Fica transparente
-            transition: { duration: 0.6, ease: "easeInOut" } // Transição suave
+            scale: 0.9,
+            opacity: 0,
+            transition: { duration: 0.6, ease: "easeInOut" }
         }
     };
 
@@ -85,7 +82,7 @@ const Preloader = () => {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.4 }}
+                                transition={{ duration: 0.3 }} // Transição de texto mais ágil
                                 className="preloader-text"
                             >
                                 {steps[index]}

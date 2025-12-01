@@ -20,27 +20,31 @@ export default defineConfig({
   ],
   build: {
     minify: 'terser',
-    cssCodeSplit: true,
+    cssCodeSplit: true, // Garante CSS sob demanda
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // OTIMIZAÇÃO DE CADEIA:
-          // Agrupa React e Router juntos. É melhor baixar um arquivo médio de uma vez
-          // do que ficar abrindo várias conexões pequenas (Waterfall).
-          if (id.includes('node_modules/react') ||
-            id.includes('node_modules/react-dom') ||
-            id.includes('node_modules/react-router') ||
-            id.includes('node_modules/react-router-dom') ||
-            id.includes('node_modules/scheduler')) {
-            return 'react-vendor';
+          // 1. Core do React (Pequeno e essencial)
+          if (id.includes('node_modules/react') || id.includes('node_modules/scheduler')) {
+            return 'react-core';
           }
 
-          // Framer Motion continua separado pois é grande e nem sempre crítico no frame 0
+          // 2. React DOM (Renderização)
+          if (id.includes('node_modules/react-dom')) {
+            return 'react-dom';
+          }
+
+          // 3. Roteamento (Separado para não bloquear o início)
+          if (id.includes('node_modules/react-router') || id.includes('node_modules/react-router-dom')) {
+            return 'react-router';
+          }
+
+          // 4. Animações (Framer Motion é pesado, fica isolado)
           if (id.includes('node_modules/framer-motion')) {
             return 'framer-motion';
           }
 
-          // Ícones separados (carregam sob demanda se possível)
+          // 5. Ícones (Só carrega o necessário)
           if (id.includes('node_modules/react-icons')) {
             return 'react-icons';
           }

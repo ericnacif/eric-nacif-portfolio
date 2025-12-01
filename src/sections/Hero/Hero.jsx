@@ -8,10 +8,10 @@ const Hero = () => {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
-    // Sincronia: (3 palavras * 600ms) + transições ~= 2.6s
+    // Sincronia: (3 * 500ms) + animações ~= 2.2s
     const timer = setTimeout(() => {
       setIsInitialLoad(false);
-    }, 2600);
+    }, 2200);
 
     return () => clearTimeout(timer);
   }, []);
@@ -37,9 +37,9 @@ const Hero = () => {
       opacity: 1,
       transition: {
         staggerChildren: 0.04,
-        // Delay: 2.5s
-        // Começa a animar o texto levemente antes do preloader terminar de subir
-        delayChildren: isInitialLoad ? 2.5 : 0.2
+        // Delay: 2.1s
+        // Começa a animar o texto logo antes do preloader terminar
+        delayChildren: isInitialLoad ? 2.1 : 0.2
       },
     },
   };
