@@ -1,29 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
 import './WhatsAppButton.css';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
 
 const WhatsAppButton = () => {
     const { language } = useLanguage();
-    const [isRaised, setIsRaised] = useState(false);
 
     const phoneNumber = "5533997088999";
-
-    // Lógica para levantar o botão quando chegar no footer
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => setIsRaised(entry.isIntersecting),
-            { threshold: 0.1 }
-        );
-
-        const footer = document.querySelector('footer');
-        if (footer) observer.observe(footer);
-
-        return () => {
-            if (footer) observer.unobserve(footer);
-        };
-    }, []);
 
     // Dicionário de mensagens para o WhatsApp
     const messages = {
@@ -39,7 +23,6 @@ const WhatsAppButton = () => {
         es: "¡Hablemos!"
     };
 
-    // Seleciona o texto com base no idioma (ou fallback para PT)
     const currentMessage = messages[language] || messages.pt;
     const currentTooltip = tooltips[language] || tooltips.pt;
 
@@ -50,8 +33,7 @@ const WhatsAppButton = () => {
             href={`https://wa.me/${phoneNumber}?text=${encodedMessage}`}
             target="_blank"
             rel="noopener noreferrer"
-            // Adiciona a classe 'raised' condicionalmente
-            className={`whatsapp-float ${isRaised ? 'raised' : ''}`}
+            className="whatsapp-float"
             aria-label="WhatsApp"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}

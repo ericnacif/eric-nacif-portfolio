@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import viteCompression from 'vite-plugin-compression';
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'; // <--- Importado aqui
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,10 +12,7 @@ export default defineConfig({
       svgrOptions: {},
       exportAsDefault: true,
     }),
-    // OTIMIZAÇÃO: Injeta o CSS no JS para evitar render-blocking (solicitação de rede extra)
     cssInjectedByJsPlugin(),
-
-    // MELHORIA: Brotli comprime mais que Gzip (ótimo para 4G/Mobile)
     viteCompression({
       algorithm: 'brotliCompress',
       ext: '.br',
@@ -27,16 +24,28 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
-              return 'react-vendor';
-            }
-            if (id.includes('framer-motion')) {
-              return 'framer-motion';
-            }
-            // Se tiver lottie instalado, descomente abaixo:
-            // if (id.includes('lottie')) return 'lottie';
+          // 1. Separa o React Core (Necessário para iniciar)
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom') || id.includes('node_modules/scheduler')) {
+            return 'react-core';
+          }
 
+          // 2. Separa o Router (Navegação)
+          if (id.includes('node_modules/react-router') || id.includes('node_modules/react-router-dom')) {
+            return 'react-router';
+          }
+
+          // 3. Separa o Framer Motion (Pesado, animações)
+          if (id.includes('node_modules/framer-motion')) {
+            return 'framer-motion';
+          }
+
+          // 4. Separa os Ícones (Geralmente grande parte do código não usado vem daqui)
+          if (id.includes('node_modules/react-icons')) {
+            return 'react-icons';
+          }
+
+          // 5. Outras dependências (Vendor genérico)
+          if (id.includes('node_modules')) {
             return 'vendor';
           }
         },

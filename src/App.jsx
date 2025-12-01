@@ -2,23 +2,27 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
-// Componentes Críticos
+// Componentes Críticos (Carregados imediatamente para o LCP)
 import Header from './components/Header/Header';
 import Hero from './sections/Hero/Hero';
 import Preloader from './components/Preloader/Preloader';
+
+// Componentes Leves / Utilitários
 import Cursor from './components/Cursor/Cursor';
 import ScrollProgress from './components/ScrollProgress/ScrollProgress';
 import EasterEgg from './components/EasterEgg/EasterEgg';
 import PrintRedirect from './components/PrintRedirect/PrintRedirect';
-import WhatsAppButton from './components/WhatsAppButton/WhatsAppButton';
-import BackToTop from './components/BackToTop';
-import NotFound from './pages/NotFound/NotFound';
 import GoogleAnalyticsTracker from './components/GoogleAnalyticsTracker';
+import NotFound from './pages/NotFound/NotFound';
 
-// Lazy Loading (Mantendo a otimização de peso)
+// Lazy Loading (Otimização de peso e "Unused JS")
 const About = React.lazy(() => import('./sections/About/About'));
 const Projects = React.lazy(() => import('./sections/Projects/Projects'));
 const Footer = React.lazy(() => import('./components/Footer/Footer'));
+
+// OTIMIZAÇÃO: Lazy load também nos botões flutuantes para reduzir o bundle inicial
+const WhatsAppButton = React.lazy(() => import('./components/WhatsAppButton/WhatsAppButton'));
+const BackToTop = React.lazy(() => import('./components/BackToTop'));
 
 function App() {
 
@@ -26,12 +30,12 @@ function App() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-      // CORREÇÃO: Tempo fixo de 2.8s
-      // Garante que a animação (Olá -> Hello -> Hola -> Logo) toque inteira
+      // SINCRONIA: Ajustado para 3200ms para casar com o Hero.jsx e Preloader.jsx
+      // Isso garante que o preloader termine sua animação suavemente antes de desmontar.
       const timer = setTimeout(() => {
         setIsLoading(false);
         window.scrollTo(0, 0);
-      }, 2800);
+      }, 3200);
 
       return () => clearTimeout(timer);
     }, []);
@@ -44,22 +48,26 @@ function App() {
 
         {/* O conteúdo aparece suavemente após o preloader sair */}
         <div style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease' }}>
-            <Header />
-            <main>
+          <Header />
+          <main>
             <Hero />
-            
-            <Suspense fallback={<div style={{ height: '50px' }}></div>}>
-                <About />
-                <Projects />
-            </Suspense>
-            </main>
 
-            <Suspense fallback={null}>
-            <Footer />
+            {/* Suspense envolve as seções pesadas */}
+            <Suspense fallback={<div style={{ height: '100px' }}></div>}>
+              <About />
+              <Projects />
             </Suspense>
-            
+          </main>
+
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
+
+          {/* OTIMIZAÇÃO: Botões carregados sob demanda */}
+          <Suspense fallback={null}>
             <BackToTop />
             <WhatsAppButton />
+          </Suspense>
         </div>
       </>
     );
@@ -68,8 +76,7 @@ function App() {
   return (
     <Router>
       <GoogleAnalyticsTracker />
-      {/* Removido o PageTitleHandler */}
-      
+
       <Cursor />
       <ScrollProgress />
       <EasterEgg />
