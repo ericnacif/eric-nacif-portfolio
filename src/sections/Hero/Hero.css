@@ -1,18 +1,20 @@
 .hero-section {
     position: relative;
-    /* ESSENCIAL para o NoiseOverlay ABSOLUTE funcionar */
+    /* Mantenho 85vh para o texto ficar bem centralizado verticalmente (não grudar no topo) */
     min-height: 85vh;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     padding: 0 20px;
+    /* Zerei paddings extras para não afastar o About */
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
 .hero-container {
     position: relative;
     z-index: 2;
-    /* Acima do Noise */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,6 +32,8 @@
     letter-spacing: -0.04em;
     color: var(--text-color);
     min-height: 1.2em;
+    margin-bottom: 0;
+    /* Garante que o título não empurre nada pra baixo */
 }
 
 .hero-title span {
@@ -43,7 +47,8 @@
 
 @media (max-width: 768px) {
     .hero-section {
-        min-height: 85vh;
+        /* No mobile, 80vh é suficiente para centralizar sem sobrar muito espaço embaixo */
+        min-height: 80vh;
     }
 
     .hero-title {

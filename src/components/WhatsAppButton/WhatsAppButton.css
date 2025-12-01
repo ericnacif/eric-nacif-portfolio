@@ -2,9 +2,10 @@
     position: fixed;
     width: 60px;
     height: 60px;
-    bottom: 25px;
-    left: 25px;
-    /* Lado Esquerdo */
+    bottom: 32px;
+    /* Padronizado com BackToTop (era 25px) */
+    left: 32px;
+    /* Padronizado (era 25px) */
 
     /* ALTERADO: Usa a cor de destaque do site */
     background-color: var(--accent-color);
@@ -35,6 +36,12 @@
     box-shadow: 0 0 20px rgba(41, 82, 255, 0.6);
     transform: translateY(-3px);
     /* Sobe um pouquinho */
+}
+
+/* CLASSE PARA SUBIR NO FOOTER */
+.whatsapp-float.raised {
+    bottom: 120px;
+    /* Sobe igual ao BackToTop */
 }
 
 /* Tooltip (balãozinho) */
@@ -81,9 +88,16 @@
     .whatsapp-float {
         width: 50px;
         height: 50px;
-        bottom: 20px;
-        left: 20px;
+        bottom: 24px;
+        /* Padronizado */
+        left: 24px;
+        /* Padronizado */
         font-size: 24px;
+    }
+
+    .whatsapp-float.raised {
+        bottom: 140px;
+        /* Sobe mais no mobile */
     }
 
     .whatsapp-tooltip {

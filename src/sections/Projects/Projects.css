@@ -3,7 +3,10 @@
   position: relative;
   background-color: var(--accent-color);
   padding: 150px 0;
-  margin-top: 60px;
+
+  /* AQUI ESTAVA O PROBLEMA: margin-top: 60px */
+  /* Alterado para 0 ou levemente negativo se tiver onda SVG */
+  margin-top: 0;
   margin-bottom: 0;
 }
 
@@ -28,6 +31,8 @@
   width: 100%;
   overflow: hidden;
   line-height: 0;
+  /* Garante que o SVG toque o limite superior */
+  margin-top: -1px;
 }
 
 .custom-shape-divider-top svg {
@@ -50,6 +55,7 @@
   width: 100%;
   overflow: hidden;
   line-height: 0;
+  margin-bottom: -1px;
 }
 
 .custom-shape-divider-bottom svg {
@@ -101,16 +107,13 @@
     height: 60px;
   }
 
-  /* CORREÇÃO FORÇADA DE TÍTULO */
+  /* CORREÇÃO FORÇADA DE TÍTULO (Mantida da sua correção anterior) */
   .projects-section-blue .section-title,
   .projects-section-blue h2,
   .projects-section-blue .white-title {
     font-size: 28px !important;
-    /* Tamanho fixo seguro para não estourar */
     line-height: 1.3 !important;
     word-spacing: normal !important;
-
-    /* Regras para proibir quebra no meio da palavra */
     overflow-wrap: normal !important;
     word-break: normal !important;
     word-wrap: normal !important;
