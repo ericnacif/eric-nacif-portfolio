@@ -5,13 +5,13 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useTheme } from '../../context/ThemeContext';
 import {
   SiInstagram, SiGithub, SiLinkedin, SiGmail,
-  SiPhp, SiLaravel, SiJavascript, SiReact, SiTypescript, 
-  SiNodedotjs, SiDocker, SiMysql, SiGit, SiTailwindcss, 
+  SiPhp, SiLaravel, SiJavascript, SiReact, SiTypescript,
+  SiNodedotjs, SiDocker, SiMysql, SiGit, SiTailwindcss,
   SiMongodb, SiNextdotjs, SiVuedotjs
 } from 'react-icons/si';
 
-import logoBlue from '../../assets/images/logo-blue.png';
-import logoGray from '../../assets/images/logo-gray.png';
+import logoBlue from '../../assets/images/logo-blue.webp';
+import logoGray from '../../assets/images/logo-gray.webp';
 
 const structuredStack = {
   pt: {
@@ -139,14 +139,14 @@ const About = () => {
 
         {/* --- TECH MARQUEE START --- */}
         <div className="tech-marquee-wrapper">
-            <div className="tech-track">
-                {[...technologies, ...technologies].map((tech, index) => (
-                    <div className="tech-item" key={index}>
-                        <span className="tech-icon">{tech.icon}</span>
-                        <span className="tech-name">{tech.name}</span>
-                    </div>
-                ))}
-            </div>
+          <div className="tech-track">
+            {[...technologies, ...technologies].map((tech, index) => (
+              <div className="tech-item" key={index}>
+                <span className="tech-icon">{tech.icon}</span>
+                <span className="tech-name">{tech.name}</span>
+              </div>
+            ))}
+          </div>
         </div>
         {/* --- TECH MARQUEE END --- */}
 

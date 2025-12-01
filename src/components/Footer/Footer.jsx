@@ -6,17 +6,17 @@ import { useTheme } from '../../context/ThemeContext';
 import { SiLinkedin, SiInstagram, SiGithub } from 'react-icons/si';
 import { FiLoader, FiCheck, FiMapPin } from 'react-icons/fi';
 
-import logoBlue from '../../assets/images/logo-blue.png';
-import logoGray from '../../assets/images/logo-gray.png';
+import logoBlue from '../../assets/images/logo-blue.webp';
+import logoGray from '../../assets/images/logo-gray.webp';
 
 const Footer = () => {
   const { language } = useLanguage();
   const { theme } = useTheme();
-  
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  
+
   const [status, setStatus] = useState("idle");
   const [greetingKey, setGreetingKey] = useState("morning");
   const [suggestions, setSuggestions] = useState([]);
@@ -101,7 +101,7 @@ const Footer = () => {
     if (val.includes('@')) {
       const [user, domainPart] = val.split('@');
       const filtered = commonDomains.filter(d => d.startsWith(domainPart));
-      
+
       if (filtered.length > 0 && !commonDomains.includes(domainPart)) {
         setSuggestions(filtered);
         setShowSuggestions(true);
@@ -133,7 +133,7 @@ const Footer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("sending");
-    
+
     const data = new FormData();
     data.append("name", name);
     data.append("email", email);
@@ -150,7 +150,7 @@ const Footer = () => {
         setStatus("success");
         setName("");
         setEmail("");
-        setMessage(t.defaultMessage); 
+        setMessage(t.defaultMessage);
         setTimeout(() => setStatus("idle"), 3000);
       } else {
         setStatus("error");
@@ -164,11 +164,11 @@ const Footer = () => {
 
   // --- ALTERAÇÃO AQUI: Aumentei a velocidade do stagger ---
   const textContainerVariants = {
-    visible: { 
+    visible: {
         transition: { staggerChildren: 0.015 } // Antes era 0.04 (agora é muito mais rápido)
     }
   };
-  
+
   const letterVariants = {
     hidden: { opacity: 0, y: 10 },
     visible: { opacity: 1, y: 0 }
@@ -183,7 +183,7 @@ const Footer = () => {
   return (
     <footer id="contato" className="main-footer">
       <div className="container footer-container">
-        
+
         <motion.div
           className="footer-cta-section"
           initial={{ opacity: 0, y: 30 }}
@@ -208,7 +208,7 @@ const Footer = () => {
           </motion.h2>
 
           <AnimatePresence mode="wait">
-            <motion.p 
+            <motion.p
                 key={language}
                 className="footer-subtitle"
                 variants={fadeVariants}
@@ -224,19 +224,19 @@ const Footer = () => {
           <form className="contact-form minimal-form" onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="input-group-minimal">
-                <input 
-                  type="text" 
-                  name="name" 
-                  id="name" 
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  required 
-                  disabled={status === "sending" || status === "success"} 
-                  placeholder=" " 
+                  required
+                  disabled={status === "sending" || status === "success"}
+                  placeholder=" "
                 />
-                
+
                 <AnimatePresence mode="wait">
-                    <motion.label 
+                    <motion.label
                         htmlFor="name"
                         key={language}
                         initial={{ opacity: 0 }}
@@ -251,20 +251,20 @@ const Footer = () => {
               </div>
 
               <div className="input-group-minimal" ref={suggestionsRef}>
-                <input 
-                  type="email" 
-                  name="email" 
-                  id="email" 
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
                   value={email}
                   onChange={handleEmailChange}
-                  required 
-                  disabled={status === "sending" || status === "success"} 
-                  placeholder=" " 
+                  required
+                  disabled={status === "sending" || status === "success"}
+                  placeholder=" "
                   autoComplete="off"
                 />
-                
+
                 <AnimatePresence mode="wait">
-                    <motion.label 
+                    <motion.label
                         htmlFor="email"
                         key={language}
                         initial={{ opacity: 0 }}
@@ -276,10 +276,10 @@ const Footer = () => {
                     </motion.label>
                 </AnimatePresence>
                 <span className="underline-bar"></span>
-                
+
                 <AnimatePresence>
                   {showSuggestions && (
-                    <motion.ul 
+                    <motion.ul
                       className="email-suggestions"
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -299,15 +299,15 @@ const Footer = () => {
 
             <div className="input-group-minimal full-width">
               <AnimatePresence mode="wait">
-                <motion.textarea 
-                    key={language} 
-                    name="message" 
-                    id="message" 
-                    rows="1" 
+                <motion.textarea
+                    key={language}
+                    name="message"
+                    id="message"
+                    rows="1"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    required 
-                    disabled={status === "sending" || status === "success"} 
+                    required
+                    disabled={status === "sending" || status === "success"}
                     placeholder=" "
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -315,9 +315,9 @@ const Footer = () => {
                     transition={{ duration: 0.2 }}
                 />
               </AnimatePresence>
-              
+
               <AnimatePresence mode="wait">
-                <motion.label 
+                <motion.label
                     htmlFor="message"
                     key={language}
                     initial={{ opacity: 0 }}
@@ -341,10 +341,10 @@ const Footer = () => {
               >
                 <AnimatePresence mode="wait">
                   {status === "idle" && (
-                    <motion.span 
-                        key={`text-${language}`} 
-                        initial={{ opacity: 0 }} 
-                        animate={{ opacity: 1 }} 
+                    <motion.span
+                        key={`text-${language}`}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                     >
                       {t.button.default}
@@ -381,9 +381,9 @@ const Footer = () => {
         <div className="footer-bottom">
             <div className="footer-brand">
                 <img src={logoSrc} alt="Logo" className="footer-logo" />
-                
+
                 <AnimatePresence mode="wait">
-                    <motion.p 
+                    <motion.p
                         className="footer-location"
                         key={language}
                         variants={fadeVariants}
@@ -392,7 +392,7 @@ const Footer = () => {
                         exit="exit"
                         transition={{ duration: 0.2 }}
                     >
-                        <FiMapPin style={{ marginRight: '6px' }} /> 
+                        <FiMapPin style={{ marginRight: '6px' }} />
                         {t.location}
                     </motion.p>
                 </AnimatePresence>

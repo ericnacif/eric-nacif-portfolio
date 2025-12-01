@@ -3,8 +3,8 @@ import './Header.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaSun, FaMoon, FaBars, FaTimes, FaGlobe, FaDownload } from 'react-icons/fa';
 
-import logoBlue from '../../assets/images/logo-blue.png';
-import logoGray from '../../assets/images/logo-gray.png';
+import logoBlue from '../../assets/images/logo-blue.webp';
+import logoGray from '../../assets/images/logo-gray.webp';
 import cvPt from '../../assets/docs/cv-pt.pdf';
 import cvEn from '../../assets/docs/cv-en.pdf';
 

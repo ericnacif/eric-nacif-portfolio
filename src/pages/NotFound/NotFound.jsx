@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import './NotFound.css';
 import { useLanguage } from '../../context/LanguageContext';
-import logoBlue from '../../assets/images/logo-blue.png'; // Importando a logo
+import logoBlue from '../../assets/images/logo-blue.webp'; // Importando a logo
 
 const NotFound = () => {
     const { language } = useLanguage();

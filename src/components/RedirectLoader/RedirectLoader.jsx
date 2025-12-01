@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { motion } from 'framer-motion';
 import './RedirectLoader.css';
-import logoBlue from '../../assets/images/logo-blue.png';
+import logoBlue from '../../assets/images/logo-blue.webp';
 
 const RedirectLoader = ({ text }) => {
     const content = (

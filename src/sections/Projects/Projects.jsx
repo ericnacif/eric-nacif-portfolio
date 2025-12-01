@@ -6,8 +6,8 @@ import { useLanguage } from '../../context/LanguageContext';
 import RedirectLoader from '../../components/RedirectLoader/RedirectLoader';
 
 // Imagens
-import certificafeImg from '../../assets/images/project-certificafe.jpg';
-import engelmigImg from '../../assets/images/project-engelmig.png';
+import certificafeImg from '../../assets/images/project-certificafe.webp';
+import engelmigImg from '../../assets/images/project-engelmig.webp';
 
 const Projects = () => {
   const { language } = useLanguage();

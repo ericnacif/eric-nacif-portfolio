@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Preloader.css';
 
-import logoBlue from '../../assets/images/logo-blue.png';
-import logoGray from '../../assets/images/logo-gray.png';
+import logoBlue from '../../assets/images/logo-blue.webp';
+import logoGray from '../../assets/images/logo-gray.webp';
 
 import { useTheme } from '../../context/ThemeContext';
 
