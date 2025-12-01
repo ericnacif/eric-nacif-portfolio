@@ -8,11 +8,11 @@ const Hero = () => {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
-    // Sincronia: O Preloader agora leva cerca de 3 segundos no total.
-    // Aumentamos o timer para 3.2s para garantir.
+    // Sincronia Ajustada: 2.4s
+    // (3 palavras * 0.55s) + animações de entrada/saída ~= 2.4s
     const timer = setTimeout(() => {
       setIsInitialLoad(false);
-    }, 3200);
+    }, 2400);
 
     return () => clearTimeout(timer);
   }, []);
@@ -38,9 +38,9 @@ const Hero = () => {
       opacity: 1,
       transition: {
         staggerChildren: 0.04,
-        // Delay Ajustado: 2.9s
-        // O texto começa a aparecer logo quando o logo explode e a cortina sobe.
-        delayChildren: isInitialLoad ? 2.9 : 0.2
+        // Delay: 2.3s
+        // Começa a animar o texto 100ms antes do timer acabar para garantir fluidez
+        delayChildren: isInitialLoad ? 2.3 : 0.2
       },
     },
   };

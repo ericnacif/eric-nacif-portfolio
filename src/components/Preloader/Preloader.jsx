@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Preloader.css';
-
 import { useTheme } from '../../context/ThemeContext';
 
 const steps = ["Olá", "Hello", "Hola", "logo"];
@@ -14,9 +13,10 @@ const Preloader = () => {
     useEffect(() => {
         if (index === steps.length - 1) return;
 
-        // AJUSTE: Aumentado para 700ms.
-        // Isso dá tempo suficiente para ler cada palavra com calma.
-        const delay = 700;
+        // AJUSTE FINO: 550ms
+        // É o "pulo do gato". Ainda dá pra ler bem, mas economiza tempo suficiente
+        // para o Google não reclamar do atraso de renderização.
+        const delay = 550;
 
         const timeout = setTimeout(() => {
             setIndex((prev) => prev + 1);
@@ -63,6 +63,9 @@ const Preloader = () => {
                             className="preloader-logo"
                             width="180"
                             height="180"
+                            // OTIMIZAÇÃO: Prioridade máxima na renderização da imagem
+                            fetchPriority="high"
+                            loading="eager"
                             variants={logoAnimation}
                             initial="initial"
                             animate="animate"
@@ -74,7 +77,7 @@ const Preloader = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.5 }} // Transição um pouco mais suave
+                            transition={{ duration: 0.4 }}
                             className="preloader-text"
                         >
                             {steps[index]}
