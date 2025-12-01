@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Preloader.css';
 
-import logoBlue from '../../assets/images/logo-blue.webp';
-import logoGray from '../../assets/images/logo-gray.webp';
+// REMOVIDO: Imports de imagem
 
 import { useTheme } from '../../context/ThemeContext';
 
@@ -12,7 +11,8 @@ const steps = ["Olá", "Hello", "Hola", "logo"];
 const Preloader = () => {
     const [index, setIndex] = useState(0);
     const { theme } = useTheme();
-    const logoSrc = theme === 'dark' ? logoGray : logoBlue;
+    // CORREÇÃO: Caminhos absolutos (strings)
+    const logoSrc = theme === 'dark' ? '/logo-gray.webp' : '/logo-blue.webp';
 
     useEffect(() => {
         if (index === steps.length - 1) return;
@@ -23,8 +23,6 @@ const Preloader = () => {
         return () => clearTimeout(timeout);
     }, [index]);
 
-    // --- CORREÇÃO DO CLS AQUI ---
-    // Trocamos 'top' por 'y'. O Framer Motion usa transform: translateY automaticamente.
     const slideUp = {
         initial: { y: 0 },
         exit: {
@@ -62,7 +60,6 @@ const Preloader = () => {
                             src={logoSrc}
                             alt="Logo"
                             className="preloader-logo"
-                            // Adicione width/height para o navegador reservar espaço
                             width="180"
                             height="180"
                             variants={logoAnimation}

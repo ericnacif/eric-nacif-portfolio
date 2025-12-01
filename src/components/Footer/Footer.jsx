@@ -6,8 +6,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { SiLinkedin, SiInstagram, SiGithub } from 'react-icons/si';
 import { FiLoader, FiCheck, FiMapPin } from 'react-icons/fi';
 
-import logoBlue from '../../assets/images/logo-blue.webp';
-import logoGray from '../../assets/images/logo-gray.webp';
+// REMOVIDO: Imports de imagem (agora estão na public)
 
 const Footer = () => {
   const { language } = useLanguage();
@@ -22,7 +21,9 @@ const Footer = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const logoSrc = theme === 'dark' ? logoGray : logoBlue;
+  // CORREÇÃO: Caminhos absolutos (strings)
+  const logoSrc = theme === 'dark' ? '/logo-gray.webp' : '/logo-blue.webp';
+
   const suggestionsRef = useRef(null);
 
   const commonDomains = ["gmail.com", "outlook.com", "hotmail.com", "icloud.com", "yahoo.com"];
@@ -162,10 +163,9 @@ const Footer = () => {
     }
   };
 
-  // --- ALTERAÇÃO AQUI: Aumentei a velocidade do stagger ---
   const textContainerVariants = {
     visible: {
-        transition: { staggerChildren: 0.015 } // Antes era 0.04 (agora é muito mais rápido)
+      transition: { staggerChildren: 0.015 }
     }
   };
 
@@ -191,7 +191,6 @@ const Footer = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          {/* Saudação com efeito cascata RÁPIDO */}
           <motion.h2
             className="section-title greeting-title"
             key={language + greetingKey}
@@ -201,23 +200,23 @@ const Footer = () => {
             viewport={{ once: true }}
           >
             {Array.from(t.greetings[greetingKey]).map((char, index) => (
-                <motion.span key={index} variants={letterVariants} style={{ display: 'inline-block' }}>
-                    {char === ' ' ? '\u00A0' : char}
-                </motion.span>
+              <motion.span key={index} variants={letterVariants} style={{ display: 'inline-block' }}>
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
             ))}
           </motion.h2>
 
           <AnimatePresence mode="wait">
             <motion.p
-                key={language}
-                className="footer-subtitle"
-                variants={fadeVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                transition={{ duration: 0.2 }}
+              key={language}
+              className="footer-subtitle"
+              variants={fadeVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={{ duration: 0.2 }}
             >
-                {t.subtitle}
+              {t.subtitle}
             </motion.p>
           </AnimatePresence>
 
@@ -236,16 +235,16 @@ const Footer = () => {
                 />
 
                 <AnimatePresence mode="wait">
-                    <motion.label
-                        htmlFor="name"
-                        key={language}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                    >
-                        {t.labels.name}
-                    </motion.label>
+                  <motion.label
+                    htmlFor="name"
+                    key={language}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {t.labels.name}
+                  </motion.label>
                 </AnimatePresence>
                 <span className="underline-bar"></span>
               </div>
@@ -264,16 +263,16 @@ const Footer = () => {
                 />
 
                 <AnimatePresence mode="wait">
-                    <motion.label
-                        htmlFor="email"
-                        key={language}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                    >
-                        {t.labels.email}
-                    </motion.label>
+                  <motion.label
+                    htmlFor="email"
+                    key={language}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {t.labels.email}
+                  </motion.label>
                 </AnimatePresence>
                 <span className="underline-bar"></span>
 
@@ -300,32 +299,32 @@ const Footer = () => {
             <div className="input-group-minimal full-width">
               <AnimatePresence mode="wait">
                 <motion.textarea
-                    key={language}
-                    name="message"
-                    id="message"
-                    rows="1"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    required
-                    disabled={status === "sending" || status === "success"}
-                    placeholder=" "
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
+                  key={language}
+                  name="message"
+                  id="message"
+                  rows="1"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  required
+                  disabled={status === "sending" || status === "success"}
+                  placeholder=" "
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
                 />
               </AnimatePresence>
 
               <AnimatePresence mode="wait">
                 <motion.label
-                    htmlFor="message"
-                    key={language}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
+                  htmlFor="message"
+                  key={language}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
                 >
-                    {t.labels.message}
+                  {t.labels.message}
                 </motion.label>
               </AnimatePresence>
               <span className="underline-bar"></span>
@@ -342,10 +341,10 @@ const Footer = () => {
                 <AnimatePresence mode="wait">
                   {status === "idle" && (
                     <motion.span
-                        key={`text-${language}`}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
+                      key={`text-${language}`}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
                     >
                       {t.button.default}
                     </motion.span>
@@ -379,52 +378,53 @@ const Footer = () => {
         <div className="footer-divider"></div>
 
         <div className="footer-bottom">
-            <div className="footer-brand">
-                <img src={logoSrc} alt="Logo" className="footer-logo" />
+          <div className="footer-brand">
+            {/* CORREÇÃO: Uso da variável com o caminho da public */}
+            <img src={logoSrc} alt="Logo" className="footer-logo" />
 
-                <AnimatePresence mode="wait">
-                    <motion.p
-                        className="footer-location"
-                        key={language}
-                        variants={fadeVariants}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.2 }}
-                    >
-                        <FiMapPin style={{ marginRight: '6px' }} />
-                        {t.location}
-                    </motion.p>
-                </AnimatePresence>
-            </div>
-
-            <div className="footer-socials-bottom">
-                {socialLinks.map((link, index) => (
-                <a
-                    key={index}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="footer-social-link"
-                    aria-label={link.alt}
-                >
-                    {link.icon}
-                </a>
-                ))}
-            </div>
-        </div>
-
-        <div className="footer-copyright">
-          <AnimatePresence mode="wait">
-            <motion.p
+            <AnimatePresence mode="wait">
+              <motion.p
+                className="footer-location"
                 key={language}
                 variants={fadeVariants}
                 initial="initial"
                 animate="animate"
                 exit="exit"
                 transition={{ duration: 0.2 }}
+              >
+                <FiMapPin style={{ marginRight: '6px' }} />
+                {t.location}
+              </motion.p>
+            </AnimatePresence>
+          </div>
+
+          <div className="footer-socials-bottom">
+            {socialLinks.map((link, index) => (
+              <a
+                key={index}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social-link"
+                aria-label={link.alt}
+              >
+                {link.icon}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div className="footer-copyright">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={language}
+              variants={fadeVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={{ duration: 0.2 }}
             >
-                © {new Date().getFullYear()} Eric Nacif. {t.copyright}
+              © {new Date().getFullYear()} Eric Nacif. {t.copyright}
             </motion.p>
           </AnimatePresence>
         </div>

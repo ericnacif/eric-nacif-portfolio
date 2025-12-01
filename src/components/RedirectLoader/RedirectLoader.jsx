@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { motion } from 'framer-motion';
 import './RedirectLoader.css';
-import logoBlue from '../../assets/images/logo-blue.webp';
+// REMOVIDO: import logoBlue
 
 const RedirectLoader = ({ text }) => {
     const content = (
@@ -15,15 +15,14 @@ const RedirectLoader = ({ text }) => {
         >
             <div className="redirect-content">
                 <motion.img
-                    src={logoBlue}
+                    src="/logo-blue.webp" /* CORREÇÃO: Uso direto da string */
                     alt="Loading..."
                     className="redirect-logo"
-                    /* ALTERADO: Agora roda 360 graus */
                     animate={{ rotate: 360 }}
                     transition={{
-                        duration: 1.5, /* Tempo de uma volta completa (ajuste se quiser mais rápido/lento) */
-                        repeat: Infinity, /* Repete para sempre */
-                        ease: "linear" /* Mantém a velocidade constante (sem frear no final) */
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "linear"
                     }}
                 />
                 <motion.p

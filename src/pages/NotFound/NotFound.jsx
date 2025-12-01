@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import './NotFound.css';
 import { useLanguage } from '../../context/LanguageContext';
-import logoBlue from '../../assets/images/logo-blue.webp'; // Importando a logo
+// REMOVIDO: import logoBlue
 
 const NotFound = () => {
     const { language } = useLanguage();
@@ -33,10 +33,9 @@ const NotFound = () => {
 
     return (
         <section className="not-found-section">
-
-            {/* --- CABEÇALHO SIMPLIFICADO (Só Logo + Nome) --- */}
             <div className="simple-header">
-                <img src={logoBlue} alt="Logo" className="simple-logo-img" />
+                {/* CORREÇÃO: Uso direto da string */}
+                <img src="/logo-blue.webp" alt="Logo" className="simple-logo-img" />
                 <span className="simple-logo-text">Eric Nacif</span>
             </div>
 

@@ -10,8 +10,7 @@ import {
   SiMongodb, SiNextdotjs, SiVuedotjs
 } from 'react-icons/si';
 
-import logoBlue from '../../assets/images/logo-blue.webp';
-import logoGray from '../../assets/images/logo-gray.webp';
+// REMOVIDO: Imports de imagem
 
 const structuredStack = {
   pt: {
@@ -19,21 +18,21 @@ const structuredStack = {
     paragraph1: "Desenvolvedor Full Stack com sólida expertise em PHP, Laravel e JavaScript, especializado em arquiteturas web escaláveis e aplicações móveis com React Native.",
     paragraph2: "Possuo forte proficiência em gestão de dados (SQL e MongoDB) e foco em boas práticas de código para entregar soluções robustas em projetos desafiadores.",
     cta: "Vamos construir algo juntos?",
-    techTitle: "Minha Tech Stack" // Título adicionado
+    techTitle: "Minha Tech Stack"
   },
   en: {
     title: "About Me",
     paragraph1: "Full Stack Developer with solid expertise in PHP, Laravel, and JavaScript, specializing in scalable web architectures and mobile applications with React Native.",
     paragraph2: "I have strong proficiency in data management (SQL and MongoDB) and focus on code best practices to deliver robust solutions in challenging projects.",
     cta: "Let's build something together?",
-    techTitle: "My Tech Stack" // Título adicionado
+    techTitle: "My Tech Stack"
   },
   es: {
     title: "Sobre Mí",
     paragraph1: "Desarrollador Full Stack con sólida experiencia en PHP, Laravel y JavaScript, especializado en arquitecturas web escalables y aplicaciones móviles con React Native.",
     paragraph2: "Tengo una fuerte competencia en gestión de datos (SQL y MongoDB) y me enfoco en las mejores prácticas de código para entregar soluciones robustas.",
     cta: "¿Construimos algo juntos?",
-    techTitle: "Mi Tech Stack" // Título adicionado
+    techTitle: "Mi Tech Stack"
   }
 };
 
@@ -58,7 +57,8 @@ const About = () => {
   const { theme } = useTheme();
   const t = structuredStack[language] || structuredStack.pt;
 
-  const logoSrc = theme === 'dark' ? logoGray : logoBlue;
+  // CORREÇÃO: Caminhos absolutos (strings)
+  const logoSrc = theme === 'dark' ? '/logo-gray.webp' : '/logo-blue.webp';
 
   const socialLinks = [
     { name: "LinkedIn", url: "https://www.linkedin.com/in/eric-nacif-956930324/", icon: <SiLinkedin /> },
@@ -134,10 +134,8 @@ const About = () => {
           </div>
         </div>
 
-        {/* --- Título da Tech Stack --- */}
         <h3 className="tech-stack-title">{t.techTitle}</h3>
 
-        {/* --- TECH MARQUEE START --- */}
         <div className="tech-marquee-wrapper">
           <div className="tech-track">
             {[...technologies, ...technologies].map((tech, index) => (
@@ -148,7 +146,6 @@ const About = () => {
             ))}
           </div>
         </div>
-        {/* --- TECH MARQUEE END --- */}
 
         <div className="about-footer">
           <AnimatePresence mode="wait">

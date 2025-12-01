@@ -3,8 +3,7 @@ import './Header.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaSun, FaMoon, FaBars, FaTimes, FaGlobe, FaDownload } from 'react-icons/fa';
 
-import logoBlue from '../../assets/images/logo-blue.webp';
-import logoGray from '../../assets/images/logo-gray.webp';
+// REMOVIDO: Imports de imagem
 import cvPt from '../../assets/docs/cv-pt.pdf';
 import cvEn from '../../assets/docs/cv-en.pdf';
 
@@ -24,7 +23,8 @@ const Header = () => {
   const menuBtnRef = useRef(null);
   const observerRef = useRef(null);
 
-  const logoSrc = theme === 'dark' ? logoGray : logoBlue;
+  // CORREÇÃO: Caminhos absolutos (strings)
+  const logoSrc = theme === 'dark' ? '/logo-gray.webp' : '/logo-blue.webp';
 
   const navItems = [
     { id: 'sobre', label: t.nav?.about || "Sobre" },
@@ -120,14 +120,13 @@ const Header = () => {
 
   useEffect(() => {
     if (isMenuOpen) {
-      document.body.style.overflow = 'hidden'; // Bloqueia scroll do site
+      document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
     return () => { document.body.style.overflow = 'unset'; }
   }, [isMenuOpen]);
 
-  // ANIMAÇÃO DO DRAWER (SLIDE DA DIREITA)
   const drawerVariants = {
     hidden: { x: "100%", opacity: 0 },
     visible: {
@@ -160,7 +159,6 @@ const Header = () => {
     exit: { scale: 0.5, opacity: 0, rotate: 90 }
   };
 
-  // Variantes para letras do logo
   const textContainerVariants = { visible: { transition: { staggerChildren: 0.04 } } };
   const letterVariants = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } };
 
@@ -168,7 +166,6 @@ const Header = () => {
     <header className="main-header" role="banner">
       <div className="header-container">
 
-        {/* LOGO LINK */}
         <a
           href="#hero"
           className="header-logo-link"
@@ -199,7 +196,6 @@ const Header = () => {
           </div>
         </a>
 
-        {/* DESKTOP NAV */}
         <nav className="desktop-nav">
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
@@ -235,7 +231,6 @@ const Header = () => {
           })}
         </nav>
 
-        {/* DESKTOP CONTROLS */}
         <div className="header-controls">
           <div className="lang-switcher" onMouseEnter={() => setShowLangMenu(true)} onMouseLeave={() => setShowLangMenu(false)}>
             <motion.button
@@ -323,7 +318,6 @@ const Header = () => {
           </motion.a>
         </div>
 
-        {/* MOBILE MENU TOGGLE BUTTON */}
         <button
           ref={menuBtnRef}
           className="mobile-menu-btn"
@@ -335,24 +329,20 @@ const Header = () => {
 
       </div>
 
-      {/* MOBILE DRAWER (NOVA IMPLEMENTAÇÃO) */}
       <AnimatePresence>
         {isMenuOpen && (
           <>
-            {/* Overlay Escuro com Blur */}
             <motion.div
               className="mobile-menu-overlay"
               initial="hidden" animate="visible" exit="exit" variants={overlayVariants}
               onClick={() => setIsMenuOpen(false)}
             />
 
-            {/* O Drawer Lateral */}
             <motion.nav
               className="mobile-menu-drawer"
               ref={menuRef}
               initial="hidden" animate="visible" exit="exit" variants={drawerVariants}
             >
-              {/* Cabeçalho do Menu Mobile */}
               <div className="drawer-header">
                 <span className="drawer-title">Menu</span>
                 <button
@@ -363,7 +353,6 @@ const Header = () => {
                 </button>
               </div>
 
-              {/* Links de Navegação */}
               <div className="drawer-links">
                 {navItems.map((item) => (
                   <a
@@ -377,15 +366,12 @@ const Header = () => {
                 ))}
               </div>
 
-              {/* Controles do Rodapé do Menu */}
               <div className="drawer-footer">
                 <div className="drawer-controls-row">
-                  {/* Seletor de Tema Mobile */}
                   <button className="drawer-icon-btn" onClick={toggleTheme}>
                     {theme === 'dark' ? <FaMoon /> : <FaSun />}
                   </button>
 
-                  {/* Seletor de Idioma Mobile */}
                   <div className="drawer-lang">
                     <button onClick={() => changeLanguage('pt')} className={language === 'pt' ? 'active' : ''}>PT</button>
                     <span className="sep">|</span>
