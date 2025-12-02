@@ -127,6 +127,7 @@ const Header = () => {
     return () => { document.body.style.overflow = 'unset'; }
   }, [isMenuOpen]);
 
+  // VARIANTES (Animações)
   const drawerVariants = {
     hidden: { x: "100%", opacity: 0 },
     visible: {
@@ -162,6 +163,31 @@ const Header = () => {
   const textContainerVariants = { visible: { transition: { staggerChildren: 0.04 } } };
   const letterVariants = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } };
 
+  // NOVAS VARIANTES PARA A NAV DESKTOP
+  const navContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const navItemVariants = {
+    hidden: { y: -20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 20
+      }
+    }
+  };
+
   return (
     <header className="main-header" role="banner">
       <div className="header-container">
@@ -196,15 +222,24 @@ const Header = () => {
           </div>
         </a>
 
-        <nav className="desktop-nav">
+        {/* MODIFICADO: motion.nav com variants */}
+        <motion.nav
+          className="desktop-nav"
+          variants={navContainerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
             return (
-              <a
+              <motion.a
                 key={item.id}
                 href={`#${item.id}`}
                 className={`nav-item ${isActive ? 'active' : ''}`}
                 onClick={(e) => handleScrollTo(e, item.id)}
+                variants={navItemVariants} // Aplica animação individual
+                whileHover={{ scale: 1.05 }} // Efeito extra de hover
+                whileTap={{ scale: 0.95 }}
               >
                 {isActive && (
                   <motion.div
@@ -226,10 +261,10 @@ const Header = () => {
                     {item.label}
                   </motion.span>
                 </AnimatePresence>
-              </a>
+              </motion.a>
             )
           })}
-        </nav>
+        </motion.nav>
 
         <div className="header-controls">
           <div className="lang-switcher" onMouseEnter={() => setShowLangMenu(true)} onMouseLeave={() => setShowLangMenu(false)}>
