@@ -2,22 +2,36 @@
     position: fixed;
     top: 0;
     left: 0;
-    transform: translate(-50%, -50%);
     pointer-events: none;
     z-index: 9999;
     border-radius: 50%;
-    
-    /* Usa a cor do texto definida no tema (Preto no Light, Branco no Dark) */
+
     border: 2px solid var(--text-color);
     background: transparent;
-    
+
     will-change: transform, width, height, border-color;
-    
-    /* REMOVIDO: mix-blend-mode que estava causando o problema */
-    /* mix-blend-mode: difference; */
 }
-  
-/* Se o dispositivo não tiver mouse (touch), esconde o cursor */
-@media (hover: none), (pointer: coarse) {
-    .custom-cursor { display: none; }
+
+/* Lógica para dispositivos touch/sem mouse */
+@media (hover: none),
+(pointer: coarse) {
+    .custom-cursor {
+        display: none;
+    }
+}
+
+/* Lógica para dispositivos COM mouse (Desktop) */
+@media (hover: hover) and (pointer: fine) {
+
+    /* Esconde o cursor padrão do sistema em TUDO para usar apenas o customizado */
+    html,
+    body,
+    a,
+    button,
+    input,
+    textarea,
+    [role="button"],
+    * {
+        cursor: none !important;
+    }
 }
