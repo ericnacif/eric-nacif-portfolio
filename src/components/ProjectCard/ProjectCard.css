@@ -1,7 +1,7 @@
 .project-card {
     background-color: var(--card-bg);
     /* Borda sutil para definir o limite */
-    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     overflow: hidden;
     display: flex;
@@ -13,7 +13,7 @@
     color: inherit;
     position: relative;
     /* Importante para o spotlight não vazar */
-    isolation: isolate; 
+    isolation: isolate;
 }
 
 /* --- EFEITO SPOTLIGHT --- */
@@ -25,22 +25,21 @@
     right: 0;
     bottom: 0;
     border-radius: 12px;
-    padding: 1.5px; /* Espessura da borda brilhante */
-    background: radial-gradient(
-        800px circle at var(--mouse-x) var(--mouse-y),
-        rgba(255, 255, 255, 0.4),
-        transparent 40%
-    );
-    
+    padding: 1.5px;
+    /* Espessura da borda brilhante */
+    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y),
+            rgba(255, 255, 255, 0.4),
+            transparent 40%);
+
     /* Propriedade para Chrome/Safari/Edge */
-    -webkit-mask: 
-        linear-gradient(#fff 0 0) content-box, 
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
         linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
 
     /* Propriedade Padrão (Correção do Aviso) */
-    mask: 
-        linear-gradient(#fff 0 0) content-box, 
+    mask:
+        linear-gradient(#fff 0 0) content-box,
         linear-gradient(#fff 0 0);
     mask-composite: exclude;
 
@@ -54,11 +53,9 @@
 .spotlight-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(
-        600px circle at var(--mouse-x) var(--mouse-y),
-        rgba(255, 255, 255, 0.06),
-        transparent 40%
-    );
+    background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y),
+            rgba(255, 255, 255, 0.06),
+            transparent 40%);
     opacity: 0;
     transition: opacity 0.4s ease;
     z-index: 1;
@@ -79,7 +76,8 @@
 .project-image-wrapper {
     overflow: hidden;
     position: relative;
-    z-index: 3; /* Imagem acima do spotlight */
+    z-index: 3;
+    /* Imagem acima do spotlight */
 }
 
 .project-image {
@@ -103,7 +101,8 @@
     opacity: 0;
     transition: opacity 0.3s ease;
     color: #fff;
-    backdrop-filter: blur(2px); /* Blur moderno */
+    backdrop-filter: blur(2px);
+    /* Blur moderno */
 }
 
 .project-card:hover .card-overlay {
@@ -120,8 +119,10 @@
     flex-direction: column;
     flex-grow: 1;
     position: relative;
-    z-index: 3; /* Texto acima do spotlight */
-    background: var(--card-bg); /* Garante leitura */
+    z-index: 3;
+    /* Texto acima do spotlight */
+    background: var(--card-bg);
+    /* Garante leitura */
 }
 
 .project-info h3 {
@@ -196,5 +197,20 @@
     .tag {
         font-size: 11px;
         padding: 4px 8px;
+    }
+}
+
+/* Adicione isto ao final para dispositivos touch/mobile */
+@media (hover: none) {
+    .card-overlay {
+        opacity: 1;
+        /* Mostra o ícone de link permanentemente no mobile */
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .header-link-icon {
+        opacity: 1;
+        transform: translateX(0);
+        color: var(--accent-color);
     }
 }

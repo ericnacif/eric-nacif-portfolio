@@ -8,7 +8,7 @@ const ProjectCard = ({ title, description, tags, image, url, onClick }) => {
 
   const handleClick = (e) => {
     if (onClick) {
-      e.preventDefault(); 
+      // e.preventDefault(); // Removido para permitir a navegação no mobile
       onClick(e);
     }
   };
@@ -18,8 +18,7 @@ const ProjectCard = ({ title, description, tags, image, url, onClick }) => {
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
-    // Atualiza variáveis CSS locais para o efeito Spotlight
+
     cardRef.current.style.setProperty('--mouse-x', `${x}px`);
     cardRef.current.style.setProperty('--mouse-y', `${y}px`);
   };
@@ -30,11 +29,10 @@ const ProjectCard = ({ title, description, tags, image, url, onClick }) => {
       href={url}
       onClick={handleClick}
       onMouseMove={handleMouseMove}
-      className="project-card spotlight-card" // Adicionei a classe spotlight-card
+      className="project-card spotlight-card"
       whileHover={{ y: -8 }}
       transition={{ type: 'spring', stiffness: 300 }}
     >
-      {/* Camada do Spotlight (Brilho) */}
       <div className="spotlight-overlay" />
 
       <div className="card-image-wrapper">
