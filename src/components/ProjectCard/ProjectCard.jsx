@@ -7,17 +7,22 @@ const ProjectCard = ({ title, description, tags, image, url, onClick }) => {
   const cardRef = useRef(null);
 
   const handleClick = (e) => {
-    // 1. Previne o comportamento padrão do HTML para evitar conflitos no mobile
-    e.preventDefault();
+    // Verifica se é dispositivo móvel pela largura da tela
+    const isMobile = window.innerWidth <= 768;
 
-    // 2. Executa função de analytics/log se houver
-    if (onClick) {
-      onClick(e);
-    }
-
-    // 3. Força a abertura via JavaScript (Resolve o problema de não abrir no mobile)
-    if (url) {
-      window.open(url, '_blank', 'noopener,noreferrer');
+    if (isMobile) {
+      // NO MOBILE: Ignora o redirect animado e abre o link imediatamente
+      // Isso resolve o problema de não abrir no celular
+      if (url) {
+        e.preventDefault();
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+    } else {
+      // NO COMPUTADOR: Mantém o comportamento original (Redirect com animação)
+      if (onClick) {
+        e.preventDefault();
+        onClick(e);
+      }
     }
   };
 
@@ -39,9 +44,9 @@ const ProjectCard = ({ title, description, tags, image, url, onClick }) => {
       onMouseMove={handleMouseMove}
       className="project-card spotlight-card"
       whileHover={{ y: -8 }}
-      whileTap={{ scale: 0.98 }} // Adiciona feedback visual ao tocar no celular
+      whileTap={{ scale: 0.98 }}
       transition={{ type: 'spring', stiffness: 300 }}
-      style={{ cursor: 'pointer', touchAction: 'manipulation' }} // Melhoria para toque
+      style={{ cursor: 'pointer', touchAction: 'manipulation' }}
     >
       <div className="spotlight-overlay" />
 
