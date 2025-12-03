@@ -7,10 +7,17 @@ const ProjectCard = ({ title, description, tags, image, url, onClick }) => {
   const cardRef = useRef(null);
 
   const handleClick = (e) => {
-    // Importante: NÃO usar e.preventDefault() aqui para permitir que o link abra.
-    // Apenas chamamos a prop onClick se ela existir (ex: para analytics).
+    // 1. Previne o comportamento padrão do HTML para evitar conflitos no mobile
+    e.preventDefault();
+
+    // 2. Executa função de analytics/log se houver
     if (onClick) {
       onClick(e);
+    }
+
+    // 3. Força a abertura via JavaScript (Resolve o problema de não abrir no mobile)
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -28,13 +35,13 @@ const ProjectCard = ({ title, description, tags, image, url, onClick }) => {
     <motion.a
       ref={cardRef}
       href={url}
-      target="_blank"             // Força a abertura em nova aba (solução principal para mobile)
-      rel="noopener noreferrer"   // Segurança necessária ao usar target="_blank"
       onClick={handleClick}
       onMouseMove={handleMouseMove}
       className="project-card spotlight-card"
       whileHover={{ y: -8 }}
+      whileTap={{ scale: 0.98 }} // Adiciona feedback visual ao tocar no celular
       transition={{ type: 'spring', stiffness: 300 }}
+      style={{ cursor: 'pointer', touchAction: 'manipulation' }} // Melhoria para toque
     >
       <div className="spotlight-overlay" />
 
