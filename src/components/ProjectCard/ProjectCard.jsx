@@ -7,8 +7,9 @@ const ProjectCard = ({ title, description, tags, image, url, onClick }) => {
   const cardRef = useRef(null);
 
   const handleClick = (e) => {
+    // Importante: NÃO usar e.preventDefault() aqui para permitir que o link abra.
+    // Apenas chamamos a prop onClick se ela existir (ex: para analytics).
     if (onClick) {
-      // e.preventDefault(); // Removido para permitir a navegação no mobile
       onClick(e);
     }
   };
@@ -27,6 +28,8 @@ const ProjectCard = ({ title, description, tags, image, url, onClick }) => {
     <motion.a
       ref={cardRef}
       href={url}
+      target="_blank"             // Força a abertura em nova aba (solução principal para mobile)
+      rel="noopener noreferrer"   // Segurança necessária ao usar target="_blank"
       onClick={handleClick}
       onMouseMove={handleMouseMove}
       className="project-card spotlight-card"
