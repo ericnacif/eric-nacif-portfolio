@@ -3,7 +3,7 @@ import './Header.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaSun, FaMoon, FaBars, FaTimes, FaGlobe, FaDownload } from 'react-icons/fa';
 
-// REMOVIDO: Imports de imagem
+// Mantive seus imports de arquivos conforme o original
 import cvPt from '../../assets/docs/cv-pt.pdf';
 import cvEn from '../../assets/docs/cv-en.pdf';
 
@@ -23,19 +23,28 @@ const Header = () => {
   const menuBtnRef = useRef(null);
   const observerRef = useRef(null);
 
-  // CORREÇÃO: Caminhos absolutos (strings)
   const logoSrc = theme === 'dark' ? '/logo-gray.webp' : '/logo-blue.webp';
 
+  // --- 1. LISTA DE NAVEGAÇÃO ATUALIZADA ---
   const navItems = [
-    { id: 'sobre', label: t.nav?.about || "Sobre" },
-    { id: 'projetos', label: t.nav?.projects || "Projetos" },
-    { id: 'contato', label: t.nav?.contact || "Contato" }
+    { id: 'sobre', label: t.nav?.about || "Sobre", path: '/#sobre', type: 'anchor' },
+    { id: 'projetos', label: t.nav?.projects || "Projetos", path: '/#projetos', type: 'anchor' },
+    { id: 'servicos', label: "Serviços", path: '/servicos', type: 'page' }, // Nova página
+    { id: 'contato', label: t.nav?.contact || "Contato", path: '/#contato', type: 'anchor' }
   ];
 
   const getCvLink = () => {
     if (language === 'pt') return cvPt;
     return cvEn;
   };
+
+  // Detecta mudança de rota para marcar "Serviços" como ativo se necessário
+  useEffect(() => {
+    const path = window.location.pathname;
+    if (path === '/servicos') {
+      setActiveSection('servicos');
+    }
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -46,6 +55,7 @@ const Header = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Observer para scroll spy (Só roda se as seções existirem na tela)
   useEffect(() => {
     const observerOptions = {
       root: null,
@@ -65,7 +75,12 @@ const Header = () => {
     observerRef.current = new IntersectionObserver(handleIntersect, observerOptions);
 
     const observeSections = () => {
+      // Tenta encontrar as seções
       const sections = document.querySelectorAll('section[id], footer#contato');
+
+      // SEGURANÇA: Se não houver seções (ex: estamos na pág Serviços), não faz nada
+      if (sections.length === 0) return;
+
       sections.forEach((section) => {
         observerRef.current.observe(section);
       });
@@ -85,10 +100,27 @@ const Header = () => {
     };
   }, []);
 
-  const handleScrollTo = (e, id) => {
+  // --- 2. NOVA LÓGICA DE NAVEGAÇÃO ---
+  const handleNavigation = (e, item) => {
+    // Se for link de página externa (ex: /servicos), deixa o navegador ir
+    if (item.type === 'page') {
+      setActiveSection(item.id);
+      setIsMenuOpen(false);
+      return;
+    }
+
+    // Se for âncora (#), verificamos onde estamos
+    const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
+
+    // Se NÃO estamos na Home, deixa o navegador carregar a home com a âncora (ex: /#sobre)
+    if (!isHomePage && item.type === 'anchor') {
+      return;
+    }
+
+    // Se estamos na Home, prevenimos o reload e fazemos scroll suave
     e.preventDefault();
-    let targetId = id;
-    if (id === 'home') targetId = 'hero';
+    let targetId = item.id;
+    if (item.id === 'home') targetId = 'hero';
 
     const element = document.getElementById(targetId);
     if (element) {
@@ -127,7 +159,7 @@ const Header = () => {
     return () => { document.body.style.overflow = 'unset'; }
   }, [isMenuOpen]);
 
-  // VARIANTES (Animações)
+  // VARIANTES (Animações) mantidas iguais
   const drawerVariants = {
     hidden: { x: "100%", opacity: 0 },
     visible: {
@@ -163,7 +195,6 @@ const Header = () => {
   const textContainerVariants = { visible: { transition: { staggerChildren: 0.04 } } };
   const letterVariants = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } };
 
-  // NOVAS VARIANTES PARA A NAV DESKTOP
   const navContainerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -193,9 +224,9 @@ const Header = () => {
       <div className="header-container">
 
         <a
-          href="#hero"
+          href="/#hero"
           className="header-logo-link"
-          onClick={(e) => handleScrollTo(e, 'hero')}
+          onClick={(e) => handleNavigation(e, { id: 'hero', type: 'anchor', path: '/#hero' })}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <img
@@ -222,7 +253,7 @@ const Header = () => {
           </div>
         </a>
 
-        {/* MODIFICADO: motion.nav com variants */}
+        {/* --- DESKTOP NAV --- */}
         <motion.nav
           className="desktop-nav"
           variants={navContainerVariants}
@@ -234,11 +265,11 @@ const Header = () => {
             return (
               <motion.a
                 key={item.id}
-                href={`#${item.id}`}
+                href={item.path}
                 className={`nav-item ${isActive ? 'active' : ''}`}
-                onClick={(e) => handleScrollTo(e, item.id)}
-                variants={navItemVariants} // Aplica animação individual
-                whileHover={{ scale: 1.05 }} // Efeito extra de hover
+                onClick={(e) => handleNavigation(e, item)}
+                variants={navItemVariants}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 {isActive && (
@@ -388,12 +419,13 @@ const Header = () => {
                 </button>
               </div>
 
+              {/* --- MOBILE NAV LINKS --- */}
               <div className="drawer-links">
                 {navItems.map((item) => (
                   <a
                     key={item.id}
-                    href={`#${item.id}`}
-                    onClick={(e) => handleScrollTo(e, item.id)}
+                    href={item.path}
+                    onClick={(e) => handleNavigation(e, item)}
                     className={`drawer-item ${activeSection === item.id ? 'active' : ''}`}
                   >
                     {item.label}
