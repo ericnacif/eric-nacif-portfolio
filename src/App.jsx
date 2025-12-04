@@ -13,20 +13,23 @@ import PrintRedirect from './components/PrintRedirect/PrintRedirect';
 import GoogleAnalyticsTracker from './components/GoogleAnalyticsTracker';
 import NotFound from './pages/NotFound/NotFound';
 
+// Imports Lazy (Carregamento sob demanda)
 const About = React.lazy(() => import('./sections/About/About'));
 const Projects = React.lazy(() => import('./sections/Projects/Projects'));
 const Footer = React.lazy(() => import('./components/Footer/Footer'));
 const WhatsAppButton = React.lazy(() => import('./components/WhatsAppButton/WhatsAppButton'));
 const BackToTop = React.lazy(() => import('./components/BackToTop'));
 
+// IMPORTANTE: Adicionando a página de Serviços aqui
+const Services = React.lazy(() => import('./pages/Services/Services'));
+
 function App() {
 
+  // O componente Home fica responsável apenas pelo conteúdo da página inicial e o Preloader
   const Home = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-      // TIMER FINAL: 2.3 segundos
-      // Tempo otimizado para fechar o ciclo de 500ms e transições
       const timer = setTimeout(() => {
         setIsLoading(false);
         window.scrollTo(0, 0);
@@ -42,24 +45,13 @@ function App() {
         </AnimatePresence>
 
         <div style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease' }}>
-          <Header />
           <main>
             <Hero />
-
             <Suspense fallback={<div style={{ height: '100px' }}></div>}>
               <About />
               <Projects />
             </Suspense>
           </main>
-
-          <Suspense fallback={null}>
-            <Footer />
-          </Suspense>
-
-          <Suspense fallback={null}>
-            <BackToTop />
-            <WhatsAppButton />
-          </Suspense>
         </div>
       </>
     );
@@ -74,10 +66,31 @@ function App() {
       <EasterEgg />
       <PrintRedirect />
 
+      {/* HEADER: Movido para cá para aparecer em TODAS as páginas */}
+      <Header />
+
       <Routes>
         <Route path="/" element={<Home />} />
+
+        {/* ROTA DE SERVIÇOS: Adicionada com Suspense para carregamento */}
+        <Route
+          path="/servicos"
+          element={
+            <Suspense fallback={<div style={{ height: '100vh' }}></div>}>
+              <Services />
+            </Suspense>
+          }
+        />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
+
+      {/* FOOTER E BOTÕES: Movidos para cá para aparecerem também em Serviços */}
+      <Suspense fallback={null}>
+        <Footer />
+        <BackToTop />
+        <WhatsAppButton />
+      </Suspense>
 
     </Router>
   );
