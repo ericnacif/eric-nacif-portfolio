@@ -29,7 +29,7 @@ const Header = () => {
   const navItems = [
     { id: 'sobre', label: t.nav?.about || "Sobre", path: '/#sobre', type: 'anchor' },
     { id: 'projetos', label: t.nav?.projects || "Projetos", path: '/#projetos', type: 'anchor' },
-    { id: 'servicos', label: "Serviços", path: '/servicos', type: 'page' }, // Nova página
+    { id: 'servicos', label: "Serviços", path: '/#servicos', type: 'anchor' },
     { id: 'contato', label: t.nav?.contact || "Contato", path: '/#contato', type: 'anchor' }
   ];
 
@@ -37,14 +37,6 @@ const Header = () => {
     if (language === 'pt') return cvPt;
     return cvEn;
   };
-
-  // Detecta mudança de rota para marcar "Serviços" como ativo se necessário
-  useEffect(() => {
-    const path = window.location.pathname;
-    if (path === '/servicos') {
-      setActiveSection('servicos');
-    }
-  }, []);
 
   useEffect(() => {
     const handleResize = () => {
