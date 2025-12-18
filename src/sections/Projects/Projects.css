@@ -107,17 +107,17 @@
     height: 60px;
   }
 
-  /* CORREÇÃO FORÇADA DE TÍTULO (Mantida da sua correção anterior) */
+  /* SAFE TYPOGRAPHY para títulos de projetos */
   .projects-section-blue .section-title,
   .projects-section-blue h2,
   .projects-section-blue .white-title {
-    font-size: 28px !important;
+    font-size: clamp(1.5rem, 5vw, 2rem) !important;
     line-height: 1.3 !important;
-    word-spacing: normal !important;
-    overflow-wrap: normal !important;
-    word-break: normal !important;
-    word-wrap: normal !important;
-    hyphens: none !important;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    text-wrap: balance;
   }
 }
 

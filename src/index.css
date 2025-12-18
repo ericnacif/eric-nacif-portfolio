@@ -49,6 +49,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* SAFE TYPOGRAPHY: Previne palavras longas de vazar, mas não quebra palavras curtas */
+  overflow-wrap: break-word;
 }
 
 html {
@@ -65,7 +67,11 @@ body {
   overflow-x: hidden;
 }
 
-/* --- TIPOGRAFIA FLUIDA & SEGURA --- */
+/* =========================================
+   SAFE TYPOGRAPHY - Global Text Handling
+   ========================================= */
+
+/* --- TIPOGRAFIA FLUIDA & SEGURA PARA TÍTULOS --- */
 h1,
 h2,
 h3,
@@ -76,10 +82,53 @@ h6 {
   font-weight: 700;
   color: inherit;
 
-  /* CORREÇÃO: Impede quebra de palavras no meio */
-  overflow-wrap: normal;
-  word-break: keep-all;
-  hyphens: none;
+  /* SAFE TYPOGRAPHY: Títulos harmônicos e nunca quebram palavras */
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+}
+
+/* Tipografia fluida com clamp() para responsividade perfeita */
+h1 {
+  font-size: clamp(2rem, 8vw, 4rem);
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 6vw, 3rem);
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  line-height: 1.4;
+}
+
+h5, h6 {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  line-height: 1.4;
+}
+
+/* --- SAFE TYPOGRAPHY PARA PARÁGRAFOS E TEXTOS --- */
+p,
+span,
+li,
+a,
+label,
+td,
+th {
+  /* SAFE TYPOGRAPHY: Evita viúvas e órfãs em parágrafos */
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .container {

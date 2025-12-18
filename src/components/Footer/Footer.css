@@ -344,7 +344,6 @@
 
     /* CORREÇÃO DO TÍTULO "Vamos construir algo?" */
     /* Usa clamp fluido para garantir que a frase caiba na tela */
-    /* 5.5vw deve ser suficiente para não quebrar a palavra "construir" */
     .footer-cta-section h2,
     .footer-cta-section .section-title {
         font-size: clamp(18px, 5vw, 38px) !important;
@@ -352,10 +351,12 @@
         padding: 0 10px;
         width: 100%;
         margin-bottom: 20px;
-        /* Impede a quebra da palavra no meio */
-        overflow-wrap: normal !important;
-        word-break: keep-all !important;
-        hyphens: none !important;
+        /* SAFE TYPOGRAPHY: Permite quebra inteligente com hífens */
+        overflow-wrap: break-word;
+        word-break: normal;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+        text-wrap: balance;
     }
 
     .footer-subtitle {
