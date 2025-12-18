@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
 import { HiOutlineRocketLaunch, HiOutlineBriefcase, HiOutlineBuildingOffice2 } from 'react-icons/hi2';

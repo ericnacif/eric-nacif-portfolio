@@ -1,4 +1,3 @@
-import React from 'react';
 import './About.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';

@@ -334,3 +334,77 @@
         padding: 5px 10px;
     }
 }
+
+/* Extra small screens (iPhone SE, Galaxy S5) */
+@media (max-width: 375px) {
+    .services-cta-area {
+        padding: 40px 0;
+    }
+
+    .services-cta-title {
+        font-size: 1.4rem;
+    }
+
+    .services-cta-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .services-cta-button {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+    }
+
+    .services-content {
+        padding: 30px 0 60px 0;
+    }
+
+    .service-card {
+        padding: 24px 18px;
+    }
+
+    .service-icon-wrapper {
+        width: 48px;
+        height: 48px;
+    }
+
+    .service-icon {
+        font-size: 22px;
+    }
+
+    .service-card-title {
+        font-size: 1.15rem;
+    }
+
+    .service-card-desc {
+        font-size: 0.9rem;
+    }
+
+    .service-feature-item {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+    .services-cta-title {
+        font-size: 1.2rem;
+    }
+
+    .services-cta-button {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
+
+    .service-card {
+        padding: 20px 14px;
+    }
+
+    .service-card-title {
+        font-size: 1.1rem;
+    }
+
+    .service-card-desc {
+        font-size: 0.85rem;
+    }
+}

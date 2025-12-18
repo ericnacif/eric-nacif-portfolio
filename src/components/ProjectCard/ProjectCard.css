@@ -214,3 +214,44 @@
         color: var(--accent-color);
     }
 }
+
+/* Extra small screens (iPhone SE, Galaxy S5) */
+@media (max-width: 375px) {
+    .project-info {
+        padding: 18px;
+    }
+
+    .project-info h3 {
+        font-size: 16px;
+    }
+
+    .project-description {
+        font-size: 14px;
+        margin-bottom: 16px;
+    }
+
+    .tag {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+    .project-info {
+        padding: 14px;
+    }
+
+    .project-info h3 {
+        font-size: 15px;
+    }
+
+    .project-description {
+        font-size: 13px;
+    }
+
+    .tag {
+        font-size: 9px;
+        padding: 3px 6px;
+    }
+}

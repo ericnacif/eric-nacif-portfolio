@@ -147,6 +147,53 @@ body:not([data-theme="light"]) .social-icons img {
   }
 }
 
+/* Extra small screens (iPhone SE, Galaxy S5) */
+@media (max-width: 375px) {
+  .container {
+    padding: 60px 16px;
+  }
+  
+  .section-title {
+    font-size: clamp(20px, 6vw, 36px);
+    margin-bottom: 48px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+  .container {
+    padding: 48px 12px;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    margin-bottom: 32px;
+  }
+}
+
+/* =========================================
+   TOUCH TARGET IMPROVEMENTS
+   ========================================= */
+@media (hover: none) and (pointer: coarse) {
+  /* Ensure minimum 44px touch targets for accessibility */
+  button,
+  a,
+  input[type="submit"],
+  .nav-item,
+  .social-icon-btn,
+  .footer-social-link {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Improve tap feedback */
+  button:active,
+  a:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+}
+
 /* =========================================
    4. UTILS / FLOATERS Z-INDEX
    ========================================= */
@@ -199,4 +246,46 @@ html {
 section:not(.hero-section) {
   content-visibility: auto;
   contain-intrinsic-size: 1px 1000px;
+}
+
+/* =========================================
+   7. SMOOTH TRANSITIONS & MICRO-INTERACTIONS
+   ========================================= */
+
+/* Global transition defaults for interactive elements */
+a,
+button,
+input,
+textarea,
+select {
+  transition: all 0.2s ease;
+}
+
+/* Focus styles for better accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Smooth link underline animation */
+a:not(.nav-item):not(.project-card):not(.social-icon-btn):not(.footer-social-link):not(.cv-button):not(.drawer-cv-btn):not(.header-logo-link) {
+  position: relative;
+}
+
+/* Active state feedback for buttons */
+button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* Disabled state styling */
+button:disabled,
+input:disabled,
+textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

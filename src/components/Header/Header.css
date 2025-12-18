@@ -493,3 +493,52 @@
         /* Mais largo no mobile estreito */
     }
 }
+
+/* Extra small screens (iPhone SE, Galaxy S5) */
+@media (max-width: 375px) {
+    .main-header {
+        padding: 0 16px;
+    }
+
+    .header-logo-text {
+        font-size: 14px;
+    }
+
+    .header-logo-img {
+        height: 28px;
+    }
+
+    .header-container {
+        height: 72px;
+    }
+
+    .main-header.scrolled .header-container {
+        height: 60px;
+    }
+
+    .mobile-menu-drawer {
+        width: 90vw;
+        padding: 16px;
+    }
+
+    .drawer-item {
+        padding: 14px 16px;
+        font-size: 18px;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+    .main-header {
+        padding: 0 12px;
+    }
+
+    .header-logo-text {
+        font-size: 12px;
+    }
+
+    .drawer-item {
+        padding: 12px 14px;
+        font-size: 16px;
+    }
+}

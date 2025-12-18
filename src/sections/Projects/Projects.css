@@ -120,3 +120,47 @@
     hyphens: none !important;
   }
 }
+
+/* Extra small screens (iPhone SE, Galaxy S5) */
+@media (max-width: 375px) {
+  .projects-section-blue {
+    padding: 80px 0;
+  }
+
+  .projects-grid {
+    gap: 24px;
+  }
+
+  .custom-shape-divider-top svg,
+  .custom-shape-divider-bottom svg {
+    height: 40px;
+  }
+
+  .projects-section-blue .section-title,
+  .projects-section-blue h2,
+  .projects-section-blue .white-title {
+    font-size: 24px !important;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+  .projects-section-blue {
+    padding: 60px 0;
+  }
+
+  .projects-grid {
+    gap: 20px;
+  }
+
+  .custom-shape-divider-top svg,
+  .custom-shape-divider-bottom svg {
+    height: 30px;
+  }
+
+  .projects-section-blue .section-title,
+  .projects-section-blue h2,
+  .projects-section-blue .white-title {
+    font-size: 20px !important;
+  }
+}
