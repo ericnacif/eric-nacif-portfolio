@@ -20,10 +20,10 @@ import NotFound from './pages/NotFound/NotFound';
 // Lazy Imports
 const About = React.lazy(() => import('./sections/About/About'));
 const Projects = React.lazy(() => import('./sections/Projects/Projects'));
+const ServicesSection = React.lazy(() => import('./sections/Services/ServicesSection'));
 const Footer = React.lazy(() => import('./components/Footer/Footer'));
 const WhatsAppButton = React.lazy(() => import('./components/WhatsAppButton/WhatsAppButton'));
 const BackToTop = React.lazy(() => import('./components/BackToTop'));
-const Services = React.lazy(() => import('./pages/Services/Services'));
 
 // --- COMPONENTE HOME INTERNO ---
 // Removemos o Preloader daqui para ele não repetir
@@ -34,6 +34,7 @@ const Home = () => {
       <Suspense fallback={<div style={{ height: '100px' }}></div>}>
         <About />
         <Projects />
+        <ServicesSection />
       </Suspense>
     </main>
   );
@@ -78,15 +79,6 @@ function AppContent() {
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
-
-            <Route
-              path="/servicos"
-              element={
-                <Suspense fallback={<div style={{ height: '100vh' }}></div>}>
-                  <Services />
-                </Suspense>
-              }
-            />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

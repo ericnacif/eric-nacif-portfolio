@@ -263,3 +263,66 @@
         font-size: 2rem;
     }
 }
+
+/* Extra small screens (iPhone SE, Galaxy S5) */
+@media (max-width: 375px) {
+    .about-section {
+        padding-top: 30px;
+    }
+
+    .intro-text {
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    .detail-text {
+        font-size: 14px;
+    }
+
+    .about-logo {
+        max-width: 120px;
+    }
+
+    .cta-text {
+        font-size: 14px;
+    }
+
+    .social-icons-row {
+        gap: 20px;
+    }
+
+    .social-icon-btn {
+        font-size: 24px;
+    }
+
+    .tech-icon {
+        font-size: 1.6rem;
+    }
+
+    .tech-name {
+        font-size: 0.75rem;
+    }
+
+    .tech-track {
+        gap: 2rem;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+    .intro-text {
+        font-size: 16px;
+    }
+
+    .detail-text {
+        font-size: 13px;
+    }
+
+    .tech-icon {
+        font-size: 1.4rem;
+    }
+
+    .tech-track {
+        gap: 1.5rem;
+    }
+}

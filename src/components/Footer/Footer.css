@@ -344,7 +344,6 @@
 
     /* CORREÇÃO DO TÍTULO "Vamos construir algo?" */
     /* Usa clamp fluido para garantir que a frase caiba na tela */
-    /* 5.5vw deve ser suficiente para não quebrar a palavra "construir" */
     .footer-cta-section h2,
     .footer-cta-section .section-title {
         font-size: clamp(18px, 5vw, 38px) !important;
@@ -352,15 +351,87 @@
         padding: 0 10px;
         width: 100%;
         margin-bottom: 20px;
-        /* Impede a quebra da palavra no meio */
-        overflow-wrap: normal !important;
-        word-break: keep-all !important;
-        hyphens: none !important;
+        /* SAFE TYPOGRAPHY: Permite quebra inteligente com hífens */
+        overflow-wrap: break-word;
+        word-break: normal;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+        text-wrap: balance;
     }
 
     .footer-subtitle {
         font-size: 16px !important;
         margin-bottom: 40px;
         padding: 0 20px;
+    }
+}
+
+/* Extra small screens (iPhone SE, Galaxy S5) */
+@media (max-width: 375px) {
+    .main-footer {
+        padding: 60px 0 0 0;
+    }
+
+    .footer-cta-section h2,
+    .footer-cta-section .section-title {
+        font-size: clamp(16px, 4.5vw, 32px) !important;
+    }
+
+    .footer-subtitle {
+        font-size: 14px !important;
+        margin-bottom: 32px;
+    }
+
+    .minimal-form {
+        max-width: 100%;
+    }
+
+    .form-row {
+        gap: 24px;
+        margin-bottom: 32px;
+    }
+
+    .input-group-minimal input,
+    .input-group-minimal textarea {
+        font-size: 14px;
+    }
+
+    .morph-btn {
+        max-width: 200px;
+        height: 46px;
+        font-size: 12px;
+    }
+
+    .footer-social-link {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+    .main-footer {
+        padding: 48px 0 0 0;
+    }
+
+    .footer-cta-section h2,
+    .footer-cta-section .section-title {
+        font-size: 14px !important;
+    }
+
+    .footer-subtitle {
+        font-size: 13px !important;
+    }
+
+    .input-group-minimal input,
+    .input-group-minimal textarea {
+        font-size: 13px;
+    }
+
+    .morph-btn {
+        max-width: 180px;
+        height: 42px;
+        font-size: 11px;
     }
 }

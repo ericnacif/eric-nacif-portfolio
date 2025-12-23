@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './Footer.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
@@ -7,6 +7,52 @@ import { SiLinkedin, SiInstagram, SiGithub } from 'react-icons/si';
 import { FiLoader, FiCheck, FiMapPin } from 'react-icons/fi';
 
 // REMOVIDO: Imports de imagem (agora estão na public)
+
+// Content translations moved outside component to avoid re-creation on each render
+const content = {
+  pt: {
+    greetings: {
+      morning: "Bom dia! Vamos construir algo?",
+      afternoon: "Boa tarde! Vamos construir algo?",
+      evening: "Boa noite! Vamos construir algo?"
+    },
+    subtitle: "Deixe sua mensagem abaixo e entrarei em contato.",
+    labels: { name: "Seu Nome", email: "Seu E-mail", message: "Sua Mensagem" },
+    defaultMessage: "Olá Eric! Vi seu portfólio e gostaria de conversar sobre um projeto...",
+    button: { default: "Enviar Mensagem", sending: "", success: "Enviado!" },
+    error: "Erro ao enviar. Tente novamente.",
+    location: "Brasil",
+    copyright: "Todos os direitos reservados."
+  },
+  en: {
+    greetings: {
+      morning: "Good morning! Let's build something?",
+      afternoon: "Good afternoon! Let's build something?",
+      evening: "Good evening! Let's build something?"
+    },
+    subtitle: "Leave your message below and I'll get in touch.",
+    labels: { name: "Your Name", email: "Your Email", message: "Your Message" },
+    defaultMessage: "Hi Eric! I saw your portfolio and would like to talk about a project...",
+    button: { default: "Send Message", sending: "", success: "Sent!" },
+    error: "Error sending. Please try again.",
+    location: "Brazil",
+    copyright: "All rights reserved."
+  },
+  es: {
+    greetings: {
+      morning: "¡Buenos días! ¿Construimos algo?",
+      afternoon: "¡Buenas tardes! ¿Construimos algo?",
+      evening: "¡Buenas noches! ¿Construimos algo?"
+    },
+    subtitle: "Deja tu mensaje abajo y me pondré en contacto.",
+    labels: { name: "Tu Nombre", email: "Tu Correo", message: "Tu Mensaje" },
+    defaultMessage: "¡Hola Eric! Vi tu portafolio y me gustaría hablar sobre un proyecto...",
+    button: { default: "Enviar Mensaje", sending: "", success: "¡Enviado!" },
+    error: "Error al enviar. Inténtalo de nuevo.",
+    location: "Brasil",
+    copyright: "Todos los derechos reservados."
+  }
+};
 
 const Footer = () => {
   const { language } = useLanguage();
@@ -35,51 +81,6 @@ const Footer = () => {
     else setGreetingKey("evening");
   }, []);
 
-  const content = {
-    pt: {
-      greetings: {
-        morning: "Bom dia! Vamos construir algo?",
-        afternoon: "Boa tarde! Vamos construir algo?",
-        evening: "Boa noite! Vamos construir algo?"
-      },
-      subtitle: "Deixe sua mensagem abaixo e entrarei em contato.",
-      labels: { name: "Seu Nome", email: "Seu E-mail", message: "Sua Mensagem" },
-      defaultMessage: "Olá Eric! Vi seu portfólio e gostaria de conversar sobre um projeto...",
-      button: { default: "Enviar Mensagem", sending: "", success: "Enviado!" },
-      error: "Erro ao enviar. Tente novamente.",
-      location: "Brasil",
-      copyright: "Todos os direitos reservados."
-    },
-    en: {
-      greetings: {
-        morning: "Good morning! Let's build something?",
-        afternoon: "Good afternoon! Let's build something?",
-        evening: "Good evening! Let's build something?"
-      },
-      subtitle: "Leave your message below and I'll get in touch.",
-      labels: { name: "Your Name", email: "Your Email", message: "Your Message" },
-      defaultMessage: "Hi Eric! I saw your portfolio and would like to talk about a project...",
-      button: { default: "Send Message", sending: "", success: "Sent!" },
-      error: "Error sending. Please try again.",
-      location: "Brazil",
-      copyright: "All rights reserved."
-    },
-    es: {
-      greetings: {
-        morning: "¡Buenos días! ¿Construimos algo?",
-        afternoon: "¡Buenas tardes! ¿Construimos algo?",
-        evening: "¡Buenas noches! ¿Construimos algo?"
-      },
-      subtitle: "Deja tu mensaje abajo y me pondré en contacto.",
-      labels: { name: "Tu Nombre", email: "Tu Correo", message: "Tu Mensaje" },
-      defaultMessage: "¡Hola Eric! Vi tu portafolio y me gustaría hablar sobre un proyecto...",
-      button: { default: "Enviar Mensaje", sending: "", success: "¡Enviado!" },
-      error: "Error al enviar. Inténtalo de nuevo.",
-      location: "Brasil",
-      copyright: "Todos los derechos reservados."
-    }
-  };
-
   const t = content[language] || content.pt;
 
   useEffect(() => {
@@ -87,7 +88,7 @@ const Footer = () => {
     if (currentIsDefault) {
       setMessage(t.defaultMessage);
     }
-  }, [language]);
+  }, [language, message, t.defaultMessage]);
 
   const socialLinks = [
     { href: "https://www.linkedin.com/in/eric-nacif-956930324/", icon: <SiLinkedin />, alt: "LinkedIn" },
@@ -100,7 +101,7 @@ const Footer = () => {
     setEmail(val);
 
     if (val.includes('@')) {
-      const [user, domainPart] = val.split('@');
+      const [, domainPart] = val.split('@');
       const filtered = commonDomains.filter(d => d.startsWith(domainPart));
 
       if (filtered.length > 0 && !commonDomains.includes(domainPart)) {
@@ -157,7 +158,7 @@ const Footer = () => {
         setStatus("error");
         setTimeout(() => setStatus("idle"), 3000);
       }
-    } catch (error) {
+    } catch {
       setStatus("error");
       setTimeout(() => setStatus("idle"), 3000);
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Cursor.css';
 import { motion, useMotionValue } from 'framer-motion';
 
