@@ -18,7 +18,7 @@ const Projects = () => {
     {
       id: "monac",
       image: monacImg,
-      url: "https://monacsite.netlify.app",
+      url: "https://monacsistemas.netlify.app",
       tags: ["React", "Node.js", "API Rest", "NFe", "SaaS"],
       translations: {
         pt: {
