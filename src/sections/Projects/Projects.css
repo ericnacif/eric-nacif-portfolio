@@ -1,26 +1,32 @@
-/* CONTAINER PRINCIPAL */
+/* =========================================
+   CONTAINER PRINCIPAL DA SEÇÃO
+   ========================================= */
 .projects-section-blue {
   position: relative;
   background-color: var(--accent-color);
-  padding: 150px 0;
-  margin-top: 0;
-  margin-bottom: 0;
+  padding: 100px 0 120px 0;
+  margin: 0;
+  overflow: hidden;
 }
 
-.relative-z {
+.projects-container {
   position: relative;
-  z-index: 2;
+  z-index: 10;
 }
 
 .white-title {
   color: #ffffff !important;
+  margin-bottom: 60px;
+  text-align: center;
 }
 
 .white-title::after {
   background-color: #ffffff !important;
 }
 
-/* ONDAS */
+/* =========================================
+   ONDAS (DIVIDERS)
+   ========================================= */
 .custom-shape-divider-top {
   position: absolute;
   top: 0;
@@ -29,6 +35,7 @@
   overflow: hidden;
   line-height: 0;
   margin-top: -1px;
+  z-index: 1;
 }
 
 .custom-shape-divider-bottom {
@@ -39,6 +46,7 @@
   overflow: hidden;
   line-height: 0;
   margin-bottom: -1px;
+  z-index: 1;
 }
 
 .custom-shape-divider-top svg,
@@ -57,76 +65,470 @@
   fill: var(--bg-color);
 }
 
-/* --- GRID DE 3 COLUNAS ALINHADAS --- */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  /* Estica os itens para terem a mesma altura */
+/* =========================================
+   CARROSSEL - ESTRUTURA
+   ========================================= */
+
+.carousel-wrapper {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+.projects-swiper {
+  padding: 50px 0 80px 0 !important; /* Muito mais espaço para o card crescer */
+  overflow: visible;
+}
+
+.swiper-wrapper {
   align-items: stretch;
 }
 
-.project-card-wrapper {
-  height: 100%;
-  /* Força o wrapper a acompanhar o grid */
+.swiper-slide {
+  height: auto;
   display: flex;
-  flex-direction: column;
 }
 
-/* PADRONIZAÇÃO DO PROJECTCARD */
-/* Força todas as imagens a terem o mesmo tamanho */
-.project-card-wrapper .project-card .project-image {
+/* Garante altura uniforme dos cards */
+.swiper-slide .project-card {
   width: 100%;
-  height: 250px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Card ativo com destaque sutil */
+.swiper-slide-active .project-card {
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.45); /* Sombra GIGANTE para destaque */
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* =========================================
+   SETAS CUSTOMIZADAS - DESIGN ELEGANTE
+   ========================================= */
+
+.custom-swiper-button-prev,
+.custom-swiper-button-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-top: -40px; /* Ajusta para centralizar com os cards (metade da paginação) */
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0.05)
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.custom-swiper-button-prev {
+  left: 0;
+}
+
+.custom-swiper-button-next {
+  right: 0;
+}
+
+/* Hover das setas */
+.custom-swiper-button-prev:hover,
+.custom-swiper-button-next:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0.15)
+  );
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-50%) scale(1.1);
+  margin-top: -40px; /* Mantém a centralização no hover */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.custom-swiper-button-prev:active,
+.custom-swiper-button-next:active {
+  transform: translateY(-50%) scale(0.95);
+  margin-top: -40px; /* Mantém a centralização no active */
+}
+
+/* Setas desabilitadas */
+.custom-swiper-button-prev.swiper-button-disabled,
+.custom-swiper-button-next.swiper-button-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* SVG das setas */
+.custom-swiper-button-prev svg,
+.custom-swiper-button-next svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2.5;
+}
+
+/* =========================================
+   PAGINAÇÃO - DESIGN PROFISSIONAL
+   ========================================= */
+
+.swiper-pagination {
+  position: relative !important;
+  bottom: 0 !important;
+  margin-top: 45px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.swiper-pagination-bullet {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.3) !important;
+  opacity: 1 !important;
+  margin: 0 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+}
+
+.swiper-pagination-bullet:hover {
+  background: rgba(255, 255, 255, 0.5) !important;
+  transform: scale(1.2);
+}
+
+.swiper-pagination-bullet-active {
+  background: #ffffff !important;
+  width: 32px !important;
+  border-radius: 5px !important;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* =========================================
+   AJUSTES NO PROJECT CARD
+   ========================================= */
+
+.projects-swiper .card-image-wrapper {
+  height: 220px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.projects-swiper .project-image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
 }
 
-/* Texto justificado nas descrições */
-.project-card-wrapper .project-card .project-description,
-.project-card-wrapper .project-card p {
-  text-align: justify;
-  text-justify: inter-word;
-}
-
-/* Garante altura uniforme dos cards */
-.project-card-wrapper .project-card {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Permite que o conteúdo do card cresça proporcionalmente */
-.project-card-wrapper .project-card .project-content {
+.projects-swiper .project-info {
   flex: 1;
   display: flex;
   flex-direction: column;
+  padding: 24px;
 }
 
-/* Responsividade */
-@media (max-width: 1024px) {
-  .projects-grid {
-    grid-template-columns: repeat(2, 1fr);
+.projects-swiper .project-header h3 {
+  font-size: 20px;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  min-height: 52px; /* Garante 2 linhas de altura */
+  display: flex;
+  align-items: center;
+}
+
+.projects-swiper .project-description {
+  flex: 1;
+  margin-bottom: 16px;
+  line-height: 1.6;
+  font-size: 15px;
+  min-height: 72px; /* Altura para 3 linhas */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.projects-swiper .project-tags {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 40px; /* Garante espaço para tags */
+}
+
+/* =========================================
+   RESPONSIVIDADE
+   ========================================= */
+
+/* Desktop grande */
+@media (min-width: 1400px) {
+  .carousel-wrapper {
+    padding: 0 100px;
   }
 }
 
-@media (max-width: 768px) {
-  .projects-section-blue {
-    padding: 100px 0;
+/* Tablets */
+@media (max-width: 1099px) {
+  .carousel-wrapper {
+    padding: 0 70px;
   }
 
-  .projects-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
+  .swiper-slide .project-card {
+    min-height: 480px;
   }
 
-  .custom-shape-divider-top svg,
-  .custom-shape-divider-bottom svg {
-    height: 60px;
-  }
-
-  /* Ajusta altura da imagem em mobile */
-  .project-card-wrapper .project-card .project-image {
+  .projects-swiper .card-image-wrapper {
     height: 200px;
   }
+
+  .custom-swiper-button-prev,
+  .custom-swiper-button-next {
+    width: 50px;
+    height: 50px;
+    margin-top: -35px; /* Ajusta para tablet */
+  }
+
+  .custom-swiper-button-prev:hover,
+  .custom-swiper-button-next:hover,
+  .custom-swiper-button-prev:active,
+  .custom-swiper-button-next:active {
+    margin-top: -35px;
+  }
+
+  .custom-swiper-button-prev svg,
+  .custom-swiper-button-next svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Mobile grande */
+@media (max-width: 768px) {
+  .projects-section-blue {
+    padding: 80px 0 100px 0;
+  }
+
+  .white-title {
+    margin-bottom: 40px;
+    font-size: 28px;
+  }
+
+  .carousel-wrapper {
+    padding: 0 60px;
+  }
+
+  .projects-swiper {
+    padding: 40px 0 70px 0 !important; /* Mais espaço para o card maior */
+  }
+
+  /* Efeito de escala no mobile também */
+  .swiper-slide {
+    transform: scale(0.88); /* Laterais menores */
+    opacity: 1;
+  }
+
+  .swiper-slide-active {
+    transform: scale(1.05); /* Card ativo BEM maior no mobile */
+    opacity: 1;
+  }
+
+  .swiper-slide .project-card {
+    min-height: 460px;
+  }
+
+  .projects-swiper .card-image-wrapper {
+    height: 190px;
+  }
+
+  .projects-swiper .project-info {
+    padding: 20px;
+  }
+
+  .projects-swiper .project-header h3 {
+    font-size: 18px;
+    min-height: 48px;
+  }
+
+  .projects-swiper .project-description {
+    font-size: 14px;
+    min-height: 56px; /* Altura para 2 linhas */
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  /* Setas menores */
+  .custom-swiper-button-prev,
+  .custom-swiper-button-next {
+    width: 44px;
+    height: 44px;
+    margin-top: -35px; /* Ajusta para mobile */
+  }
+
+  .custom-swiper-button-prev:hover,
+  .custom-swiper-button-next:hover,
+  .custom-swiper-button-prev:active,
+  .custom-swiper-button-next:active {
+    margin-top: -35px;
+  }
+
+  .custom-swiper-button-prev svg,
+  .custom-swiper-button-next svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Paginação */
+  .swiper-pagination {
+    margin-top: 35px;
+    gap: 10px;
+  }
+
+  .swiper-pagination-bullet {
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  .swiper-pagination-bullet-active {
+    width: 28px !important;
+  }
+}
+
+/* Mobile pequeno */
+@media (max-width: 480px) {
+  .carousel-wrapper {
+    padding: 0 50px;
+  }
+
+  .swiper-slide .project-card {
+    min-height: 440px;
+  }
+
+  .projects-swiper .card-image-wrapper {
+    height: 170px;
+  }
+
+  .white-title {
+    font-size: 24px;
+  }
+
+  .custom-swiper-button-prev,
+  .custom-swiper-button-next {
+    width: 40px;
+    height: 40px;
+    margin-top: -30px; /* Ajusta para mobile pequeno */
+  }
+
+  .custom-swiper-button-prev:hover,
+  .custom-swiper-button-next:hover,
+  .custom-swiper-button-prev:active,
+  .custom-swiper-button-next:active {
+    margin-top: -30px;
+  }
+
+  .custom-swiper-button-prev svg,
+  .custom-swiper-button-next svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* =========================================
+   ANIMAÇÕES E TRANSIÇÕES
+   ========================================= */
+
+/* Transição suave entre slides */
+.swiper-slide {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(0.82); /* Cards laterais BEM menores */
+  opacity: 1;
+}
+
+.swiper-slide-active {
+  transform: scale(1.08); /* Card do meio BEM MAIOR */
+  opacity: 1;
+  z-index: 2;
+}
+
+/* Efeito sutil nos cards adjacentes */
+@media (min-width: 1100px) {
+  .swiper-slide-next,
+  .swiper-slide-prev {
+    transform: scale(0.88); /* Próximos intermediários */
+    opacity: 1;
+  }
+}
+
+/* Cursor ao arrastar */
+.projects-swiper.swiper-grab {
+  cursor: grab;
+}
+
+.projects-swiper.swiper-grabbing {
+  cursor: grabbing;
+}
+
+/* Remove o efeito de scale ao arrastar para não ficar estranho */
+.projects-swiper.swiper-grabbing .swiper-slide {
+  transform: scale(1) !important;
+  opacity: 1 !important; /* Garante sem escurecimento */
+}
+
+/* =========================================
+   ACESSIBILIDADE
+   ========================================= */
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+  .custom-swiper-button-prev,
+  .custom-swiper-button-next {
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid #ffffff;
+  }
+
+  .swiper-pagination-bullet {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+  }
+
+  .swiper-pagination-bullet-active {
+    border: 2px solid #ffffff;
+  }
+}
+
+/* Redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+  .swiper-slide,
+  .custom-swiper-button-prev,
+  .custom-swiper-button-next,
+  .swiper-pagination-bullet {
+    transition: none;
+  }
+}
+
+/* Focus para navegação por teclado */
+.custom-swiper-button-prev:focus-visible,
+.custom-swiper-button-next:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 4px;
+}
+
+.swiper-pagination-bullet:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 3px;
 }
