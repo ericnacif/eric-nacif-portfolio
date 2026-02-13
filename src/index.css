@@ -2,9 +2,8 @@
    1. FONTES LOCAIS (Carregamento Otimizado)
    ========================================= */
 @font-face {
-  font-family: 'Cocomat Pro';
-  /* Aponta para a pasta public/fonts para cache eficiente */
-  src: url('/fonts/cocomat-pro-regular.woff2') format('woff2');
+  font-family: "Cocomat Pro";
+  src: url("/fonts/cocomat-pro-regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -14,32 +13,17 @@
    2. VARIÁVEIS GLOBAIS
    ========================================= */
 :root {
-  /* --- TEMA DARK (Contraste ok) --- */
-  --bg-color: #000000;
-  --text-color: #ffffff;
-  --text-secondary: #e0e0e0;
-  --card-bg: #121212;
-  --border-color: #333333;
-  --shadow-color: rgba(255, 255, 255, 0.1);
-  --accent-color: #a6a6a6;
-  --accent-rgb: 166, 166, 166;
-  --font-main: 'Cocomat Pro', 'Manrope', sans-serif;
-  --font-display: 'Cocomat Pro', sans-serif;
-}
-
-/* --- TEMA LIGHT (Ajustado para Acessibilidade) --- */
-[data-theme="light"] {
+  /* TEMA LIGHT ÚNICO */
   --bg-color: #fff8f8;
   --text-color: #050505;
-
-  /* MUDANÇA: De #555555 para #333333 (Mais escuro para passar no teste) */
   --text-secondary: #333333;
-
   --card-bg: #ffffff;
   --border-color: #e0e0e0;
   --shadow-color: rgba(0, 0, 0, 0.07);
-  --accent-color: #2952FF;
+  --accent-color: #2952ff;
   --accent-rgb: 41, 82, 255;
+  --font-main: "Cocomat Pro", "Manrope", sans-serif;
+  --font-display: "Cocomat Pro", sans-serif;
 }
 
 /* =========================================
@@ -61,7 +45,9 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
   overflow-x: hidden;
 }
 
@@ -75,8 +61,6 @@ h6 {
   font-family: var(--font-display);
   font-weight: 700;
   color: inherit;
-
-  /* CORREÇÃO: Impede quebra de palavras no meio */
   overflow-wrap: normal;
   word-break: keep-all;
   hyphens: none;
@@ -90,10 +74,7 @@ h6 {
 
 .section-title {
   display: inline-block;
-
-  /* --- CORREÇÃO DEFINITIVA (Fluidez) --- */
   font-size: clamp(24px, 6vw, 48px);
-
   font-weight: 700;
   margin-bottom: 64px;
   position: relative;
@@ -101,7 +82,7 @@ h6 {
 }
 
 .section-title::after {
-  content: '';
+  content: "";
   display: block;
   width: 60px;
   height: 4px;
@@ -130,15 +111,7 @@ svg {
 .social-icons img,
 .social-icons svg {
   transition: filter 0.3s ease;
-}
-
-[data-theme="light"] .social-icons img {
   filter: brightness(0);
-}
-
-[data-theme="dark"] .social-icons img,
-body:not([data-theme="light"]) .social-icons img {
-  filter: brightness(0) invert(1);
 }
 
 @media (max-width: 768px) {
