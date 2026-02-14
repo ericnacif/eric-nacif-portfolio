@@ -1,37 +1,323 @@
+/* =========================================
+   CURSOR CUSTOMIZADO PREMIUM
+   Glassmorphism + Morphing + Gradients
+   ========================================= */
+
+/* Cursor Principal - Glassmorphism */
 .custom-cursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 9999;
-    border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  will-change: transform;
 
-    border: 2px solid var(--text-color);
-    background: transparent;
+  /* Glassmorphism effect */
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
 
-    will-change: transform, width, height, border-color;
+  /* Sombra suave */
+  box-shadow:
+    0 8px 32px 0 rgba(var(--accent-rgb), 0.15),
+    inset 0 0 20px rgba(255, 255, 255, 0.05);
+
+  /* Animação suave */
+  transition: border-radius 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Flex para centralizar conteúdo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Lógica para dispositivos touch/sem mouse */
-@media (hover: none),
-(pointer: coarse) {
-    .custom-cursor {
-        display: none;
-    }
+/* Estados específicos do cursor */
+.custom-cursor.cursor-default {
+  background: rgba(var(--accent-rgb), 0.08);
+  border-color: rgba(var(--accent-rgb), 0.3);
 }
 
-/* Lógica para dispositivos COM mouse (Desktop) */
+.custom-cursor.cursor-button,
+.custom-cursor.cursor-link,
+.custom-cursor.cursor-card,
+.custom-cursor.cursor-nav {
+  background: rgba(var(--accent-rgb), 0.12);
+  border-color: rgba(var(--accent-rgb), 0.4);
+  box-shadow:
+    0 12px 40px 0 rgba(var(--accent-rgb), 0.25),
+    inset 0 0 30px rgba(255, 255, 255, 0.08);
+}
+
+.custom-cursor.cursor-text {
+  background: var(--accent-color);
+  border: none;
+  box-shadow: 0 2px 8px rgba(var(--accent-rgb), 0.5);
+}
+
+/* Gradient Border Animado */
+.cursor-gradient-border {
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(
+    45deg,
+    rgba(var(--accent-rgb), 0.6),
+    rgba(var(--accent-rgb), 0.2),
+    rgba(var(--accent-rgb), 0),
+    rgba(var(--accent-rgb), 0.2),
+    rgba(var(--accent-rgb), 0.6)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Texto customizado dentro do cursor */
+.cursor-text {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  user-select: none;
+  position: absolute;
+}
+
+/* Cursor Trail (Rastro) */
+.cursor-trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99998;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+
+  /* Gradient radial animado */
+  background: radial-gradient(
+    circle,
+    rgba(var(--accent-rgb), 0.2) 0%,
+    rgba(var(--accent-rgb), 0.1) 30%,
+    rgba(var(--accent-rgb), 0.05) 60%,
+    transparent 100%
+  );
+
+  /* Blur para efeito suave */
+  filter: blur(15px);
+
+  /* Animação de pulso sutil */
+  animation: trailPulse 2s ease-in-out infinite;
+}
+
+@keyframes trailPulse {
+  0%,
+  100% {
+    opacity: 0.12;
+    filter: blur(15px);
+  }
+  50% {
+    opacity: 0.18;
+    filter: blur(12px);
+  }
+}
+
+/* Dot Central */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    rgba(var(--accent-rgb), 0.8)
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 100000;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  box-shadow:
+    0 0 10px rgba(var(--accent-rgb), 0.8),
+    0 0 20px rgba(var(--accent-rgb), 0.4);
+}
+
+/* Ripple Effect ao Clicar */
+.cursor-ripple {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(var(--accent-rgb), 0.6);
+  background: radial-gradient(
+    circle,
+    rgba(var(--accent-rgb), 0.2) 0%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 99997;
+  backdrop-filter: blur(4px);
+}
+
+/* =========================================
+   ESCONDER CURSOR PADRÃO
+   ========================================= */
+
 @media (hover: hover) and (pointer: fine) {
+  html,
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  [role="button"],
+  * {
+    cursor: none !important;
+  }
+}
 
-    /* Esconde o cursor padrão do sistema em TUDO para usar apenas o customizado */
-    html,
-    body,
-    a,
-    button,
-    input,
-    textarea,
-    [role="button"],
-    * {
-        cursor: none !important;
-    }
+/* =========================================
+   DISPOSITIVOS TOUCH (MOBILE/TABLET)
+   ========================================= */
+
+@media (hover: none), (pointer: coarse) {
+  .custom-cursor,
+  .cursor-trail,
+  .cursor-dot,
+  .cursor-ripple {
+    display: none !important;
+  }
+}
+
+/* =========================================
+   OTIMIZAÇÕES DE PERFORMANCE
+   ========================================= */
+
+.custom-cursor,
+.cursor-trail,
+.cursor-dot,
+.cursor-ripple {
+  /* Force GPU acceleration */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* =========================================
+   ESTADOS ESPECIAIS E ANIMAÇÕES
+   ========================================= */
+
+/* Glow effect em elementos interativos */
+.custom-cursor.cursor-button,
+.custom-cursor.cursor-link {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 12px 40px 0 rgba(var(--accent-rgb), 0.25),
+      inset 0 0 30px rgba(255, 255, 255, 0.08);
+  }
+  50% {
+    box-shadow:
+      0 12px 50px 0 rgba(var(--accent-rgb), 0.35),
+      inset 0 0 35px rgba(255, 255, 255, 0.12);
+  }
+}
+
+/* Efeito especial para cards */
+.custom-cursor.cursor-card {
+  animation: cardFloat 1.5s ease-in-out infinite;
+}
+
+@keyframes cardFloat {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0px);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-3px);
+  }
+}
+
+/* =========================================
+   ACESSIBILIDADE
+   ========================================= */
+
+/* Respeita preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor,
+  .cursor-trail,
+  .cursor-dot,
+  .cursor-ripple {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .cursor-gradient-border {
+    animation: none !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .custom-cursor {
+    border-width: 3px;
+    border-color: var(--accent-color);
+    opacity: 1;
+    background: rgba(var(--accent-rgb), 0.2);
+  }
+
+  .cursor-trail {
+    display: none;
+  }
+}
+
+/* Dark backgrounds adjustment */
+@media (prefers-color-scheme: dark) {
+  .custom-cursor {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* =========================================
+   SUBTLE DETAILS
+   ========================================= */
+
+/* Adiciona um pequeno brilho interno */
+.custom-cursor::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 40%;
+  height: 40%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.3),
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Esconde o brilho no modo texto */
+.custom-cursor.cursor-text::before {
+  display: none;
 }
