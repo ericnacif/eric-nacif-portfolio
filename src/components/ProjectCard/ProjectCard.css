@@ -1,7 +1,11 @@
+/* =========================================
+   PROJECT CARD — POLISHED, SEM EXAGEROS
+   ========================================= */
+
 .project-card {
   background-color: var(--card-bg);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -18,66 +22,56 @@
   will-change: transform;
 }
 
-/* --- EFEITO SPOTLIGHT --- */
+/* Spotlight sutil */
 .spotlight-card::before {
-  content: "";
+  content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 12px;
-  padding: 1.5px;
-  background: radial-gradient(
-    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(255, 255, 255, 0.4),
-    transparent 40%
-  );
-
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
+  inset: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(41, 82, 255, 0.18),
+      transparent 40%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
-
   opacity: 0;
   transition: opacity 0.4s ease;
   z-index: 2;
   pointer-events: none;
 }
 
-/* Brilho interno (radial) */
 .spotlight-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(255, 255, 255, 0.06),
-    transparent 40%
-  );
+  background: radial-gradient(500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(41, 82, 255, 0.04),
+      transparent 40%);
   opacity: 0;
   transition: opacity 0.4s ease;
   z-index: 1;
   pointer-events: none;
 }
 
-/* Ativa o efeito no hover - APENAS EM DESKTOP */
 @media (hover: hover) and (pointer: fine) {
+  .project-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 2px 0 0 rgba(41, 82, 255, 0.25),
+      /* borda accent no topo */
+      0 20px 48px rgba(0, 0, 0, 0.1),
+      0 8px 16px rgba(0, 0, 0, 0.06);
+    border-color: rgba(41, 82, 255, 0.2);
+  }
+
   .project-card:hover::before,
   .project-card:hover .spotlight-overlay {
     opacity: 1;
   }
 
-  .project-card:hover {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-
   .project-card:hover .project-image {
-    transform: scale(1.05);
+    transform: scale(1.04);
   }
 
   .project-card:hover .card-overlay {
@@ -86,7 +80,7 @@
 
   .project-card:hover .header-link-icon {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate(0, 0);
   }
 
   .project-card:hover .project-info h3 {
@@ -94,11 +88,12 @@
   }
 
   .project-card:hover .tag {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(41, 82, 255, 0.2);
+    color: var(--accent-color);
   }
 }
 
+/* ── Imagem ── */
 .card-image-wrapper {
   overflow: hidden;
   position: relative;
@@ -114,14 +109,10 @@
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* OVERLAY (Efeito visual ao passar o mouse na imagem) */
 .card-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,9 +120,9 @@
   transition: opacity 0.3s ease;
   color: #fff;
   backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
 }
 
+/* ── Info ── */
 .project-info {
   padding: 24px;
   display: flex;
@@ -148,11 +139,11 @@
 
 .project-info h3 {
   font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
   color: var(--text-color);
   margin: 0;
-  transition: color 0.3s ease;
+  transition: color 0.25s ease;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -160,9 +151,9 @@
 }
 
 .header-link-icon {
-  font-size: 18px;
+  font-size: 15px;
   opacity: 0;
-  transform: translateX(-5px);
+  transform: translate(-4px, 4px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   color: var(--accent-color);
   flex-shrink: 0;
@@ -172,37 +163,52 @@
   flex: 1;
   margin-bottom: 16px;
   color: var(--text-secondary);
-  line-height: 1.6;
-  font-size: 15px;
-  min-height: 100px; /* Garante espaço mínimo */
+  line-height: 1.65;
+  font-size: 14px;
+  min-height: 68px;
 }
 
+/* ── Tags ── */
 .project-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
   margin-top: auto;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 14px;
+  border-top: 1px solid var(--border-color);
 }
 
 .tag {
-  font-size: 11px;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--text-secondary);
-  background-color: rgba(255, 255, 255, 0.05);
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
   transition: all 0.2s ease;
   white-space: nowrap;
 }
 
-/* =========================================
-   RESPONSIVIDADE
-   ========================================= */
+/* ── Mobile ── */
+@media (hover: none) and (pointer: coarse) {
+  .card-overlay {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.18);
+  }
+
+  .header-link-icon {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  .project-card:active {
+    transform: scale(0.98);
+  }
+}
 
 @media (max-width: 768px) {
   .project-info {
@@ -210,76 +216,41 @@
   }
 
   .project-info h3 {
-    font-size: 18px;
+    font-size: 17px;
   }
 
   .project-description {
-    font-size: 14px;
-    min-height: 80px;
+    font-size: 13px;
   }
 
   .tag {
     font-size: 10px;
-    padding: 5px 10px;
+    padding: 4px 8px;
   }
 }
 
-/* Mobile - Sempre mostra o ícone de link */
-@media (hover: none) and (pointer: coarse) {
-  .card-overlay {
-    opacity: 1;
-    background: rgba(0, 0, 0, 0.2);
-  }
+/* ── Acessibilidade ── */
+@media (prefers-reduced-motion: reduce) {
 
-  .header-link-icon {
-    opacity: 1;
-    transform: translateX(0);
-    color: var(--accent-color);
-  }
-
-  /* Efeito sutil de toque */
-  .project-card:active {
-    transform: scale(0.98);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  .project-card,
+  .project-image,
+  .card-overlay,
+  .header-link-icon,
+  .tag {
+    transition: none;
   }
 }
 
-/* =========================================
-   MELHORIAS DE PERFORMANCE
-   ========================================= */
+@media (prefers-contrast: high) {
+  .project-card {
+    border: 2px solid var(--text-color);
+  }
+}
 
-/* GPU acceleration para animações suaves */
+/* GPU acceleration */
 .project-card,
 .project-image,
 .card-overlay {
   transform: translateZ(0);
   backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-/* Modo de contraste alto */
-@media (prefers-contrast: high) {
-  .project-card {
-    border: 2px solid rgba(255, 255, 255, 0.3);
-  }
-
-  .tag {
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
-}
-
-/* Redução de movimento para acessibilidade */
-@media (prefers-reduced-motion: reduce) {
-  .project-card,
-  .project-image,
-  .card-overlay,
-  .header-link-icon,
-  .tag,
-  .spotlight-overlay {
-    transition: none;
-  }
-
-  .project-card::before {
-    transition: none;
-  }
 }

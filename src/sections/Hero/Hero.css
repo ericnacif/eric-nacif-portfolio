@@ -1,15 +1,17 @@
+/* =========================================
+   HERO — CLEAN, MELHORADO
+   ========================================= */
+
 .hero-section {
     position: relative;
-    /* Mantenho 85vh para o texto ficar bem centralizado verticalmente (não grudar no topo) */
-    min-height: 85vh;
+    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     padding: 0 20px;
-    /* Zerei paddings extras para não afastar o About */
-    padding-bottom: 0;
-    margin-bottom: 0;
 }
 
 .hero-container {
@@ -17,23 +19,67 @@
     z-index: 2;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    width: 100%;
+    text-align: center;
+    gap: 0;
 }
 
+/* ── Badge ── */
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    background: var(--card-bg);
+    margin-bottom: 36px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.hero-badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+    animation: badgePulse 2.5s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes badgePulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+    }
+}
+
+.hero-badge-text {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+}
+
+/* ── Título ── */
 .hero-title {
     font-family: var(--font-display);
-    font-size: clamp(42px, 9vw, 96px);
+    font-size: clamp(44px, 9vw, 108px);
     font-weight: 700;
-    line-height: 1.1;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
     text-align: center;
     text-transform: lowercase;
-    letter-spacing: -0.04em;
     color: var(--text-color);
-    min-height: 1.2em;
-    margin-bottom: 0;
-    /* Garante que o título não empurre nada pra baixo */
+    margin-bottom: 20px;
+    min-height: 1.1em;
 }
 
 .hero-title span {
@@ -41,28 +87,147 @@
     white-space: pre;
 }
 
-.mobile-break {
-    display: none;
+/* ── Nome ── */
+.hero-name {
+    font-family: var(--font-main);
+    font-size: clamp(14px, 1.5vw, 18px);
+    font-weight: 400;
+    color: var(--text-secondary);
+    letter-spacing: 0.04em;
+    margin-bottom: 48px;
 }
 
+/* ── CTAs ── */
+.hero-ctas {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.hero-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 32px;
+    border-radius: 50px;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.25s ease;
+    white-space: nowrap;
+}
+
+.hero-cta:hover {
+    transform: translateY(-2px);
+}
+
+.hero-cta:active {
+    transform: translateY(0);
+}
+
+.hero-cta--primary {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.hero-cta--primary:hover {
+    background-color: var(--accent-color);
+    box-shadow: 0 8px 24px rgba(41, 82, 255, 0.3);
+}
+
+.hero-cta--secondary {
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1.5px solid var(--border-color);
+}
+
+.hero-cta--secondary:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    box-shadow: 0 8px 24px rgba(41, 82, 255, 0.1);
+}
+
+/* ── Scroll indicator ── */
+.hero-scroll-indicator {
+    position: absolute;
+    bottom: clamp(28px, 5vh, 48px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.hero-scroll-mouse {
+    width: 24px;
+    height: 38px;
+    border: 2px solid var(--text-color);
+    border-radius: 12px;
+    opacity: 0.25;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+}
+
+.hero-scroll-wheel {
+    width: 3px;
+    height: 7px;
+    background: var(--text-color);
+    border-radius: 2px;
+    animation: scrollWheel 2s ease-in-out infinite;
+}
+
+@keyframes scrollWheel {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+}
+
+/* =========================================
+   RESPONSIVIDADE
+   ========================================= */
+
 @media (max-width: 768px) {
-    .hero-section {
-        /* No mobile, 80vh é suficiente para centralizar sem sobrar muito espaço embaixo */
-        min-height: 80vh;
-    }
-
     .hero-title {
-        font-size: clamp(32px, 11vw, 56px);
-        line-height: 1.2;
-        display: block;
-        min-height: 2.5em;
-        margin-top: 0;
-        margin-bottom: 0;
+        font-size: clamp(36px, 11vw, 60px);
+        line-height: 1.1;
     }
 
-    .mobile-break {
-        display: block;
-        content: "";
-        margin-top: 8px;
+    .hero-ctas {
+        gap: 10px;
+    }
+
+    .hero-cta {
+        padding: 12px 24px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 400px) {
+    .hero-ctas {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .hero-cta {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .hero-badge-dot,
+    .hero-scroll-wheel {
+        animation: none;
     }
 }

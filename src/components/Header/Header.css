@@ -1,24 +1,39 @@
-/* --- HEADER BASE --- */
+/* =========================================
+   HEADER — VISUAL MAIS DISTINTO
+   ========================================= */
+
 .main-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border-bottom: 1px solid transparent;
   z-index: 1000;
-  padding: 0 40px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0 clamp(20px, 4vw, 56px);
+  transition: background 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Linha accent no topo do header */
+.main-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent-color);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.main-header.scrolled::before {
+  opacity: 1;
 }
 
 .main-header.scrolled {
-  background-color: rgba(255, 248, 248, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 248, 248, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06), 0 4px 24px rgba(0, 0, 0, 0.05);
 }
 
 .header-container {
@@ -27,62 +42,63 @@
   align-items: center;
   max-width: 1400px;
   margin: 0 auto;
-  height: 88px;
-  transition: height 0.4s ease;
+  height: 76px;
+  transition: height 0.35s ease;
 }
 
 .main-header.scrolled .header-container {
-  height: 72px;
+  height: 64px;
 }
 
-/* --- LOGO --- */
+/* ── Logo ── */
 .header-logo-link {
   display: flex;
   align-items: center;
   text-decoration: none;
+  gap: 10px;
   z-index: 10;
-  gap: 12px;
+}
+
+/* Quadrado de fundo para o ícone */
+.header-logo-mark {
+  width: 34px;
+  height: 34px;
+  background: rgba(41, 82, 255, 0.08);
+  border: 1px solid rgba(41, 82, 255, 0.18);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s, border-color 0.25s;
+}
+
+.header-logo-link:hover .header-logo-mark {
+  background: rgba(41, 82, 255, 0.14);
+  border-color: rgba(41, 82, 255, 0.35);
 }
 
 .header-logo-img {
-  height: 40px;
-  width: auto;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
-  transition: transform 0.3s ease;
-}
-
-.header-logo-link:hover .header-logo-img {
-  transform: rotate(10deg);
 }
 
 .header-logo-text {
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--accent-color);
-  white-space: nowrap;
-  transition: opacity 0.3s ease;
+  letter-spacing: 0.04em;
+  color: var(--text-color);
 }
 
-/* --- NAVEGAÇÃO DESKTOP (HÍBRIDA) --- */
+/* ── Nav ── */
 .desktop-nav {
   display: flex;
-  gap: 8px;
+  gap: 2px;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  background-color: transparent;
-  padding: 0;
-  border-radius: 0;
-  border: none;
-  transition: all 0.4s ease;
-}
-
-/* ESTADO SCROLLED */
-.main-header.scrolled .desktop-nav {
-  background-color: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.04);
   padding: 4px;
   border-radius: 50px;
   border: 1px solid var(--border-color);
@@ -90,60 +106,36 @@
 
 .nav-item {
   position: relative;
-  padding: 8px 20px;
+  padding: 7px 20px;
   text-decoration: none;
   color: var(--text-secondary);
-  font-size: 14px;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: color 0.3s ease;
-  border-radius: 30px;
+  letter-spacing: 0.08em;
+  border-radius: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1;
+  transition: color 0.2s;
 }
 
 .nav-item:hover {
   color: var(--text-color);
 }
 
-/* --- ATIVO (TOPO vs SCROLLED) --- */
-.main-header:not(.scrolled) .nav-item.active {
+.nav-item.active {
   color: var(--accent-color);
 }
 
-.main-header:not(.scrolled) .nav-item.active::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  width: 6px;
-  height: 6px;
-  background-color: var(--accent-color);
-  border-radius: 50%;
-}
-
-.main-header.scrolled .nav-item.active {
-  color: var(--accent-color);
-}
-
-.main-header.scrolled .nav-item.active::after {
-  display: none;
-}
-
-/* --- A PÍLULA FLUTUANTE --- */
 .nav-pill-bg {
   position: absolute;
   inset: 0;
-  background-color: rgba(var(--accent-rgb), 0.15);
-  border-radius: 30px;
+  background: rgba(41, 82, 255, 0.1);
+  border-radius: 50px;
   z-index: -1;
-  opacity: 0;
-}
-
-.main-header.scrolled .nav-pill-bg {
-  opacity: 1;
 }
 
 .nav-text {
@@ -151,140 +143,120 @@
   z-index: 2;
 }
 
-/* --- CONTROLES DESKTOP --- */
+/* ── Controls ── */
 .header-controls {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.lang-switcher {
-  position: relative;
-  z-index: 1001;
-}
-
-.lang-btn {
-  background: none;
-  border: none;
-  color: var(--text-color);
-  cursor: pointer;
+/* Lang inline — botões lado a lado sem dropdown */
+.lang-inline {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 8px;
-}
-
-.lang-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
   gap: 4px;
-  min-width: 80px;
-  box-shadow: 0 10px 20px var(--shadow-color);
 }
 
-.lang-dropdown button {
+.lang-inline-btn {
   background: none;
   border: none;
-  color: var(--text-secondary);
-  padding: 6px 12px;
   cursor: pointer;
-  text-align: left;
-  font-size: 13px;
-  border-radius: 4px;
-  transition: all 0.2s;
-  width: 100%;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  padding: 4px 2px;
+  transition: color 0.2s;
 }
 
-.lang-dropdown button:hover {
-  background: var(--bg-color);
+.lang-inline-btn:hover {
   color: var(--text-color);
 }
 
-.lang-dropdown button.active {
+.lang-inline-btn.active {
   color: var(--accent-color);
-  font-weight: bold;
 }
 
+.lang-sep {
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  background: var(--border-color);
+  margin: 0 4px;
+}
+
+/* CV */
 .cv-button {
   display: flex;
   align-items: center;
-  gap: 8px;
-  background-color: var(--text-color);
-  color: var(--bg-color);
-  padding: 10px 20px;
-  border-radius: 50px;
+  gap: 7px;
+  background: var(--accent-color);
+  color: #fff;
+  padding: 9px 20px;
+  border-radius: 8px;
   text-decoration: none;
-  font-size: 13px;
+  font-family: var(--font-display);
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  transition:
-    transform 0.2s ease,
-    background-color 0.3s ease;
+  letter-spacing: 0.8px;
+  transition: background 0.22s, box-shadow 0.22s, transform 0.18s;
 }
 
 .cv-button:hover {
-  transform: translateY(-2px);
-  background-color: var(--accent-color);
-  color: #fff;
+  background: #1a3de0;
+  box-shadow: 0 6px 20px rgba(41, 82, 255, 0.35);
 }
 
 /* =========================================
-   MOBILE MENU (ESTILO DRAWER / LATERAL)
+   MOBILE DRAWER
    ========================================= */
 
 .mobile-menu-btn {
   display: none;
+  flex-direction: column;
+  gap: 5px;
   background: none;
   border: none;
-  color: var(--text-color);
-  font-size: 24px;
   cursor: pointer;
-  z-index: 1001;
   padding: 8px;
+  z-index: 1001;
 }
 
-/* OVERLAY (Fundo Escuro Atrás do Menu) */
+.mobile-menu-btn span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text-color);
+  border-radius: 2px;
+  transition: transform 0.2s;
+}
+
 .mobile-menu-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
   z-index: 2000;
 }
 
-/* DRAWER (O Painel Lateral) */
 .mobile-menu-drawer {
   position: fixed;
   top: 0;
   right: 0;
-  width: 320px;
-  /* Largura fixa boa */
-  max-width: 85vw;
-  /* Não ocupa mais que 85% em telas pequenas */
+  width: 300px;
+  max-width: 88vw;
   height: 100%;
-  background-color: var(--card-bg);
+  background: var(--bg-color);
   border-left: 1px solid var(--border-color);
   z-index: 2001;
-  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: 28px 24px;
+  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.1);
 }
 
-/* Header do Drawer */
 .drawer-header {
   display: flex;
   justify-content: space-between;
@@ -294,27 +266,28 @@
   border-bottom: 1px solid var(--border-color);
 }
 
-.drawer-title {
+.drawer-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--font-display);
+  font-size: 14px;
   font-weight: 700;
-  font-size: 18px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--text-secondary);
+  color: var(--text-color);
 }
 
 .drawer-close-btn {
-  background: none;
-  border: 1px solid var(--border-color);
-  color: var(--text-color);
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: none;
+  color: var(--text-color);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s;
 }
 
 .drawer-close-btn:hover {
@@ -323,135 +296,127 @@
   transform: rotate(90deg);
 }
 
-/* Links do Drawer */
 .drawer-links {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  flex: 1;
-  /* Empurra o footer para baixo */
+  gap: 4px;
 }
 
 .drawer-item {
-  padding: 16px 20px;
-  font-size: 20px;
-  font-family: var(--font-display);
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-decoration: none;
-  border-radius: 12px;
-  transition: all 0.2s ease;
   display: flex;
   align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.2s;
 }
 
 .drawer-item:hover {
-  background-color: var(--bg-color);
+  background: rgba(41, 82, 255, 0.05);
   color: var(--text-color);
-  transform: translateX(5px);
 }
 
 .drawer-item.active {
-  background-color: rgba(var(--accent-rgb), 0.1);
+  background: rgba(41, 82, 255, 0.08);
   color: var(--accent-color);
-  border-left: 4px solid var(--accent-color);
 }
 
-/* Footer do Drawer (Controles) */
+.drawer-item-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--accent-color);
+  opacity: 0.6;
+  min-width: 20px;
+}
+
 .drawer-footer {
-  border-top: 1px solid var(--border-color);
   padding-top: 24px;
+  border-top: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
-  gap: 20px;
-}
-
-.drawer-controls-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  gap: 14px;
 }
 
 .drawer-lang {
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: var(--bg-color);
-  padding: 8px 16px;
-  border-radius: 12px;
+  justify-content: center;
+  gap: 16px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 10px;
   border: 1px solid var(--border-color);
 }
 
 .drawer-lang button {
   background: none;
   border: none;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
   color: var(--text-secondary);
-  font-size: 14px;
-  font-weight: 600;
   cursor: pointer;
-  padding: 2px;
+  transition: color 0.2s;
 }
 
 .drawer-lang button.active {
   color: var(--accent-color);
 }
 
-.drawer-lang .sep {
-  color: var(--border-color);
-  font-size: 12px;
-}
-
 .drawer-cv-btn {
-  width: 100%;
-  background-color: var(--text-color);
-  color: var(--bg-color);
-  padding: 16px;
-  border-radius: 12px;
+  background: var(--accent-color);
+  color: #fff;
+  padding: 14px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   text-decoration: none;
+  font-family: var(--font-display);
   font-weight: 700;
+  font-size: 12px;
   text-transform: uppercase;
-  font-size: 14px;
-  transition: background-color 0.3s;
+  letter-spacing: 0.8px;
+  transition: background 0.22s;
 }
 
 .drawer-cv-btn:hover {
-  background-color: var(--accent-color);
-  color: #fff;
+  background: #1a3de0;
 }
+
+/* =========================================
+   RESPONSIVIDADE
+   ========================================= */
 
 @media (max-width: 1024px) {
   .desktop-nav {
     display: none;
   }
 
-  .mobile-menu-btn {
-    display: block;
-  }
-
   .header-controls {
     display: none;
   }
+
+  .mobile-menu-btn {
+    display: flex;
+  }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .main-header {
     padding: 0 20px;
   }
 
   .header-logo-text {
-    font-size: 16px;
-  }
-
-  .header-logo-img {
-    height: 32px;
-  }
-
-  .mobile-menu-drawer {
-    width: 85vw;
-    /* Mais largo no mobile estreito */
+    display: none;
   }
 }
