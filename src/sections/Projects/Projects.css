@@ -121,27 +121,28 @@
   flex: 1;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
-  line-clamp: 3;
   overflow: hidden;
 }
 
-/* ── Controles (setas + paginação numa linha) ── */
-.swiper-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 36px;
+/* ── Wrapper com espaço lateral para as setas ── */
+.carousel-wrapper {
+  position: relative;
+  padding: 0 56px;
 }
 
-/* Setas */
+/* ── Setas — absolutas, laterais, centralizadas nos cards ── */
 .swiper-arrow {
-  width: 40px;
-  height: 40px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(calc(-50% - 20px));
+  z-index: 10;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
   color: #fff;
   display: flex;
   align-items: center;
@@ -149,23 +150,34 @@
   cursor: pointer;
   flex-shrink: 0;
   transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  backdrop-filter: blur(6px);
+}
+
+.swiper-arrow--prev {
+  left: 0;
+}
+
+.swiper-arrow--next {
+  right: 0;
 }
 
 .swiper-arrow:hover {
-  background: rgba(255, 255, 255, 0.24);
-  border-color: rgba(255, 255, 255, 0.55);
-  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(calc(-50% - 20px)) scale(1.08);
 }
 
 .swiper-arrow:active {
-  transform: scale(0.93);
+  transform: translateY(calc(-50% - 20px)) scale(0.94);
 }
 
-/* Paginação customizada */
+/* ── Paginação — centralizada abaixo, separada das setas ── */
 .swiper-custom-pagination {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
+  margin-top: 32px;
 }
 
 .swiper-custom-bullet {

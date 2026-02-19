@@ -85,9 +85,7 @@ const Header = () => {
 
         {/* Logo */}
         <a href="#hero" className="header-logo-link" onClick={(e) => handleScrollTo(e, "hero")}>
-          <div className="header-logo-mark">
-            <img src={logoSrc} alt="Logo" className="header-logo-img" width="28" height="28" />
-          </div>
+          <img src={logoSrc} alt="Logo" className="header-logo-img" width="36" height="36" />
           <span className="header-logo-text">Eric Nacif</span>
         </a>
 
