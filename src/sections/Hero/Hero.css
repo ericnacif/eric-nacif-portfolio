@@ -1,5 +1,5 @@
 /* =========================================
-   HERO — CLEAN, MELHORADO
+   HERO — DUAS COLUNAS, 4 ÍCONES CARDEAIS
    ========================================= */
 
 .hero-section {
@@ -9,22 +9,26 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     overflow: hidden;
-    padding: 0 20px;
+    padding: 80px clamp(20px, 5vw, 80px) 0;
 }
 
-.hero-container {
-    position: relative;
-    z-index: 2;
+.hero-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 64px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* ── Coluna esquerda ── */
+.hero-left {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 0;
 }
 
-/* ── Badge ── */
 .hero-badge {
     display: inline-flex;
     align-items: center;
@@ -33,7 +37,8 @@
     border: 1px solid var(--border-color);
     border-radius: 50px;
     background: var(--card-bg);
-    margin-bottom: 36px;
+    margin-bottom: 32px;
+    width: fit-content;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
 
@@ -42,7 +47,6 @@
     height: 7px;
     border-radius: 50%;
     background: #22c55e;
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
     animation: badgePulse 2.5s ease-in-out infinite;
     flex-shrink: 0;
 }
@@ -61,64 +65,62 @@
 
 .hero-badge-text {
     font-family: var(--font-display);
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 11px;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     color: var(--text-secondary);
 }
 
-/* ── Título ── */
 .hero-title {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+}
+
+.hero-title-line {
     font-family: var(--font-display);
-    font-size: clamp(44px, 9vw, 108px);
+    font-size: clamp(44px, 6.5vw, 80px);
     font-weight: 700;
     line-height: 1.05;
-    letter-spacing: -0.04em;
-    text-align: center;
+    letter-spacing: -0.03em;
     text-transform: lowercase;
     color: var(--text-color);
-    margin-bottom: 20px;
-    min-height: 1.1em;
+    display: block;
 }
 
-.hero-title span {
-    display: inline-block;
-    white-space: pre;
+.hero-title-accent {
+    color: var(--accent-color);
 }
 
-/* ── Nome ── */
-.hero-name {
-    font-family: var(--font-main);
-    font-size: clamp(14px, 1.5vw, 18px);
-    font-weight: 400;
+.hero-sub {
+    font-size: clamp(15px, 1.5vw, 17px);
     color: var(--text-secondary);
-    letter-spacing: 0.04em;
-    margin-bottom: 48px;
+    line-height: 1.75;
+    margin-bottom: 40px;
+    max-width: 420px;
 }
 
-/* ── CTAs ── */
 .hero-ctas {
     display: flex;
-    gap: 14px;
+    gap: 12px;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .hero-cta {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 13px 32px;
-    border-radius: 50px;
+    padding: 13px 28px;
+    border-radius: 8px;
     font-family: var(--font-display);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
     cursor: pointer;
     border: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.25s ease;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.22s, color 0.22s, border-color 0.22s;
     white-space: nowrap;
 }
 
@@ -131,17 +133,17 @@
 }
 
 .hero-cta--primary {
-    background-color: var(--text-color);
+    background: var(--text-color);
     color: var(--bg-color);
 }
 
 .hero-cta--primary:hover {
-    background-color: var(--accent-color);
+    background: var(--accent-color);
     box-shadow: 0 8px 24px rgba(41, 82, 255, 0.3);
 }
 
 .hero-cta--secondary {
-    background-color: transparent;
+    background: transparent;
     color: var(--text-color);
     border: 1.5px solid var(--border-color);
 }
@@ -149,16 +151,214 @@
 .hero-cta--secondary:hover {
     border-color: var(--accent-color);
     color: var(--accent-color);
-    box-shadow: 0 8px 24px rgba(41, 82, 255, 0.1);
+}
+
+/* ── Coluna direita ── */
+.hero-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Cena orbital — tamanho generoso para os ícones terem espaço */
+.orbit-scene {
+    position: relative;
+    width: 360px;
+    height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Anéis decorativos */
+.orbit-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px dashed rgba(41, 82, 255, 0.15);
+    pointer-events: none;
+}
+
+.orbit-ring--1 {
+    width: 320px;
+    height: 320px;
+    animation: orbitSpin 28s linear infinite;
+}
+
+.orbit-ring--2 {
+    width: 230px;
+    height: 230px;
+    animation: orbitSpin 20s linear infinite reverse;
+    border-color: rgba(41, 82, 255, 0.08);
+}
+
+@keyframes orbitSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ── 4 ícones fixos via CSS — posições cardeais ── */
+.orbit-icon {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    z-index: 4;
+    /* Centraliza o ícone na borda do anel externo (raio = 160px) */
+    /* top: 50% - 22px (metade do ícone) ± 160px */
+}
+
+.orbit-icon:hover {
+    transform: scale(1.25) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.13);
+    z-index: 10;
+}
+
+/* Topo: centro horizontal, borda superior do anel */
+.orbit-icon--top {
+    top: calc(50% - 160px - 22px);
+    left: calc(50% - 22px);
+}
+
+/* Direita: borda direita do anel, centro vertical */
+.orbit-icon--right {
+    top: calc(50% - 22px);
+    left: calc(50% + 160px - 22px);
+}
+
+/* Baixo: centro horizontal, borda inferior */
+.orbit-icon--bottom {
+    top: calc(50% + 160px - 22px);
+    left: calc(50% - 22px);
+}
+
+/* Esquerda: borda esquerda, centro vertical */
+.orbit-icon--left {
+    top: calc(50% - 22px);
+    left: calc(50% - 160px - 22px);
+}
+
+/* ── Bloco de código ── */
+.code-block {
+    position: relative;
+    z-index: 5;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    width: 210px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03), 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+.code-block__bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.dot--red {
+    background: #ff5f57;
+}
+
+.dot--yellow {
+    background: #ffbd2e;
+}
+
+.dot--green {
+    background: #28c840;
+}
+
+.code-block__body {
+    padding: 12px 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 10.5px;
+    line-height: 1.8;
+    min-height: 160px;
+}
+
+.code-line {
+    display: flex;
+    align-items: baseline;
+    padding: 0 12px;
+}
+
+.code-num {
+    color: var(--border-color);
+    min-width: 20px;
+    font-size: 9px;
+    user-select: none;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.code-text {
+    color: var(--text-color);
+    white-space: pre;
+}
+
+.code-text .kw {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.code-text .str {
+    color: #10b981;
+}
+
+.code-text .fn {
+    color: #f59e0b;
+}
+
+.cursor-blink {
+    display: inline-block;
+    width: 2px;
+    height: 12px;
+    background: var(--accent-color);
+    margin-left: 1px;
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
 
 /* ── Scroll indicator ── */
-.hero-scroll-indicator {
+.hero-scroll {
     position: absolute;
-    bottom: clamp(28px, 5vh, 48px);
+    bottom: clamp(24px, 4vh, 44px);
     left: 50%;
     transform: translateX(-50%);
-    z-index: 2;
 }
 
 .hero-scroll-mouse {
@@ -166,7 +366,7 @@
     height: 38px;
     border: 2px solid var(--text-color);
     border-radius: 12px;
-    opacity: 0.25;
+    opacity: 0.2;
     display: flex;
     justify-content: center;
     padding-top: 6px;
@@ -196,38 +396,75 @@
    RESPONSIVIDADE
    ========================================= */
 
-@media (max-width: 768px) {
-    .hero-title {
-        font-size: clamp(36px, 11vw, 60px);
-        line-height: 1.1;
+@media (max-width: 900px) {
+    .hero-layout {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 48px;
+    }
+
+    .hero-left {
+        align-items: center;
+    }
+
+    .hero-sub {
+        max-width: 100%;
     }
 
     .hero-ctas {
-        gap: 10px;
-    }
-
-    .hero-cta {
-        padding: 12px 24px;
-        font-size: 12px;
+        justify-content: center;
     }
 }
 
-@media (max-width: 400px) {
-    .hero-ctas {
-        flex-direction: column;
-        width: 100%;
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 80px 20px 0;
     }
 
-    .hero-cta {
-        width: 100%;
-        justify-content: center;
+    .hero-title-line {
+        font-size: clamp(36px, 11vw, 52px);
+    }
+
+    .orbit-scene {
+        width: 280px;
+        height: 280px;
+    }
+
+    .orbit-ring--1 {
+        width: 250px;
+        height: 250px;
+    }
+
+    .orbit-ring--2 {
+        width: 180px;
+        height: 180px;
+    }
+
+    /* Reposiciona ícones para raio menor (125px) em mobile */
+    .orbit-icon--top {
+        top: calc(50% - 125px - 22px);
+    }
+
+    .orbit-icon--bottom {
+        top: calc(50% + 125px - 22px);
+    }
+
+    .orbit-icon--right {
+        left: calc(50% + 125px - 22px);
+    }
+
+    .orbit-icon--left {
+        left: calc(50% - 125px - 22px);
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
 
+    .orbit-ring--1,
+    .orbit-ring--2,
     .hero-badge-dot,
-    .hero-scroll-wheel {
+    .hero-scroll-wheel,
+    .cursor-blink {
         animation: none;
     }
 }
