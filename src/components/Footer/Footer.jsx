@@ -147,6 +147,18 @@ const Footer = () => {
           transition={{ duration: 0.6 }}
         >
           <AnimatePresence mode="wait">
+            <motion.span
+              className="section-eyebrow footer-eyebrow"
+              key={language}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {language === 'en' ? '03 — Contact' : '03 — Contato'}
+            </motion.span>
+          </AnimatePresence>
+          <AnimatePresence mode="wait">
             <motion.h2
               className="footer-greeting"
               key={`${language}-${greetingKey}`}

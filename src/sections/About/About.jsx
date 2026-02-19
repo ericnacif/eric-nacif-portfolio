@@ -12,6 +12,7 @@ import {
 
 const structuredStack = {
   pt: {
+    eyebrow: '01 — Sobre',
     title: 'Sobre Mim',
     paragraph1: 'Desenvolvedor Full Stack com sólida expertise em PHP, Laravel e JavaScript, especializado em arquiteturas web escaláveis e aplicações móveis com React Native.',
     paragraph2: 'Possuo forte proficiência em gestão de dados (SQL e MongoDB) e foco em boas práticas de código para entregar soluções robustas em projetos desafiadores.',
@@ -19,6 +20,7 @@ const structuredStack = {
     techTitle: 'Minha Tech Stack',
   },
   en: {
+    eyebrow: '01 — About',
     title: 'About Me',
     paragraph1: 'Full Stack Developer with solid expertise in PHP, Laravel, and JavaScript, specializing in scalable web architectures and mobile applications with React Native.',
     paragraph2: 'Strong proficiency in data management (SQL and MongoDB) and code best practices to deliver robust solutions in challenging projects.',
@@ -26,11 +28,13 @@ const structuredStack = {
     techTitle: 'My Tech Stack',
   },
   es: {
+    eyebrow: '01 — Sobre',
     title: 'Sobre Mí',
     paragraph1: 'Desarrollador Full Stack con sólida experiencia en PHP, Laravel y JavaScript, especializado en arquitecturas web escalables y aplicaciones móviles con React Native.',
     paragraph2: 'Tengo una fuerte competencia en gestión de datos (SQL y MongoDB) y me enfoco en las mejores prácticas para entregar soluciones robustas.',
     cta: '¿Construimos algo juntos?',
     techTitle: 'Mi Tech Stack',
+    eyebrow: '01 — Sobre',
   },
 };
 
@@ -83,18 +87,40 @@ const About = () => {
     <section id="sobre" className="about-section">
       <div className="container about-container">
 
-        {/* Título */}
-        <motion.h2
-          className="section-title"
-          key={language}
+        {/* Eyebrow + Título */}
+        <motion.div
+          className="section-header"
           variants={fadeUp}
           custom={0}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.6 }}
         >
-          {t.title}
-        </motion.h2>
+          <AnimatePresence mode="wait">
+            <motion.span
+              className="section-eyebrow"
+              key={language}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {t.eyebrow}
+            </motion.span>
+          </AnimatePresence>
+          <AnimatePresence mode="wait">
+            <motion.h2
+              className="section-title"
+              key={`title-${language}`}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.22 }}
+            >
+              {t.title}
+            </motion.h2>
+          </AnimatePresence>
+        </motion.div>
 
         {/* Layout duas colunas */}
         <div className="about-body">

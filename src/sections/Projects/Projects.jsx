@@ -94,7 +94,7 @@ const Projects = () => {
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="projects-eyebrow">03 — Portfolio</span>
+            <span className="projects-eyebrow">02 — Projetos</span>
             <AnimatePresence mode="wait">
               <motion.h2
                 className="projects-title"
