@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
 import { useTheme } from '../../context/ThemeContext';
 import { SiLinkedin, SiInstagram, SiGithub } from 'react-icons/si';
-import { FiLoader, FiCheck, FiMapPin, FiSend } from 'react-icons/fi';
+import { FiLoader, FiCheck, FiMapPin } from 'react-icons/fi';
 
 const Footer = () => {
   const { language } = useLanguage();
@@ -29,31 +29,43 @@ const Footer = () => {
 
   const content = {
     pt: {
-      greetings: { morning: 'Bom dia! Vamos construir algo?', afternoon: 'Boa tarde! Vamos construir algo?', evening: 'Boa noite! Vamos construir algo?' },
-      subtitle: 'Deixe sua mensagem abaixo e entrarei em contato em breve.',
+      greetings: {
+        morning: 'Bom dia! Vamos construir algo?',
+        afternoon: 'Boa tarde! Vamos construir algo?',
+        evening: 'Boa noite! Vamos construir algo?',
+      },
+      subtitle: 'Deixe sua mensagem e entrarei em contato.',
       labels: { name: 'Seu Nome', email: 'Seu E-mail', message: 'Sua Mensagem' },
       defaultMessage: 'Olá Eric! Vi seu portfólio e gostaria de conversar sobre um projeto...',
-      button: { default: 'Enviar Mensagem', success: 'Enviado com sucesso!' },
+      button: { default: 'Enviar Mensagem', success: 'Enviado!' },
       error: 'Erro ao enviar. Tente novamente.',
       location: 'Brasil',
       copyright: 'Todos os direitos reservados.',
     },
     en: {
-      greetings: { morning: "Good morning! Let's build something?", afternoon: "Good afternoon! Let's build something?", evening: "Good evening! Let's build something?" },
-      subtitle: "Leave your message below and I'll get in touch soon.",
+      greetings: {
+        morning: "Good morning! Let's build something?",
+        afternoon: "Good afternoon! Let's build something?",
+        evening: "Good evening! Let's build something?",
+      },
+      subtitle: "Leave your message and I'll get in touch.",
       labels: { name: 'Your Name', email: 'Your Email', message: 'Your Message' },
       defaultMessage: "Hi Eric! I saw your portfolio and would like to talk about a project...",
-      button: { default: 'Send Message', success: 'Message sent!' },
+      button: { default: 'Send Message', success: 'Sent!' },
       error: 'Error sending. Please try again.',
       location: 'Brazil',
       copyright: 'All rights reserved.',
     },
     es: {
-      greetings: { morning: '¡Buenos días! ¿Construimos algo?', afternoon: '¡Buenas tardes! ¿Construimos algo?', evening: '¡Buenas noches! ¿Construimos algo?' },
-      subtitle: 'Deja tu mensaje abajo y me pondré en contacto pronto.',
+      greetings: {
+        morning: '¡Buenos días! ¿Construimos algo?',
+        afternoon: '¡Buenas tardes! ¿Construimos algo?',
+        evening: '¡Buenas noches! ¿Construimos algo?',
+      },
+      subtitle: 'Deja tu mensaje y me pondré en contacto.',
       labels: { name: 'Tu Nombre', email: 'Tu Correo', message: 'Tu Mensaje' },
       defaultMessage: '¡Hola Eric! Vi tu portafolio y me gustaría hablar sobre un proyecto...',
-      button: { default: 'Enviar Mensaje', success: '¡Mensaje enviado!' },
+      button: { default: 'Enviar Mensaje', success: '¡Enviado!' },
       error: 'Error al enviar. Inténtalo de nuevo.',
       location: 'Brasil',
       copyright: 'Todos los derechos reservados.',
@@ -75,7 +87,9 @@ const Footer = () => {
       const filtered = commonDomains.filter((d) => d.startsWith(domainPart));
       setSuggestions(filtered);
       setShowSuggestions(filtered.length > 0 && !commonDomains.includes(domainPart));
-    } else setShowSuggestions(false);
+    } else {
+      setShowSuggestions(false);
+    }
   };
 
   const handleDomainSelect = (domain) => {
@@ -85,7 +99,8 @@ const Footer = () => {
 
   useEffect(() => {
     const handler = (e) => {
-      if (suggestionsRef.current && !suggestionsRef.current.contains(e.target)) setShowSuggestions(false);
+      if (suggestionsRef.current && !suggestionsRef.current.contains(e.target))
+        setShowSuggestions(false);
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
@@ -95,9 +110,13 @@ const Footer = () => {
     e.preventDefault();
     setStatus('sending');
     const data = new FormData();
-    data.append('name', name); data.append('email', email); data.append('message', message);
+    data.append('name', name);
+    data.append('email', email);
+    data.append('message', message);
     try {
-      const res = await fetch('https://formspree.io/f/movpajdd', { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      const res = await fetch('https://formspree.io/f/movpajdd', {
+        method: 'POST', body: data, headers: { Accept: 'application/json' },
+      });
       if (res.ok) {
         setStatus('success');
         setName(''); setEmail(''); setMessage(t.defaultMessage);
@@ -113,184 +132,200 @@ const Footer = () => {
   ];
 
   const isDisabled = status === 'sending' || status === 'success';
+  const fadeVariants = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } };
 
   return (
     <footer id="contato" className="main-footer">
+      <div className="footer-inner">
 
-      {/* Seção de contato */}
-      <div className="footer-contact">
-        <div className="footer-contact-inner">
+        {/* Saudação */}
+        <motion.div
+          className="footer-cta"
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <AnimatePresence mode="wait">
+            <motion.h2
+              className="footer-greeting"
+              key={`${language}-${greetingKey}`}
+              variants={fadeVariants}
+              initial="initial" animate="animate" exit="exit"
+              transition={{ duration: 0.22 }}
+            >
+              {t.greetings[greetingKey]}
+            </motion.h2>
+          </AnimatePresence>
 
-          {/* Cabeçalho */}
-          <motion.div
-            className="footer-heading"
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <AnimatePresence mode="wait">
-              <motion.h2
-                className="footer-greeting"
-                key={`${language}-${greetingKey}`}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.22 }}
-              >
-                {t.greetings[greetingKey]}
-              </motion.h2>
-            </AnimatePresence>
+          <AnimatePresence mode="wait">
+            <motion.p
+              className="footer-subtitle"
+              key={language}
+              variants={fadeVariants}
+              initial="initial" animate="animate" exit="exit"
+              transition={{ duration: 0.2 }}
+            >
+              {t.subtitle}
+            </motion.p>
+          </AnimatePresence>
+        </motion.div>
 
-            <AnimatePresence mode="wait">
-              <motion.p
-                className="footer-subtitle"
-                key={language}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                {t.subtitle}
-              </motion.p>
-            </AnimatePresence>
-          </motion.div>
-
-          {/* Formulário em card */}
-          <motion.div
-            className="form-card"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-          >
-            <form className="contact-form" onSubmit={handleSubmit}>
-              <div className="form-row">
-                {/* Nome */}
-                <div className="field">
-                  <AnimatePresence mode="wait">
-                    <motion.label htmlFor="name" key={language}
-                      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                      transition={{ duration: 0.16 }}
-                    >
-                      {t.labels.name}
-                    </motion.label>
-                  </AnimatePresence>
-                  <input
-                    type="text" id="name" name="name"
-                    value={name} onChange={(e) => setName(e.target.value)}
-                    required disabled={isDisabled} placeholder="João Silva"
-                  />
-                </div>
-
-                {/* Email */}
-                <div className="field" ref={suggestionsRef} style={{ position: 'relative' }}>
-                  <AnimatePresence mode="wait">
-                    <motion.label htmlFor="email" key={language}
-                      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                      transition={{ duration: 0.16 }}
-                    >
-                      {t.labels.email}
-                    </motion.label>
-                  </AnimatePresence>
-                  <input
-                    type="email" id="email" name="email"
-                    value={email} onChange={handleEmailChange}
-                    required disabled={isDisabled} placeholder="joao@email.com" autoComplete="off"
-                  />
-                  <AnimatePresence>
-                    {showSuggestions && (
-                      <motion.ul className="email-suggestions"
-                        initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-                      >
-                        {suggestions.map((domain) => (
-                          <li key={domain} onClick={() => handleDomainSelect(domain)}>
-                            <span className="sug-user">{email.split('@')[0]}@</span>
-                            <span className="sug-domain">{domain}</span>
-                          </li>
-                        ))}
-                      </motion.ul>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </div>
-
-              {/* Mensagem */}
-              <div className="field field--full">
-                <AnimatePresence mode="wait">
-                  <motion.label htmlFor="message" key={language}
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                    transition={{ duration: 0.16 }}
-                  >
-                    {t.labels.message}
-                  </motion.label>
-                </AnimatePresence>
-                <AnimatePresence mode="wait">
-                  <motion.textarea
-                    key={language} id="message" name="message" rows="4"
-                    value={message} onChange={(e) => setMessage(e.target.value)}
-                    required disabled={isDisabled}
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                    transition={{ duration: 0.16 }}
-                  />
-                </AnimatePresence>
-              </div>
-
-              {/* Submit */}
-              <div className="form-submit">
-                <motion.button
-                  type="submit"
-                  className={`submit-btn submit-btn--${status}`}
-                  disabled={isDisabled}
-                  layout
-                  transition={{ duration: 0.3, type: 'spring', stiffness: 120 }}
+        {/* Formulário — inputs flutuantes, sem card */}
+        <motion.form
+          className="contact-form minimal-form"
+          onSubmit={handleSubmit}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+        >
+          <div className="form-row">
+            {/* Nome */}
+            <div className="input-group-minimal">
+              <input
+                type="text" name="name" id="name"
+                value={name} onChange={(e) => setName(e.target.value)}
+                required disabled={isDisabled} placeholder=" "
+              />
+              <AnimatePresence mode="wait">
+                <motion.label htmlFor="name" key={language}
+                  variants={fadeVariants} initial="initial" animate="animate" exit="exit"
+                  transition={{ duration: 0.18 }}
                 >
-                  <AnimatePresence mode="wait">
-                    {status === 'idle' && (
-                      <motion.span key={`idle-${language}`} className="btn-inner"
-                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                      >
-                        <AnimatePresence mode="wait">
-                          <motion.span key={language} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                            {t.button.default}
-                          </motion.span>
-                        </AnimatePresence>
-                        <FiSend size={15} />
-                      </motion.span>
-                    )}
-                    {status === 'sending' && (
-                      <motion.span key="sending" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}>
-                        <FiLoader className="spin-icon" size={20} />
-                      </motion.span>
-                    )}
-                    {status === 'success' && (
-                      <motion.span key="success" className="btn-inner" initial={{ scale: 0 }} animate={{ scale: 1 }}>
-                        <FiCheck size={18} />
-                        <motion.span key={`s-${language}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                          {t.button.success}
-                        </motion.span>
-                      </motion.span>
-                    )}
-                    {status === 'error' && (
-                      <motion.span key={`err-${language}`}>{t.error}</motion.span>
-                    )}
-                  </AnimatePresence>
-                </motion.button>
-              </div>
-            </form>
-          </motion.div>
-        </div>
-      </div>
+                  {t.labels.name}
+                </motion.label>
+              </AnimatePresence>
+              <span className="underline-bar" />
+            </div>
 
-      {/* Rodapé inferior */}
-      <div className="footer-bottom-bar">
-        <div className="footer-bottom-inner">
+            {/* Email */}
+            <div className="input-group-minimal" ref={suggestionsRef}>
+              <input
+                type="email" name="email" id="email"
+                value={email} onChange={handleEmailChange}
+                required disabled={isDisabled} placeholder=" " autoComplete="off"
+              />
+              <AnimatePresence mode="wait">
+                <motion.label htmlFor="email" key={language}
+                  variants={fadeVariants} initial="initial" animate="animate" exit="exit"
+                  transition={{ duration: 0.18 }}
+                >
+                  {t.labels.email}
+                </motion.label>
+              </AnimatePresence>
+              <span className="underline-bar" />
+
+              <AnimatePresence>
+                {showSuggestions && (
+                  <motion.ul
+                    className="email-suggestions"
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    {suggestions.map((domain) => (
+                      <li key={domain} onClick={() => handleDomainSelect(domain)}>
+                        <span className="sug-user">{email.split('@')[0]}@</span>
+                        <span className="sug-domain">{domain}</span>
+                      </li>
+                    ))}
+                  </motion.ul>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+
+          {/* Mensagem */}
+          <div className="input-group-minimal full-width">
+            <AnimatePresence mode="wait">
+              <motion.textarea
+                key={language} name="message" id="message" rows="1"
+                value={message} onChange={(e) => setMessage(e.target.value)}
+                required disabled={isDisabled} placeholder=" "
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                transition={{ duration: 0.18 }}
+              />
+            </AnimatePresence>
+            <AnimatePresence mode="wait">
+              <motion.label htmlFor="message" key={language}
+                variants={fadeVariants} initial="initial" animate="animate" exit="exit"
+                transition={{ duration: 0.18 }}
+              >
+                {t.labels.message}
+              </motion.label>
+            </AnimatePresence>
+            <span className="underline-bar" />
+          </div>
+
+          {/* Botão */}
+          <div className="button-wrapper">
+            <motion.button
+              type="submit"
+              className={`morph-btn ${status}`}
+              disabled={isDisabled}
+              layout
+              transition={{ duration: 0.35, type: 'spring', stiffness: 100 }}
+            >
+              <AnimatePresence mode="wait">
+                {status === 'idle' && (
+                  <motion.span key={`idle-${language}`}
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                  >
+                    <AnimatePresence mode="wait">
+                      <motion.span key={language}
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                        transition={{ duration: 0.18 }}
+                      >
+                        {t.button.default}
+                      </motion.span>
+                    </AnimatePresence>
+                  </motion.span>
+                )}
+                {status === 'sending' && (
+                  <motion.div key="loader"
+                    initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
+                  >
+                    <FiLoader className="spinner-icon" />
+                  </motion.div>
+                )}
+                {status === 'success' && (
+                  <motion.div key="success" className="success-content"
+                    initial={{ scale: 0 }} animate={{ scale: 1 }}
+                  >
+                    <FiCheck size={22} />
+                    <motion.span key={`s-${language}`}
+                      initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                      transition={{ duration: 0.18 }}
+                    >
+                      {t.button.success}
+                    </motion.span>
+                  </motion.div>
+                )}
+                {status === 'error' && (
+                  <motion.span key={`err-${language}`}>{t.error}</motion.span>
+                )}
+              </AnimatePresence>
+            </motion.button>
+          </div>
+        </motion.form>
+
+        {/* Divider */}
+        <div className="footer-divider" />
+
+        {/* Bottom */}
+        <div className="footer-bottom">
           <div className="footer-brand">
             <img src={logoSrc} alt="Logo" className="footer-logo" />
-            <p className="footer-location">
-              <FiMapPin size={12} />
-              {t.location}
-            </p>
+            <AnimatePresence mode="wait">
+              <motion.p className="footer-location" key={language}
+                variants={fadeVariants} initial="initial" animate="animate" exit="exit"
+                transition={{ duration: 0.2 }}
+              >
+                <FiMapPin size={13} style={{ marginRight: 5 }} />
+                {t.location}
+              </motion.p>
+            </AnimatePresence>
           </div>
 
           <div className="footer-socials">
@@ -304,18 +339,19 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Copyright */}
         <div className="footer-copyright">
           <AnimatePresence mode="wait">
             <motion.p key={language}
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              variants={fadeVariants} initial="initial" animate="animate" exit="exit"
               transition={{ duration: 0.2 }}
             >
               © {new Date().getFullYear()} Eric Nacif. {t.copyright}
             </motion.p>
           </AnimatePresence>
         </div>
-      </div>
 
+      </div>
     </footer>
   );
 };
