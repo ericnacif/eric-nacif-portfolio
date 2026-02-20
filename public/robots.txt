@@ -1,3 +1,8 @@
 User-agent: *
 Allow: /
+
+# Host
+Host: ericnacif.dev
+
+# Sitemap
 Sitemap: https://ericnacif.dev/sitemap.xml
