@@ -6,7 +6,6 @@ import Header from './components/Header/Header';
 import Hero from './sections/Hero/Hero';
 import Preloader from './components/Preloader/Preloader';
 
-import Cursor from './components/Cursor/Cursor';
 import ScrollProgress from './components/ScrollProgress/ScrollProgress';
 import EasterEgg from './components/EasterEgg/EasterEgg';
 import PrintRedirect from './components/PrintRedirect/PrintRedirect';
@@ -69,7 +68,6 @@ function App() {
     <Router>
       <GoogleAnalyticsTracker />
 
-      <Cursor />
       <ScrollProgress />
       <EasterEgg />
       <PrintRedirect />

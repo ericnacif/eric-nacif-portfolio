@@ -258,7 +258,7 @@
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 14px;
-    width: 210px;
+    width: 260px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03), 0 16px 40px rgba(0, 0, 0, 0.08);
 }
@@ -293,7 +293,7 @@
 .code-block__body {
     padding: 12px 0;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 10.5px;
+    font-size: 12.5px;
     line-height: 1.8;
     min-height: 160px;
 }
@@ -426,13 +426,18 @@
     }
 
     .orbit-scene {
-        width: 280px;
-        height: 280px;
+        position: relative;
+        width: 420px;
+        height: 420px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
     }
 
     .orbit-ring--1 {
-        width: 250px;
-        height: 250px;
+        width: 360px;
+        height: 360px;
     }
 
     .orbit-ring--2 {
