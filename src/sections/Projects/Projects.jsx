@@ -13,6 +13,7 @@ import certificafeImg from '../../assets/images/project-certificafe.webp';
 import engelmigImg from '../../assets/images/project-engelmig.png';
 import monacImg from '../../assets/images/project-monac.png';
 import okanImg from '../../assets/images/project-okan.png';
+import murkeImg from '../../assets/images/project-murke.png';
 
 const projectsData = [
   {
@@ -22,6 +23,29 @@ const projectsData = [
       pt: { title: 'OKAN Contabilidade', description: 'Site institucional moderno com design profissional, foco em conversão e performance otimizada.' },
       en: { title: 'OKAN Contabilidade', description: 'Modern institutional website with professional design, focused on conversion and optimized performance.' },
       es: { title: 'OKAN Contabilidade', description: 'Sitio institucional moderno con diseño profesional, enfocado en conversión y rendimiento optimizado.' },
+    },
+  },
+  {
+    id: 'murke',
+    image: murkeImg,
+    url: 'https://murke.netlify.app',
+    tags: ['Branding', 'UI Design', 'React', 'Framer Motion'],
+    translations: {
+      pt: {
+        title: 'Murke',
+        description:
+          'Projeto de branding e presença digital para estúdio criativo. Identidade visual autoral com direção estética marcante e interface orientada a conceito.',
+      },
+      en: {
+        title: 'Murke',
+        description:
+          'Branding and digital presence project for a creative studio. Authorial visual identity with bold aesthetic direction and concept-driven interface.',
+      },
+      es: {
+        title: 'Murke',
+        description:
+          'Proyecto de branding y presencia digital para estudio creativo. Identidad visual autoral con fuerte dirección estética e interfaz conceptual.',
+      },
     },
   },
   {
