@@ -1,169 +1,41 @@
-/* =========================================
-   1. FONTES LOCAIS (Carregamento Otimizado)
-   ========================================= */
-@font-face {
-  font-family: "Cocomat Pro";
-  src: url("/fonts/cocomat-pro-regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Jost:wght@300;400;500;600&display=swap');
 
-/* =========================================
-   2. VARIÁVEIS GLOBAIS
-   ========================================= */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  /* TEMA LIGHT ÚNICO */
-  --bg-color: #fff8f8;
-  --text-color: #050505;
-  --text-secondary: #333333;
-  --card-bg: #ffffff;
-  --border-color: #e0e0e0;
-  --shadow-color: rgba(0, 0, 0, 0.07);
-  --accent-color: #2952ff;
-  --accent-rgb: 41, 82, 255;
-  --font-main: "Cocomat Pro", "Manrope", sans-serif;
-  --font-display: "Cocomat Pro", sans-serif;
+  --color-base: #161616;
+  --color-light: #f5f4f2;
+  --color-accent: #a52020;
 }
 
-/* =========================================
-   3. RESET & GLOBAL
-   ========================================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
 html {
-  scroll-behavior: smooth;
-  width: 100%;
+  background: var(--color-base);
 }
 
 body {
-  font-family: var(--font-main);
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  -webkit-font-smoothing: antialiased;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+  font-family: 'Jost', sans-serif;
+  background: var(--color-base);
+  color: var(--color-light);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* --- TIPOGRAFIA FLUIDA & SEGURA --- */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-display);
-  font-weight: 700;
+a {
   color: inherit;
-  overflow-wrap: normal;
-  word-break: keep-all;
-  hyphens: none;
-}
-
-.container {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 100px 20px;
-}
-
-.section-title {
-  display: inline-block;
-  font-size: clamp(24px, 6vw, 48px);
-  font-weight: 700;
-  margin-bottom: 64px;
-  position: relative;
-  line-height: 1.2;
-}
-
-.section-title::after {
-  content: "";
-  display: block;
-  width: 60px;
-  height: 4px;
-  background: var(--accent-color);
-  margin-top: 8px;
-  border-radius: 2px;
-}
-
-img,
-svg {
-  display: block;
-  max-width: 100%;
-}
-
-:focus-visible {
-  outline: 2px solid var(--accent-color);
-  outline-offset: 4px;
-}
-
-.social-icons img,
-.social-icons svg {
-  transition: filter 0.3s ease;
-  filter: brightness(0);
-}
-
-@media (max-width: 768px) {
-  .container {
-    padding: 72px 20px;
-  }
-}
-
-/* =========================================
-   4. UTILS / FLOATERS Z-INDEX
-   ========================================= */
-.back-to-top,
-div[class*="WhatsApp"],
-div[class*="BackToTop"] {
-  z-index: 9999 !important;
-}
-
-/* =========================================
-   5. POLIMENTO VISUAL
-   ========================================= */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-color);
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--border-color);
-  border-radius: 5px;
-  border: 2px solid var(--bg-color);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--accent-color);
-}
-
-html {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-color) var(--bg-color);
-}
-
-::selection {
-  background: var(--accent-color);
-  color: #ffffff;
-  text-shadow: none;
-}
-
-::-moz-selection {
-  background: var(--accent-color);
-  color: #ffffff;
-}
-
-/* =========================================
-   6. PERFORMANCE (LCP)
-   ========================================= */
-section:not(.hero-section) {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 1000px;
+  text-decoration: none;
 }

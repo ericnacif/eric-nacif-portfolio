@@ -1,109 +1,33 @@
-/* =========================================
-   PRELOADER — CLEAN, MELHORADO
-   ========================================= */
-
-.preloader-overlay {
-    height: 100vh;
-    height: 100dvh;
-    width: 100vw;
-    position: fixed;
-    inset: 0;
-    background-color: var(--bg-color);
-    z-index: 99999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    will-change: transform;
-    overflow: hidden;
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: #161616;
+  display: grid;
+  place-items: center;
 }
 
-/* Linha de progresso no topo */
-.preloader-progress {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 2px;
-    width: 100%;
-    background-color: var(--accent-color);
-    transform-origin: left center;
-    transform: scaleX(0);
+.preloader-line {
+  width: min(72vw, 900px);
+  height: 2px;
+  background: rgba(165, 32, 32, 0.2);
+  overflow: hidden;
+  will-change: transform, height;
 }
 
-/* Conteúdo central */
-.preloader-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 200px;
+.preloader-line-fill {
+  width: 100%;
+  height: 100%;
+  background: #a52020;
+  transform: scaleX(0);
+  transform-origin: left center;
 }
 
-/* Texto */
-.preloader-text {
-    font-family: var(--font-display);
-    font-size: clamp(48px, 10vw, 80px);
-    font-weight: 700;
-    color: var(--text-color);
-    margin: 0;
-    display: flex;
-    align-items: flex-end;
-    gap: 2px;
-    line-height: 1;
-}
-
-.preloader-dot {
-    color: var(--accent-color);
-    line-height: 1;
-}
-
-/* Logo */
-.preloader-logo-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.preloader-logo {
-    width: 140px;
-    height: auto;
-    object-fit: contain;
-    display: block;
-}
-
-/* Counter canto inferior direito */
-.preloader-counter {
-    position: absolute;
-    bottom: 32px;
-    right: 40px;
-    font-family: var(--font-display);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: var(--text-secondary);
-    opacity: 0.4;
-}
-
-/* =========================================
-   RESPONSIVIDADE
-   ========================================= */
-
-@media (max-width: 768px) {
-    .preloader-text {
-        font-size: clamp(36px, 12vw, 56px);
-    }
-
-    .preloader-logo {
-        width: 110px;
-    }
-
-    .preloader-counter {
-        bottom: 24px;
-        right: 24px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .preloader-progress {
-        transition: none;
-    }
+.preloader-percent {
+  position: absolute;
+  bottom: 10vh;
+  right: min(8vw, 72px);
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  color: rgba(245, 244, 242, 0.78);
 }

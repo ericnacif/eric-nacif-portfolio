@@ -1,109 +1,74 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Preloader.css';
-import { useTheme } from '../../context/ThemeContext';
 
-const steps = ['Olá', 'Hello', 'Hola'];
+const SESSION_KEY = 'en_portfolio_preloaded';
 
-const Preloader = () => {
-    const [index, setIndex] = useState(0);
-    const [showLogo, setShowLogo] = useState(false);
-    const { theme } = useTheme();
-    const logoSrc = theme === 'dark' ? '/logo-gray.webp' : '/logo-blue.webp';
+const Preloader = ({ onComplete }) => {
+  const [phase, setPhase] = useState('line');
+  const [progress, setProgress] = useState(0);
+  const visited = useMemo(() => sessionStorage.getItem(SESSION_KEY) === '1', []);
 
-    useEffect(() => {
-        if (index < steps.length) {
-            const t = setTimeout(() => setIndex((p) => p + 1), 480);
-            return () => clearTimeout(t);
-        } else {
-            setShowLogo(true);
-        }
-    }, [index]);
+  useEffect(() => {
+    const lineDuration = visited ? 420 : 1600;
+    const startedAt = performance.now();
 
-    const slideUp = {
-        initial: { y: 0 },
-        exit: {
-            y: '-100vh',
-            transition: { duration: 0.75, ease: [0.76, 0, 0.24, 1], delay: 0.15 },
-        },
+    let rafId;
+
+    const tick = (time) => {
+      const elapsed = time - startedAt;
+      const nextProgress = Math.min(100, (elapsed / lineDuration) * 100);
+      setProgress(nextProgress);
+
+      if (nextProgress < 100) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        setPhase('wipe');
+      }
     };
 
-    const wordVariants = {
-        initial: { opacity: 0, y: 28 },
-        animate: { opacity: 1, y: 0, transition: { duration: 0.32, ease: [0.16, 1, 0.3, 1] } },
-        exit: { opacity: 0, y: -20, transition: { duration: 0.22, ease: 'easeIn' } },
-    };
+    rafId = requestAnimationFrame(tick);
 
-    const logoVariants = {
-        initial: { opacity: 0, scale: 0.88 },
-        animate: { opacity: 1, scale: 1, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } },
-        exit: { opacity: 0, scale: 0.92, transition: { duration: 0.5, ease: 'easeInOut' } },
-    };
+    return () => cancelAnimationFrame(rafId);
+  }, [visited]);
 
-    return (
+  useEffect(() => {
+    if (phase !== 'wipe') return undefined;
+
+    const doneTimer = setTimeout(() => {
+      sessionStorage.setItem(SESSION_KEY, '1');
+      onComplete?.();
+    }, visited ? 540 : 860);
+
+    return () => clearTimeout(doneTimer);
+  }, [onComplete, phase, visited]);
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        className="preloader"
+        initial={{ opacity: 1 }}
+        animate={{ opacity: phase === 'wipe' ? 0 : 1 }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: phase === 'wipe' ? 0.25 : 0 }}
+      >
         <motion.div
-            className="preloader-overlay"
-            variants={slideUp}
-            initial="initial"
-            exit="exit"
+          className="preloader-line"
+          initial={{ height: 2 }}
+          animate={{ height: phase === 'wipe' ? '100vh' : 2 }}
+          transition={{ duration: visited ? 0.5 : 0.82, ease: [0.22, 1, 0.36, 1] }}
         >
-            {/* Linha de progresso */}
-            <motion.div
-                className="preloader-progress"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: showLogo ? 1 : (index + 1) / (steps.length + 1) }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
-            />
-
-            <div className="preloader-content">
-                <AnimatePresence mode="wait">
-                    {showLogo ? (
-                        <motion.div
-                            key="logo"
-                            className="preloader-logo-wrap"
-                            variants={logoVariants}
-                            initial="initial"
-                            animate="animate"
-                            exit="exit"
-                        >
-                            <img
-                                src={logoSrc}
-                                alt="Logo"
-                                className="preloader-logo"
-                                width="140"
-                                height="140"
-                                fetchPriority="high"
-                                loading="eager"
-                            />
-                        </motion.div>
-                    ) : (
-                        index < steps.length && (
-                            <motion.p
-                                key={steps[index]}
-                                className="preloader-text"
-                                variants={wordVariants}
-                                initial="initial"
-                                animate="animate"
-                                exit="exit"
-                            >
-                                {steps[index]}
-                                <span className="preloader-dot">.</span>
-                            </motion.p>
-                        )
-                    )}
-                </AnimatePresence>
-            </div>
-
-            {/* Counter */}
-            <motion.span
-                className="preloader-counter"
-                animate={{ opacity: showLogo ? 0 : 1 }}
-                transition={{ duration: 0.2 }}
-            >
-                {String(Math.round(((index) / steps.length) * 100)).padStart(2, '0')}
-            </motion.span>
+          <motion.div
+            className="preloader-line-fill"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: progress / 100 }}
+            transition={{ duration: 0.08, ease: 'linear' }}
+          />
         </motion.div>
-    );
+
+        <span className="preloader-percent">{Math.round(progress)}%</span>
+      </motion.div>
+    </AnimatePresence>
+  );
 };
 
 export default Preloader;
