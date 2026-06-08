@@ -340,7 +340,7 @@
 
 @media (max-width: 768px) {
   .projects-section {
-    padding: 92px 0 110px;
+    padding: 80px 0 96px;
   }
 
   .projects-container {
@@ -348,16 +348,58 @@
   }
 
   .projects-header {
-    align-items: center;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 32px;
   }
 
   .projects-title {
-    font-size: clamp(40px, 11vw, 60px);
+    font-size: clamp(34px, 9vw, 52px);
+  }
+
+  .projects-eyebrow {
+    margin-bottom: 12px;
+  }
+
+  .showcase {
+    gap: 24px;
+  }
+
+  .showcase__media {
+    border-radius: 18px;
+  }
+
+  .showcase__index {
+    margin-bottom: 14px;
+  }
+
+  .showcase__title {
+    margin-bottom: 14px;
+  }
+
+  .showcase__desc {
+    margin-bottom: 22px;
+  }
+
+  .showcase__tags {
+    margin-bottom: 26px;
+  }
+
+  /* botão ocupa a largura toda — melhor toque */
+  .showcase__btn {
+    width: 100%;
+    justify-content: center;
+    padding: 16px 24px;
   }
 
   .swiper-arrow {
     width: 44px;
     height: 44px;
+  }
+
+  .swiper-custom-pagination {
+    justify-content: center;
+    margin-top: 32px;
   }
 }
 

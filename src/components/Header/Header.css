@@ -422,14 +422,32 @@
   .mobile-menu-btn {
     display: flex;
   }
+
+  .header-container {
+    height: 68px;
+  }
+
+  .main-header.scrolled .header-container {
+    height: 60px;
+  }
 }
 
 @media (max-width: 600px) {
   .main-header {
-    padding: 0 20px;
+    padding: 0 18px;
   }
 
   .header-logo-text {
     display: none;
+  }
+
+  .header-logo-img {
+    height: 32px;
+  }
+
+  /* área de toque maior no botão do menu */
+  .mobile-menu-btn {
+    padding: 10px;
+    margin-right: -10px;
   }
 }

@@ -35,6 +35,14 @@ html {
   width: 100%;
   background: var(--bg-color);
   text-rendering: geometricPrecision;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Mobile: remove o flash azul ao tocar e melhora o feedback de toque */
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {

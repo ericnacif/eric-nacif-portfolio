@@ -360,29 +360,43 @@
 
 @media (max-width: 768px) {
     .main-footer {
-        padding-top: 72px;
+        padding-top: 64px;
+    }
+
+    .footer-top {
+        margin-bottom: 36px;
+    }
+
+    .footer-greeting {
+        max-width: 100%;
     }
 
     .form-row {
         grid-template-columns: 1fr;
-        gap: 28px;
+        gap: 24px;
+    }
+
+    .contact-form {
+        gap: 24px;
+    }
+
+    .form-field input,
+    .form-field textarea {
+        padding: 12px 0;
+        font-size: 18px;
     }
 
     .submit-btn {
         align-self: stretch;
         width: 100%;
-    }
-
-    .footer-bottom {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+        height: 56px;
     }
 
     .footer-connect {
         flex-direction: column;
         align-items: stretch;
         text-align: left;
+        gap: 28px;
     }
 
     .footer-brand {
@@ -391,5 +405,6 @@
 
     .footer-links {
         width: 100%;
+        min-width: 0;
     }
 }
