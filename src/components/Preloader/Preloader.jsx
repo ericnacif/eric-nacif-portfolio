@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Preloader.css';
-import { useTheme } from '../../context/ThemeContext';
 
 const steps = ['Olá', 'Hello', 'Hola'];
 
-const Preloader = () => {
+const Preloader = ({ onComplete }) => {
     const [index, setIndex] = useState(0);
     const [showLogo, setShowLogo] = useState(false);
-    const { theme } = useTheme();
-    const logoSrc = theme === 'dark' ? '/logo-gray.webp' : '/logo-blue.webp';
+    const logoSrc = '/logo-blue.webp';
 
     useEffect(() => {
         if (index < steps.length) {
@@ -19,6 +17,13 @@ const Preloader = () => {
             setShowLogo(true);
         }
     }, [index]);
+
+    useEffect(() => {
+        if (!showLogo) return undefined;
+
+        const t = setTimeout(() => onComplete?.(), 650);
+        return () => clearTimeout(t);
+    }, [showLogo, onComplete]);
 
     const slideUp = {
         initial: { y: 0 },

@@ -7,8 +7,8 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 2px;
-    background: var(--accent-color);
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent-soft), var(--accent-color));
     transform-origin: 0%;
     z-index: 99999;
     pointer-events: none;

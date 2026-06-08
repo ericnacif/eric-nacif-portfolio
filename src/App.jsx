@@ -9,7 +9,6 @@ import Preloader from './components/Preloader/Preloader';
 import ScrollProgress from './components/ScrollProgress/ScrollProgress';
 import EasterEgg from './components/EasterEgg/EasterEgg';
 import PrintRedirect from './components/PrintRedirect/PrintRedirect';
-import GoogleAnalyticsTracker from './components/GoogleAnalyticsTracker';
 import NotFound from './pages/NotFound/NotFound';
 
 const About = React.lazy(() => import('./sections/About/About'));
@@ -18,34 +17,28 @@ const Footer = React.lazy(() => import('./components/Footer/Footer'));
 const WhatsAppButton = React.lazy(() => import('./components/WhatsAppButton/WhatsAppButton'));
 const BackToTop = React.lazy(() => import('./components/BackToTop'));
 
-function App() {
+const Home = () => {
+  const [isLoading, setIsLoading] = useState(true);
 
-  const Home = () => {
-    const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    if (!isLoading) {
+      window.scrollTo(0, 0);
+    }
+  }, [isLoading]);
 
-    useEffect(() => {
-      // TIMER FINAL: 2.3 segundos
-      // Tempo otimizado para fechar o ciclo de 500ms e transições
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-        window.scrollTo(0, 0);
-      }, 2300);
+  return (
+    <>
+      <AnimatePresence mode="wait">
+        {isLoading && <Preloader key="preloader" onComplete={() => setIsLoading(false)} />}
+      </AnimatePresence>
 
-      return () => clearTimeout(timer);
-    }, []);
-
-    return (
-      <>
-        <AnimatePresence mode="wait">
-          {isLoading && <Preloader key="preloader" />}
-        </AnimatePresence>
-
-        <div style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease' }}>
+      {!isLoading && (
+        <>
           <Header />
           <main>
             <Hero />
 
-            <Suspense fallback={<div style={{ height: '100px' }}></div>}>
+            <Suspense fallback={<div style={{ height: '100px' }} />}>
               <About />
               <Projects />
             </Suspense>
@@ -59,15 +52,16 @@ function App() {
             <BackToTop />
             <WhatsAppButton />
           </Suspense>
-        </div>
-      </>
-    );
-  };
+        </>
+      )}
+    </>
+  );
+};
+
+function App() {
 
   return (
     <Router>
-      <GoogleAnalyticsTracker />
-
       <ScrollProgress />
       <EasterEgg />
       <PrintRedirect />

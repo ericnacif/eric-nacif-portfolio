@@ -1,141 +1,130 @@
 /* =========================================
-   FOOTER — INPUTS FLUTUANTES, SEM CARD
+   FOOTER — EDITORIAL / AWWWARDS
    ========================================= */
 
 .main-footer {
-    background-color: var(--bg-color);
-    padding-top: 100px;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(var(--accent-rgb), 0.08), transparent 34rem),
+        var(--bg-color);
+    padding-top: clamp(96px, 12vw, 150px);
 }
 
 .footer-inner {
-    max-width: 700px;
+    max-width: 1180px;
     margin: 0 auto;
     padding: 0 clamp(20px, 5vw, 40px);
     display: flex;
     flex-direction: column;
 }
 
-/* ── Eyebrow ── */
-.footer-eyebrow {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-    opacity: 0.6;
-    margin-bottom: 12px;
-    text-align: center;
+/* ── Headline ── */
+.footer-top {
+    margin-bottom: clamp(48px, 6vw, 72px);
 }
 
-/* ── Saudação ── */
-.footer-cta {
-    text-align: center;
-    margin-bottom: 64px;
+.footer-eyebrow {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    opacity: 0.65;
+    margin-bottom: 18px;
 }
 
 .footer-greeting {
     font-family: var(--font-display);
-    font-size: clamp(32px, 5.5vw, 52px);
+    font-size: clamp(42px, 7vw, 104px);
     font-weight: 700;
     color: var(--text-color);
-    line-height: 1.15;
-    margin-bottom: 16px;
+    line-height: 0.98;
+    margin-bottom: 22px;
+    letter-spacing: -0.04em;
+    max-width: 14ch;
     word-break: keep-all;
     hyphens: none;
 }
 
 .footer-subtitle {
-    font-size: clamp(15px, 1.6vw, 17px);
+    font-size: clamp(16px, 1.4vw, 19px);
     color: var(--text-secondary);
-    line-height: 1.65;
+    line-height: 1.7;
+    max-width: 460px;
 }
 
-/* ── Formulário — mesmo padrão do original ── */
-.minimal-form {
-    width: 100%;
+/* ── Formulário ── */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(28px, 3vw, 40px);
+    margin-bottom: clamp(64px, 8vw, 96px);
 }
 
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    margin-bottom: 48px;
+    gap: clamp(28px, 5vw, 56px);
 }
 
-/* Input group flutuante */
-.input-group-minimal {
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     position: relative;
-    width: 100%;
-    z-index: 1;
 }
 
-.input-group-minimal:focus-within {
-    z-index: 10;
+.form-field--full {
+    grid-column: 1 / -1;
 }
 
-.input-group-minimal.full-width {
-    margin-bottom: 56px;
+.form-field label {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
 }
 
-.input-group-minimal input,
-.input-group-minimal textarea {
+.form-field input,
+.form-field textarea {
     width: 100%;
     padding: 10px 0;
-    font-size: 16px;
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: 500;
     color: var(--text-color);
     border: none;
     border-bottom: 1.5px solid var(--border-color);
     background: transparent;
     outline: none;
-    font-family: var(--font-main);
+    font-family: var(--font-display);
     transition: border-color 0.28s;
     border-radius: 0;
 }
 
-.input-group-minimal textarea {
+.form-field textarea {
     resize: vertical;
-    min-height: 44px;
+    min-height: 56px;
+    line-height: 1.4;
 }
 
-/* Label flutuante */
-.input-group-minimal label {
-    position: absolute;
-    top: 10px;
-    left: 0;
-    font-size: 16px;
-    color: var(--text-secondary);
-    pointer-events: none;
-    transition: all 0.28s ease;
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+    color: var(--text-tertiary);
+    opacity: 0.5;
 }
 
-.input-group-minimal input:focus~label,
-.input-group-minimal input:not(:placeholder-shown)~label,
-.input-group-minimal textarea:focus~label,
-.input-group-minimal textarea:not(:placeholder-shown)~label {
-    top: -20px;
-    font-size: 12px;
-    color: var(--accent-color);
-    font-weight: 600;
-    letter-spacing: 0.3px;
+.form-field input:focus,
+.form-field textarea:focus {
+    border-color: var(--accent-color);
 }
 
-/* Linha accent no focus */
-.underline-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--accent-color);
-    transition: width 0.35s ease;
-    border-radius: 1px;
-}
-
-.input-group-minimal input:focus~.underline-bar,
-.input-group-minimal textarea:focus~.underline-bar {
-    width: 100%;
+.form-field input:disabled,
+.form-field textarea:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 /* Email suggestions */
@@ -144,18 +133,18 @@
     top: calc(100% + 4px);
     left: 0;
     width: 100%;
-    background: var(--card-bg);
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 12px;
     list-style: none;
     padding: 4px 0;
     z-index: 50;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 12px 32px rgba(20, 40, 120, 0.1);
 }
 
 .email-suggestions li {
-    padding: 9px 14px;
-    font-size: 13px;
+    padding: 10px 16px;
+    font-size: 14px;
     cursor: pointer;
     display: flex;
     transition: background 0.16s;
@@ -176,41 +165,37 @@
 }
 
 /* ── Botão ── */
-.button-wrapper {
-    display: flex;
-    justify-content: center;
-    height: 56px;
-}
-
-.morph-btn {
-    background: var(--text-color);
-    color: var(--bg-color);
-    font-family: var(--font-display);
-    font-weight: 700;
+.submit-btn {
+    align-self: flex-start;
+    background: var(--accent-color);
+    color: #ffffff;
+    font-family: var(--font-ui);
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.1em;
     font-size: 13px;
     border: none;
     cursor: pointer;
-    width: 100%;
-    max-width: 260px;
-    height: 52px;
-    border-radius: 10px;
+    min-width: 220px;
+    height: 58px;
+    padding: 0 36px;
+    border-radius: 999px;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background-color 0.25s, box-shadow 0.25s, transform 0.2s;
 }
 
-.morph-btn:not(:disabled):hover {
-    background: var(--accent-color);
-    box-shadow: 0 8px 28px rgba(41, 82, 255, 0.3);
+.submit-btn:not(:disabled):hover {
+    background: var(--deep-color);
+    box-shadow: 0 16px 36px rgba(var(--accent-rgb), 0.28);
     transform: translateY(-2px);
 }
 
-.morph-btn.sending {
-    width: 52px;
-    max-width: 52px;
+.submit-btn.sending {
+    min-width: 58px;
+    width: 58px;
+    padding: 0;
     border-radius: 50%;
     background: var(--card-bg);
     border: 2px solid var(--accent-color);
@@ -231,16 +216,14 @@
     }
 }
 
-.morph-btn.success {
-    max-width: 200px;
+.submit-btn.success {
     background: #10b981;
-    border-radius: 50px;
     cursor: default;
     transform: none !important;
     box-shadow: none !important;
 }
 
-.morph-btn.error {
+.submit-btn.error {
     background: #ef4444;
     cursor: default;
     transform: none !important;
@@ -252,35 +235,42 @@
     gap: 8px;
 }
 
-/* ── Divider ── */
-.footer-divider {
-    width: 100%;
-    height: 1px;
-    background: var(--border-color);
-    opacity: 0.6;
-    margin: 72px 0 40px;
-}
-
-/* ── Bottom ── */
-.footer-bottom {
+/* ── Seção de conexão ── */
+.footer-connect {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 24px;
-    margin-bottom: 40px;
+    gap: 32px;
+    padding-top: clamp(36px, 5vw, 56px);
+    border-top: 1px solid var(--border-color);
+    margin-bottom: clamp(40px, 5vw, 56px);
 }
 
 .footer-brand {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    gap: 16px;
 }
 
 .footer-logo {
-    height: 28px;
+    height: 44px;
     width: auto;
     object-fit: contain;
+}
+
+.footer-brand-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.footer-brand-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-color);
 }
 
 .footer-location {
@@ -290,30 +280,61 @@
     align-items: center;
 }
 
-.footer-socials {
+.footer-links {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 240px;
 }
 
-.footer-social {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    border: 1px solid var(--border-color);
+.footer-link {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    color: var(--text-secondary);
+    gap: 14px;
+    padding: 12px 4px;
     text-decoration: none;
-    transition: all 0.22s;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+    transition: color 0.22s, padding 0.22s;
 }
 
-.footer-social:hover {
+.footer-link:last-child {
+    border-bottom: none;
+}
+
+.footer-link-icon {
+    display: flex;
+    font-size: 17px;
+    color: var(--text-secondary);
+    transition: color 0.22s;
+}
+
+.footer-link-label {
+    flex: 1;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+.footer-link-arrow {
+    font-size: 16px;
+    color: var(--text-tertiary);
+    transition: transform 0.22s var(--ease-out), color 0.22s;
+}
+
+.footer-link:hover {
     color: var(--accent-color);
-    border-color: var(--accent-color);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(41, 82, 255, 0.14);
+    padding-left: 10px;
+}
+
+.footer-link:hover .footer-link-icon,
+.footer-link:hover .footer-link-arrow {
+    color: var(--accent-color);
+}
+
+.footer-link:hover .footer-link-arrow {
+    transform: translate(3px, -3px);
 }
 
 /* ── Copyright ── */
@@ -325,7 +346,7 @@
     text-align: center;
     font-size: 12px;
     color: var(--text-secondary);
-    background: var(--bg-color);
+    background: rgba(238, 242, 251, 0.7);
     opacity: 0.75;
 }
 
@@ -342,17 +363,14 @@
         padding-top: 72px;
     }
 
-    .footer-cta {
-        margin-bottom: 48px;
-    }
-
-    .footer-greeting {
-        font-size: clamp(24px, 7vw, 36px);
-    }
-
     .form-row {
         grid-template-columns: 1fr;
-        gap: 36px;
+        gap: 28px;
+    }
+
+    .submit-btn {
+        align-self: stretch;
+        width: 100%;
     }
 
     .footer-bottom {
@@ -361,7 +379,17 @@
         text-align: center;
     }
 
+    .footer-connect {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: left;
+    }
+
     .footer-brand {
-        align-items: center;
+        justify-content: center;
+    }
+
+    .footer-links {
+        width: 100%;
     }
 }

@@ -10,6 +10,47 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+}
+
+/* Blobs acolhedores no fundo */
+.redirect-overlay::before,
+.redirect-overlay::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+}
+
+.redirect-overlay::before {
+    width: min(50vw, 520px);
+    height: min(50vw, 520px);
+    top: -12%;
+    left: -8%;
+    background: radial-gradient(circle, rgba(var(--accent-rgb), 0.32), transparent 70%);
+    animation: redBlob 16s ease-in-out infinite;
+}
+
+.redirect-overlay::after {
+    width: min(46vw, 480px);
+    height: min(46vw, 480px);
+    bottom: -14%;
+    right: -8%;
+    background: radial-gradient(circle, rgba(255, 176, 120, 0.28), transparent 70%);
+    animation: redBlob 20s ease-in-out infinite reverse;
+}
+
+@keyframes redBlob {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(30px, 24px) scale(1.1);
+    }
 }
 
 /* Barra de progresso no topo */
@@ -19,22 +60,37 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: var(--accent-color);
+    background: linear-gradient(90deg, var(--accent-soft), var(--accent-color));
     transform-origin: left center;
+    z-index: 3;
 }
 
 .redirect-content {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 24px;
+    gap: 22px;
 }
 
 .redirect-logo {
-    width: 72px;
+    width: 80px;
     height: auto;
     object-fit: contain;
-    opacity: 0.85;
+    animation: redirectLogoPulse 2s ease-in-out infinite;
+}
+
+@keyframes redirectLogoPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.06);
+    }
 }
 
 .redirect-text-row {
@@ -44,11 +100,11 @@
 }
 
 .redirect-text {
-    font-family: var(--font-display);
-    font-size: 13px;
-    font-weight: 700;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 0.22em;
     color: var(--text-secondary);
 }
 
@@ -88,5 +144,15 @@
     40% {
         opacity: 1;
         transform: scale(1.15);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .redirect-overlay::before,
+    .redirect-overlay::after,
+    .redirect-logo,
+    .redirect-dots span {
+        animation: none;
     }
 }

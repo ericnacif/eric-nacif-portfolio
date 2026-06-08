@@ -1,35 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
 import './WhatsAppButton.css';
 import { motion } from 'framer-motion';
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from '../../hooks/useLanguage';
+import { useBackToTopVisible } from '../../hooks/useBackToTopVisible';
 
 const WhatsAppButton = () => {
-    const { language } = useLanguage();
-    const [backToTopVisible, setBackToTopVisible] = useState(false);
+    const { t } = useLanguage();
+    const backToTopVisible = useBackToTopVisible();
 
     const phoneNumber = "5533997088999";
 
-    const messages = {
-        pt: "Olá Eric, vi seu portfólio e gostaria de conversar!",
-        en: "Hi Eric, I saw your portfolio and would like to chat!",
-        es: "Hola Eric, vi tu portafolio y me gustaría charlar!",
-    };
-
-    const tooltips = {
-        pt: "Fale comigo!",
-        en: "Chat with me!",
-        es: "¡Hablemos!",
-    };
-
-    useEffect(() => {
-        const onScroll = () => setBackToTopVisible(window.scrollY > 600);
-        window.addEventListener('scroll', onScroll, { passive: true });
-        return () => window.removeEventListener('scroll', onScroll);
-    }, []);
-
-    const encodedMessage = encodeURIComponent(messages[language] || messages.pt);
-    const tooltip = tooltips[language] || tooltips.pt;
+    const encodedMessage = encodeURIComponent(t.whatsapp.message);
 
     return (
         <motion.a
@@ -53,7 +35,7 @@ const WhatsAppButton = () => {
             whileTap={{ scale: 0.92 }}
         >
             <FaWhatsapp className="whatsapp-icon" />
-            <span className="whatsapp-tooltip">{tooltip}</span>
+            <span className="whatsapp-tooltip">{t.whatsapp.tooltip}</span>
         </motion.a>
     );
 };

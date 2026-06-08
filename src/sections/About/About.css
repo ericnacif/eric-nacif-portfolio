@@ -3,20 +3,21 @@
    ========================================= */
 
 .about-section {
-    padding: 60px 0 20px 0;
+    padding: clamp(96px, 12vw, 160px) 0 clamp(72px, 8vw, 120px);
 }
 
 .about-container {
-    max-width: 1000px;
+    max-width: 1180px;
     margin: 0 auto;
 }
 
 /* ── Layout duas colunas ── */
 .about-body {
-    display: flex;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
     align-items: flex-start;
-    gap: 64px;
-    margin-bottom: 64px;
+    gap: clamp(56px, 8vw, 110px);
+    margin-bottom: clamp(72px, 9vw, 116px);
 }
 
 /* ── Coluna esquerda ── */
@@ -29,22 +30,24 @@
 }
 
 .about-logo-card {
-    width: 200px;
-    height: 200px;
-    border-radius: 24px;
+    width: clamp(220px, 25vw, 310px);
+    height: clamp(220px, 25vw, 310px);
+    border-radius: 38px;
     border: 1px solid var(--border-color);
-    background: var(--card-bg);
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(238, 242, 251, 0.82)),
+        radial-gradient(circle at 50% 44%, rgba(var(--accent-rgb), 0.14), transparent 48%);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 24px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+    padding: clamp(36px, 5vw, 56px);
+    box-shadow: 0 34px 80px rgba(20, 40, 120, 0.13);
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .about-logo-card:hover {
-    box-shadow: 0 8px 40px rgba(41, 82, 255, 0.1);
-    border-color: rgba(41, 82, 255, 0.2);
+    box-shadow: 0 42px 90px rgba(20, 40, 120, 0.18);
+    border-color: rgba(var(--accent-rgb), 0.26);
 }
 
 .about-logo {
@@ -61,9 +64,9 @@
 }
 
 .about-social-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
     border: 1px solid var(--border-color);
     display: flex;
     align-items: center;
@@ -72,14 +75,15 @@
     color: var(--text-secondary);
     text-decoration: none;
     transition: all 0.25s ease;
-    background: var(--card-bg);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
 }
 
 .about-social-btn:hover {
     border-color: var(--accent-color);
     color: var(--accent-color);
     transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(41, 82, 255, 0.15);
+    box-shadow: 0 16px 28px rgba(var(--accent-rgb), 0.14);
 }
 
 /* ── Coluna direita ── */
@@ -90,18 +94,20 @@
 
 /* ── Textos ── */
 .intro-text {
-    font-size: clamp(20px, 3vw, 26px);
-    font-weight: 400;
+    font-size: clamp(28px, 3.6vw, 48px);
+    font-weight: 600;
     color: var(--text-color);
-    line-height: 1.55;
-    margin-bottom: 20px;
+    line-height: 1.18;
+    margin-bottom: 28px;
     font-family: var(--font-display);
+    letter-spacing: -0.025em;
 }
 
 .detail-text {
-    font-size: clamp(15px, 1.6vw, 17px);
+    font-size: clamp(16px, 1.5vw, 19px);
     line-height: 1.85;
     color: var(--text-secondary);
+    max-width: 620px;
 }
 
 /* ── Tech Stack ── */
@@ -110,41 +116,41 @@
 }
 
 .tech-stack-title {
-    font-family: var(--font-display);
+    font-family: var(--font-ui);
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-bottom: 20px;
-    text-align: center;
-    opacity: 0.7;
+    letter-spacing: 0.28em;
+    margin-bottom: 24px;
+    text-align: left;
+    opacity: 0.78;
 }
 
 .about-chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
+    gap: 12px;
+    justify-content: flex-start;
 }
 
 .about-chip {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    padding: 8px 14px;
-    border-radius: 8px;
+    gap: 9px;
+    padding: 10px 15px;
+    border-radius: 999px;
     border: 1px solid var(--border-color);
-    background: var(--card-bg);
+    background: rgba(255, 255, 255, 0.72);
     cursor: default;
     transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
     will-change: transform;
 }
 
 .about-chip:hover {
-    border-color: rgba(41, 82, 255, 0.35);
-    background: rgba(41, 82, 255, 0.03);
-    box-shadow: 0 4px 14px rgba(41, 82, 255, 0.08);
+    border-color: rgba(var(--accent-rgb), 0.35);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 16px 30px rgba(20, 40, 120, 0.1);
 }
 
 .about-chip-icon {
@@ -155,9 +161,9 @@
 }
 
 .about-chip-name {
-    font-family: var(--font-display);
+    font-family: var(--font-ui);
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--text-color);
     white-space: nowrap;
 }
@@ -168,18 +174,19 @@
     align-items: center;
     justify-content: space-between;
     gap: 32px;
-    padding-top: 28px;
+    padding-top: 32px;
     border-top: 1px solid var(--border-color);
     flex-wrap: wrap;
 }
 
 .cta-text {
     font-family: var(--font-display);
-    font-size: clamp(16px, 2.2vw, 22px);
+    font-size: clamp(26px, 3.4vw, 46px);
     color: var(--accent-color);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-weight: 600;
+    font-style: normal;
+    text-transform: none;
+    letter-spacing: -0.025em;
 }
 
 /* ── Eyebrow + header de seção ── */
@@ -187,15 +194,15 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 40px;
+    margin-bottom: clamp(44px, 6vw, 72px);
 }
 
 .section-eyebrow {
     display: inline-block;
-    font-family: var(--font-display);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--text-secondary);
     opacity: 0.6;
@@ -205,12 +212,12 @@
 /* ── Título de seção (mantém o padrão global) ── */
 .section-title {
     font-family: var(--font-display);
-    font-size: clamp(36px, 5vw, 52px);
-    font-weight: 700;
+    font-size: clamp(48px, 7.5vw, 96px);
+    font-weight: 600;
     color: var(--text-color);
-    margin-bottom: 40px;
+    margin-bottom: 0;
     position: relative;
-    padding-bottom: 15px;
+    padding-bottom: 20px;
     text-align: left;
 }
 
@@ -219,8 +226,8 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 60px;
-    height: 4px;
+    width: 84px;
+    height: 1px;
     background-color: var(--accent-color);
     border-radius: 2px;
 }
@@ -235,7 +242,7 @@
     }
 
     .about-body {
-        flex-direction: column;
+        grid-template-columns: 1fr;
         gap: 36px;
         align-items: center;
         margin-bottom: 40px;
@@ -246,8 +253,8 @@
     }
 
     .about-logo-card {
-        width: 160px;
-        height: 160px;
+        width: 180px;
+        height: 180px;
     }
 
     .about-col-right {
@@ -255,13 +262,19 @@
     }
 
     .intro-text {
-        font-size: clamp(18px, 5vw, 22px);
+        font-size: clamp(34px, 12vw, 52px);
         text-align: center;
     }
 
     .detail-text {
         font-size: 15px;
         text-align: center;
+    }
+
+    .tech-stack-title,
+    .about-chips {
+        text-align: center;
+        justify-content: center;
     }
 
     .about-footer {

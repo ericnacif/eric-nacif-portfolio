@@ -1,29 +1,24 @@
 /* =========================================
-   1. FONTES LOCAIS (Carregamento Otimizado)
-   ========================================= */
-@font-face {
-  font-family: "Cocomat Pro";
-  src: url("/fonts/cocomat-pro-regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* =========================================
    2. VARIÁVEIS GLOBAIS
    ========================================= */
 :root {
-  /* TEMA LIGHT ÚNICO */
-  --bg-color: #fff8f8;
-  --text-color: #050505;
-  --text-secondary: #333333;
-  --card-bg: #ffffff;
-  --border-color: #e0e0e0;
-  --shadow-color: rgba(0, 0, 0, 0.07);
-  --accent-color: #2952ff;
-  --accent-rgb: 41, 82, 255;
-  --font-main: "Cocomat Pro", "Manrope", sans-serif;
-  --font-display: "Cocomat Pro", sans-serif;
+  --bg-color: #f6f8fc;
+  --surface-color: #ffffff;
+  --surface-muted: #eef2fb;
+  --text-color: #0b1020;
+  --text-secondary: #5a6377;
+  --text-tertiary: #98a1b4;
+  --card-bg: rgba(255, 255, 255, 0.82);
+  --border-color: rgba(11, 16, 32, 0.1);
+  --shadow-color: rgba(20, 40, 120, 0.12);
+  --accent-color: #3b5bff;
+  --accent-rgb: 59, 91, 255;
+  --accent-soft: #c8d4ff;
+  --deep-color: #0b1020;
+  --font-main: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-ui: "Manrope", system-ui, sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* =========================================
@@ -38,17 +33,37 @@
 html {
   scroll-behavior: smooth;
   width: 100%;
+  background: var(--bg-color);
+  text-rendering: geometricPrecision;
 }
 
 body {
   font-family: var(--font-main);
-  background-color: var(--bg-color);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(var(--accent-rgb), 0.1), transparent 26rem),
+    radial-gradient(circle at 88% 14%, rgba(var(--accent-rgb), 0.08), transparent 30rem),
+    linear-gradient(180deg, #ffffff 0%, var(--bg-color) 42%, #eef2fb 100%);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
   overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(rgba(11, 16, 32, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 16, 32, 0.03) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
 }
 
 /* --- TIPOGRAFIA FLUIDA & SEGURA --- */
@@ -59,11 +74,12 @@ h4,
 h5,
 h6 {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   color: inherit;
   overflow-wrap: normal;
   word-break: keep-all;
   hyphens: none;
+  letter-spacing: -0.02em;
 }
 
 .container {
@@ -74,20 +90,20 @@ h6 {
 
 .section-title {
   display: inline-block;
-  font-size: clamp(24px, 6vw, 48px);
-  font-weight: 700;
+  font-size: clamp(40px, 6.4vw, 84px);
+  font-weight: 600;
   margin-bottom: 64px;
   position: relative;
-  line-height: 1.2;
+  line-height: 1.0;
 }
 
 .section-title::after {
   content: "";
   display: block;
   width: 60px;
-  height: 4px;
+  height: 1px;
   background: var(--accent-color);
-  margin-top: 8px;
+  margin-top: 18px;
   border-radius: 2px;
 }
 

@@ -1,42 +1,13 @@
 import React from 'react';
 import './About.css';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLanguage } from '../../context/LanguageContext';
-import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../hooks/useLanguage';
 import {
   SiInstagram, SiGithub, SiLinkedin, SiGmail,
   SiPhp, SiLaravel, SiJavascript, SiReact, SiTypescript,
   SiNodedotjs, SiDocker, SiMysql, SiGit, SiTailwindcss,
   SiMongodb, SiNextdotjs, SiVuedotjs
 } from 'react-icons/si';
-
-const structuredStack = {
-  pt: {
-    eyebrow: '01 — Sobre',
-    title: 'Sobre Mim',
-    paragraph1: 'Desenvolvedor Full Stack com sólida expertise em PHP, Laravel e JavaScript, especializado em arquiteturas web escaláveis e aplicações móveis com React Native.',
-    paragraph2: 'Possuo forte proficiência em gestão de dados (SQL e MongoDB) e foco em boas práticas de código para entregar soluções robustas em projetos desafiadores.',
-    cta: 'Vamos construir algo juntos?',
-    techTitle: 'Minha Tech Stack',
-  },
-  en: {
-    eyebrow: '01 — About',
-    title: 'About Me',
-    paragraph1: 'Full Stack Developer with solid expertise in PHP, Laravel, and JavaScript, specializing in scalable web architectures and mobile applications with React Native.',
-    paragraph2: 'Strong proficiency in data management (SQL and MongoDB) and code best practices to deliver robust solutions in challenging projects.',
-    cta: "Let's build something together?",
-    techTitle: 'My Tech Stack',
-  },
-  es: {
-    eyebrow: '01 — Sobre',
-    title: 'Sobre Mí',
-    paragraph1: 'Desarrollador Full Stack con sólida experiencia en PHP, Laravel y JavaScript, especializado en arquitecturas web escalables y aplicaciones móviles con React Native.',
-    paragraph2: 'Tengo una fuerte competencia en gestión de datos (SQL y MongoDB) y me enfoco en las mejores prácticas para entregar soluciones robustas.',
-    cta: '¿Construimos algo juntos?',
-    techTitle: 'Mi Tech Stack',
-    eyebrow: '01 — Sobre',
-  },
-};
 
 const technologies = [
   { name: 'PHP', icon: <SiPhp /> },
@@ -62,10 +33,9 @@ const socialLinks = [
 ];
 
 const About = () => {
-  const { language } = useLanguage();
-  const { theme } = useTheme();
-  const t = structuredStack[language] || structuredStack.pt;
-  const logoSrc = theme === 'dark' ? '/logo-gray.webp' : '/logo-blue.webp';
+  const { language, t } = useLanguage();
+  const content = t.about;
+  const logoSrc = '/logo-blue.webp';
 
   const fadeUp = {
     hidden: { opacity: 0, y: 24 },
@@ -105,7 +75,7 @@ const About = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              {t.eyebrow}
+              {content.eyebrow}
             </motion.span>
           </AnimatePresence>
           <AnimatePresence mode="wait">
@@ -117,7 +87,7 @@ const About = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.22 }}
             >
-              {t.title}
+              {content.title}
             </motion.h2>
           </AnimatePresence>
         </motion.div>
@@ -164,8 +134,8 @@ const About = () => {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
               >
-                <p className="intro-text">{t.paragraph1}</p>
-                <p className="detail-text">{t.paragraph2}</p>
+                <p className="intro-text">{content.paragraph1}</p>
+                <p className="detail-text">{content.paragraph2}</p>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -189,7 +159,7 @@ const About = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
             >
-              {t.techTitle}
+              {content.techTitle}
             </motion.h3>
           </AnimatePresence>
 
@@ -230,7 +200,7 @@ const About = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
             >
-              {t.cta}
+              {content.cta}
             </motion.span>
           </AnimatePresence>
         </motion.div>

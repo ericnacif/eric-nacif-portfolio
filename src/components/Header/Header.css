@@ -8,8 +8,8 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding: 0 clamp(20px, 4vw, 56px);
-  transition: background 0.35s ease, box-shadow 0.35s ease;
+  padding: 0 clamp(18px, 4vw, 54px);
+  transition: background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 /* Linha accent no topo do header */
@@ -19,8 +19,8 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: var(--accent-color);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
   opacity: 0;
   transition: opacity 0.35s ease;
 }
@@ -30,24 +30,24 @@
 }
 
 .main-header.scrolled {
-  background: rgba(255, 248, 248, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06), 0 4px 24px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(24px) saturate(1.12);
+  -webkit-backdrop-filter: blur(24px) saturate(1.12);
+  box-shadow: 0 1px 0 rgba(11, 16, 32, 0.06), 0 18px 44px rgba(20, 40, 120, 0.06);
 }
 
 .header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1400px;
+  max-width: 1480px;
   margin: 0 auto;
-  height: 76px;
+  height: 88px;
   transition: height 0.35s ease;
 }
 
 .main-header.scrolled .header-container {
-  height: 64px;
+  height: 72px;
 }
 
 /* ── Logo ── */
@@ -71,17 +71,17 @@
 }
 
 .header-logo-text {
-  font-family: var(--font-display);
+  font-family: var(--font-ui);
   font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-weight: 800;
+  letter-spacing: 0.01em;
   color: var(--text-color);
 }
 
 /* ── Nav ── */
 .desktop-nav {
   display: flex;
-  gap: 32px;
+  gap: clamp(28px, 2.8vw, 48px);
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -89,14 +89,14 @@
 
 .nav-item {
   position: relative;
-  padding: 4px 0;
+  padding: 6px 0;
   text-decoration: none;
   color: var(--text-secondary);
-  font-family: var(--font-display);
-  font-size: 12px;
+  font-family: var(--font-ui);
+  font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,10 +115,10 @@
 .nav-item::after {
   content: '';
   position: absolute;
-  bottom: -2px;
+  bottom: -5px;
   left: 0;
   width: 0;
-  height: 2px;
+  height: 1px;
   background: var(--accent-color);
   border-radius: 2px;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -141,26 +141,26 @@
 .header-controls {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 22px;
 }
 
 /* Lang inline — botões lado a lado sem dropdown */
 .lang-inline {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .lang-inline-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-family: var(--font-display);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   color: var(--text-secondary);
-  padding: 4px 2px;
+  padding: 4px 3px;
   transition: color 0.2s;
 }
 
@@ -175,32 +175,32 @@
 .lang-sep {
   display: inline-block;
   width: 1px;
-  height: 12px;
+  height: 13px;
   background: var(--border-color);
-  margin: 0 4px;
+  margin: 0 5px;
 }
 
 /* CV */
 .cv-button {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   background: var(--accent-color);
-  color: #fff;
-  padding: 9px 20px;
-  border-radius: 8px;
+  color: #ffffff;
+  padding: 12px 22px;
+  border-radius: 999px;
   text-decoration: none;
-  font-family: var(--font-display);
-  font-size: 11px;
-  font-weight: 700;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.1em;
   transition: background 0.22s, box-shadow 0.22s, transform 0.18s;
 }
 
 .cv-button:hover {
-  background: #1a3de0;
-  box-shadow: 0 6px 20px rgba(41, 82, 255, 0.35);
+  background: var(--deep-color);
+  box-shadow: 0 12px 30px rgba(var(--accent-rgb), 0.3);
 }
 
 /* =========================================
@@ -242,13 +242,13 @@
   width: 300px;
   max-width: 88vw;
   height: 100%;
-  background: var(--bg-color);
+  background: var(--surface-color);
   border-left: 1px solid var(--border-color);
   z-index: 2001;
   display: flex;
   flex-direction: column;
   padding: 28px 24px;
-  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.1);
+  box-shadow: -24px 0 60px rgba(20, 40, 120, 0.14);
 }
 
 .drawer-header {
@@ -264,7 +264,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-display);
+  font-family: var(--font-ui);
   font-size: 14px;
   font-weight: 700;
   color: var(--text-color);
@@ -305,19 +305,19 @@
   border-radius: 10px;
   text-decoration: none;
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 26px;
   font-weight: 600;
   color: var(--text-secondary);
   transition: all 0.2s;
 }
 
 .drawer-item:hover {
-  background: rgba(41, 82, 255, 0.05);
+  background: rgba(var(--accent-rgb), 0.08);
   color: var(--text-color);
 }
 
 .drawer-item.active {
-  background: rgba(41, 82, 255, 0.08);
+  background: rgba(var(--accent-rgb), 0.12);
   color: var(--accent-color);
 }
 
@@ -344,7 +344,7 @@
   justify-content: center;
   gap: 16px;
   padding: 10px;
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(11, 16, 32, 0.035);
   border-radius: 10px;
   border: 1px solid var(--border-color);
 }
@@ -352,7 +352,7 @@
 .drawer-lang button {
   background: none;
   border: none;
-  font-family: var(--font-display);
+  font-family: var(--font-ui);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -367,7 +367,7 @@
 
 .drawer-cv-btn {
   background: var(--accent-color);
-  color: #fff;
+  color: #ffffff;
   padding: 14px;
   border-radius: 10px;
   display: flex;
@@ -375,7 +375,7 @@
   justify-content: center;
   gap: 8px;
   text-decoration: none;
-  font-family: var(--font-display);
+  font-family: var(--font-ui);
   font-weight: 700;
   font-size: 12px;
   text-transform: uppercase;
@@ -384,12 +384,31 @@
 }
 
 .drawer-cv-btn:hover {
-  background: #1a3de0;
+  background: var(--accent-color);
 }
 
 /* =========================================
    RESPONSIVIDADE
    ========================================= */
+
+/* Notebooks menores: reduz folgas sem encolher a tipografia */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .header-container {
+    height: 80px;
+  }
+
+  .desktop-nav {
+    gap: 26px;
+  }
+
+  .header-controls {
+    gap: 16px;
+  }
+
+  .cv-button {
+    padding: 11px 18px;
+  }
+}
 
 @media (max-width: 1024px) {
   .desktop-nav {

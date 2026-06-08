@@ -3,15 +3,16 @@
    ========================================= */
 
 .project-card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
+  background:
+    linear-gradient(180deg, #ffffff, #f4f7fe);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 28px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   transition:
-    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.45s var(--ease-out),
+    box-shadow 0.45s var(--ease-out),
     border-color 0.3s ease;
   cursor: pointer;
   height: 100%;
@@ -27,10 +28,10 @@
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 16px;
+  border-radius: 28px;
   padding: 1px;
   background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      rgba(41, 82, 255, 0.18),
+      rgba(var(--accent-rgb), 0.22),
       transparent 40%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -46,7 +47,7 @@
   position: absolute;
   inset: 0;
   background: radial-gradient(500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      rgba(41, 82, 255, 0.04),
+      rgba(var(--accent-rgb), 0.07),
       transparent 40%);
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -56,13 +57,12 @@
 
 @media (hover: hover) and (pointer: fine) {
   .project-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-10px);
     box-shadow:
-      0 2px 0 0 rgba(41, 82, 255, 0.25),
-      /* borda accent no topo */
-      0 20px 48px rgba(0, 0, 0, 0.1),
-      0 8px 16px rgba(0, 0, 0, 0.06);
-    border-color: rgba(41, 82, 255, 0.2);
+      0 1px 0 0 rgba(var(--accent-rgb), 0.3),
+      0 28px 64px rgba(20, 40, 120, 0.2),
+      0 10px 22px rgba(20, 40, 120, 0.12);
+    border-color: rgba(var(--accent-rgb), 0.2);
   }
 
   .project-card:hover::before,
@@ -88,7 +88,7 @@
   }
 
   .project-card:hover .tag {
-    border-color: rgba(41, 82, 255, 0.2);
+    border-color: rgba(var(--accent-rgb), 0.24);
     color: var(--accent-color);
   }
 }
@@ -99,6 +99,7 @@
   position: relative;
   z-index: 3;
   flex-shrink: 0;
+  border-radius: 24px 24px 0 0;
 }
 
 .project-image {
@@ -112,7 +113,7 @@
 .card-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(11, 16, 32, 0.34);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -124,13 +125,13 @@
 
 /* ── Info ── */
 .project-info {
-  padding: 24px;
+  padding: 28px;
   display: flex;
   flex-direction: column;
   flex: 1;
   position: relative;
   z-index: 3;
-  background: var(--card-bg);
+  background: transparent;
 }
 
 .project-header {
@@ -139,15 +140,16 @@
 
 .project-info h3 {
   font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 700;
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 600;
   color: var(--text-color);
   margin: 0;
   transition: color 0.25s ease;
   display: flex;
   align-items: center;
   gap: 8px;
-  line-height: 1.3;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .header-link-icon {
@@ -163,9 +165,9 @@
   flex: 1;
   margin-bottom: 16px;
   color: var(--text-secondary);
-  line-height: 1.65;
-  font-size: 14px;
-  min-height: 68px;
+  line-height: 1.78;
+  font-size: 14.5px;
+  min-height: 82px;
 }
 
 /* ── Tags ── */
@@ -179,15 +181,15 @@
 }
 
 .tag {
-  font-family: var(--font-display);
+  font-family: var(--font-ui);
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--text-secondary);
-  background: transparent;
-  padding: 4px 10px;
-  border-radius: 4px;
+  background: rgba(11, 16, 32, 0.04);
+  padding: 6px 10px;
+  border-radius: 999px;
   border: 1px solid var(--border-color);
   transition: all 0.2s ease;
   white-space: nowrap;

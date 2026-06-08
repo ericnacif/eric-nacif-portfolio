@@ -8,8 +8,8 @@
     right: 32px;
     width: 44px;
     height: 44px;
-    border-radius: 50%;
-    background: var(--card-bg);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.82);
     color: var(--text-color);
     border: 1px solid var(--border-color);
     display: flex;
@@ -17,15 +17,16 @@
     justify-content: center;
     cursor: pointer;
     z-index: 1000;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 16px 32px rgba(20, 40, 120, 0.12);
+    backdrop-filter: blur(16px);
     transition: background 0.22s, border-color 0.22s, color 0.22s, box-shadow 0.22s;
 }
 
 .back-to-top:hover {
-    background: var(--text-color);
-    color: var(--bg-color);
-    border-color: var(--text-color);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+    background: var(--deep-color);
+    color: var(--surface-color);
+    border-color: var(--deep-color);
+    box-shadow: 0 18px 36px rgba(20, 40, 120, 0.2);
 }
 
 @media (max-width: 768px) {

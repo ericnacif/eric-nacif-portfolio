@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Footer.css';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLanguage } from '../../context/LanguageContext';
-import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../hooks/useLanguage';
+import { translations } from '../../i18n/translations';
 import { SiLinkedin, SiInstagram, SiGithub } from 'react-icons/si';
-import { FiLoader, FiCheck, FiMapPin } from 'react-icons/fi';
+import { FiLoader, FiCheck, FiMapPin, FiArrowUpRight } from 'react-icons/fi';
 
 const Footer = () => {
-  const { language } = useLanguage();
-  const { theme } = useTheme();
+  const { language, t } = useLanguage();
+  const content = t.footer;
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -18,7 +18,7 @@ const Footer = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const logoSrc = theme === 'dark' ? '/logo-gray.webp' : '/logo-blue.webp';
+  const logoSrc = '/logo-blue.webp';
   const suggestionsRef = useRef(null);
   const commonDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'icloud.com', 'yahoo.com'];
 
@@ -27,57 +27,10 @@ const Footer = () => {
     setGreetingKey(h >= 5 && h < 12 ? 'morning' : h < 18 ? 'afternoon' : 'evening');
   }, []);
 
-  const content = {
-    pt: {
-      greetings: {
-        morning: 'Bom dia! Vamos construir algo?',
-        afternoon: 'Boa tarde! Vamos construir algo?',
-        evening: 'Boa noite! Vamos construir algo?',
-      },
-      subtitle: 'Deixe sua mensagem e entrarei em contato.',
-      labels: { name: 'Seu Nome', email: 'Seu E-mail', message: 'Sua Mensagem' },
-      defaultMessage: 'Olá Eric! Vi seu portfólio e gostaria de conversar sobre um projeto...',
-      button: { default: 'Enviar Mensagem', success: 'Enviado!' },
-      error: 'Erro ao enviar. Tente novamente.',
-      location: 'Brasil',
-      copyright: 'Todos os direitos reservados.',
-    },
-    en: {
-      greetings: {
-        morning: "Good morning! Let's build something?",
-        afternoon: "Good afternoon! Let's build something?",
-        evening: "Good evening! Let's build something?",
-      },
-      subtitle: "Leave your message and I'll get in touch.",
-      labels: { name: 'Your Name', email: 'Your Email', message: 'Your Message' },
-      defaultMessage: "Hi Eric! I saw your portfolio and would like to talk about a project...",
-      button: { default: 'Send Message', success: 'Sent!' },
-      error: 'Error sending. Please try again.',
-      location: 'Brazil',
-      copyright: 'All rights reserved.',
-    },
-    es: {
-      greetings: {
-        morning: '¡Buenos días! ¿Construimos algo?',
-        afternoon: '¡Buenas tardes! ¿Construimos algo?',
-        evening: '¡Buenas noches! ¿Construimos algo?',
-      },
-      subtitle: 'Deja tu mensaje y me pondré en contacto.',
-      labels: { name: 'Tu Nombre', email: 'Tu Correo', message: 'Tu Mensaje' },
-      defaultMessage: '¡Hola Eric! Vi tu portafolio y me gustaría hablar sobre un proyecto...',
-      button: { default: 'Enviar Mensaje', success: '¡Enviado!' },
-      error: 'Error al enviar. Inténtalo de nuevo.',
-      location: 'Brasil',
-      copyright: 'Todos los derechos reservados.',
-    },
-  };
-
-  const t = content[language] || content.pt;
-
   useEffect(() => {
-    const isDefault = Object.values(content).some((c) => c.defaultMessage === message) || message === '';
-    if (isDefault) setMessage(t.defaultMessage);
-  }, [language]);
+    const isDefault = Object.values(translations).some(({ footer }) => footer.defaultMessage === message) || message === '';
+    if (isDefault) setMessage(content.defaultMessage);
+  }, [content.defaultMessage, message]);
 
   const handleEmailChange = (e) => {
     const val = e.target.value;
@@ -119,7 +72,7 @@ const Footer = () => {
       });
       if (res.ok) {
         setStatus('success');
-        setName(''); setEmail(''); setMessage(t.defaultMessage);
+        setName(''); setEmail(''); setMessage(content.defaultMessage);
         setTimeout(() => setStatus('idle'), 3500);
       } else { setStatus('error'); setTimeout(() => setStatus('idle'), 3000); }
     } catch { setStatus('error'); setTimeout(() => setStatus('idle'), 3000); }
@@ -138,9 +91,9 @@ const Footer = () => {
     <footer id="contato" className="main-footer">
       <div className="footer-inner">
 
-        {/* Saudação */}
+        {/* Headline editorial */}
         <motion.div
-          className="footer-cta"
+          className="footer-top"
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -148,14 +101,14 @@ const Footer = () => {
         >
           <AnimatePresence mode="wait">
             <motion.span
-              className="section-eyebrow footer-eyebrow"
+              className="footer-eyebrow"
               key={language}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              {language === 'en' ? '03 — Contact' : '03 — Contato'}
+              {content.eyebrow}
             </motion.span>
           </AnimatePresence>
           <AnimatePresence mode="wait">
@@ -166,10 +119,9 @@ const Footer = () => {
               initial="initial" animate="animate" exit="exit"
               transition={{ duration: 0.22 }}
             >
-              {t.greetings[greetingKey]}
+              {content.greetings[greetingKey]}
             </motion.h2>
           </AnimatePresence>
-
           <AnimatePresence mode="wait">
             <motion.p
               className="footer-subtitle"
@@ -178,14 +130,14 @@ const Footer = () => {
               initial="initial" animate="animate" exit="exit"
               transition={{ duration: 0.2 }}
             >
-              {t.subtitle}
+              {content.subtitle}
             </motion.p>
           </AnimatePresence>
         </motion.div>
 
-        {/* Formulário — inputs flutuantes, sem card */}
+        {/* Formulário em coluna única */}
         <motion.form
-          className="contact-form minimal-form"
+          className="contact-form"
           onSubmit={handleSubmit}
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -193,41 +145,36 @@ const Footer = () => {
           transition={{ duration: 0.6, delay: 0.15 }}
         >
           <div className="form-row">
-            {/* Nome */}
-            <div className="input-group-minimal">
-              <input
-                type="text" name="name" id="name"
-                value={name} onChange={(e) => setName(e.target.value)}
-                required disabled={isDisabled} placeholder=" "
-              />
+            <div className="form-field">
               <AnimatePresence mode="wait">
                 <motion.label htmlFor="name" key={language}
                   variants={fadeVariants} initial="initial" animate="animate" exit="exit"
                   transition={{ duration: 0.18 }}
                 >
-                  {t.labels.name}
+                  {content.labels.name}
                 </motion.label>
               </AnimatePresence>
-              <span className="underline-bar" />
+              <input
+                type="text" name="name" id="name"
+                value={name} onChange={(e) => setName(e.target.value)}
+                required disabled={isDisabled}
+              />
             </div>
 
-            {/* Email */}
-            <div className="input-group-minimal" ref={suggestionsRef}>
-              <input
-                type="email" name="email" id="email"
-                value={email} onChange={handleEmailChange}
-                required disabled={isDisabled} placeholder=" " autoComplete="off"
-              />
+            <div className="form-field" ref={suggestionsRef}>
               <AnimatePresence mode="wait">
                 <motion.label htmlFor="email" key={language}
                   variants={fadeVariants} initial="initial" animate="animate" exit="exit"
                   transition={{ duration: 0.18 }}
                 >
-                  {t.labels.email}
+                  {content.labels.email}
                 </motion.label>
               </AnimatePresence>
-              <span className="underline-bar" />
-
+              <input
+                type="email" name="email" id="email"
+                value={email} onChange={handleEmailChange}
+                required disabled={isDisabled} autoComplete="off"
+              />
               <AnimatePresence>
                 {showSuggestions && (
                   <motion.ul
@@ -248,107 +195,104 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Mensagem */}
-          <div className="input-group-minimal full-width">
-            <AnimatePresence mode="wait">
-              <motion.textarea
-                key={language} name="message" id="message" rows="1"
-                value={message} onChange={(e) => setMessage(e.target.value)}
-                required disabled={isDisabled} placeholder=" "
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                transition={{ duration: 0.18 }}
-              />
-            </AnimatePresence>
+          <div className="form-field form-field--full">
             <AnimatePresence mode="wait">
               <motion.label htmlFor="message" key={language}
                 variants={fadeVariants} initial="initial" animate="animate" exit="exit"
                 transition={{ duration: 0.18 }}
               >
-                {t.labels.message}
+                {content.labels.message}
               </motion.label>
             </AnimatePresence>
-            <span className="underline-bar" />
-          </div>
-
-          {/* Botão */}
-          <div className="button-wrapper">
-            <motion.button
-              type="submit"
-              className={`morph-btn ${status}`}
-              disabled={isDisabled}
-              layout
-              transition={{ duration: 0.35, type: 'spring', stiffness: 100 }}
-            >
-              <AnimatePresence mode="wait">
-                {status === 'idle' && (
-                  <motion.span key={`idle-${language}`}
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                  >
-                    <AnimatePresence mode="wait">
-                      <motion.span key={language}
-                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                        transition={{ duration: 0.18 }}
-                      >
-                        {t.button.default}
-                      </motion.span>
-                    </AnimatePresence>
-                  </motion.span>
-                )}
-                {status === 'sending' && (
-                  <motion.div key="loader"
-                    initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
-                  >
-                    <FiLoader className="spinner-icon" />
-                  </motion.div>
-                )}
-                {status === 'success' && (
-                  <motion.div key="success" className="success-content"
-                    initial={{ scale: 0 }} animate={{ scale: 1 }}
-                  >
-                    <FiCheck size={22} />
-                    <motion.span key={`s-${language}`}
-                      initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                      transition={{ duration: 0.18 }}
-                    >
-                      {t.button.success}
-                    </motion.span>
-                  </motion.div>
-                )}
-                {status === 'error' && (
-                  <motion.span key={`err-${language}`}>{t.error}</motion.span>
-                )}
-              </AnimatePresence>
-            </motion.button>
-          </div>
-        </motion.form>
-
-        {/* Divider */}
-        <div className="footer-divider" />
-
-        {/* Bottom */}
-        <div className="footer-bottom">
-          <div className="footer-brand">
-            <img src={logoSrc} alt="Logo" className="footer-logo" />
             <AnimatePresence mode="wait">
-              <motion.p className="footer-location" key={language}
-                variants={fadeVariants} initial="initial" animate="animate" exit="exit"
-                transition={{ duration: 0.2 }}
-              >
-                <FiMapPin size={13} style={{ marginRight: 5 }} />
-                {t.location}
-              </motion.p>
+              <motion.textarea
+                key={language} name="message" id="message" rows="3"
+                value={message} onChange={(e) => setMessage(e.target.value)}
+                required disabled={isDisabled}
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                transition={{ duration: 0.18 }}
+              />
             </AnimatePresence>
           </div>
 
-          <div className="footer-socials">
+          <motion.button
+            type="submit"
+            className={`submit-btn ${status}`}
+            disabled={isDisabled}
+            layout
+            transition={{ duration: 0.35, type: 'spring', stiffness: 100 }}
+          >
+            <AnimatePresence mode="wait">
+              {status === 'idle' && (
+                <motion.span key={`idle-${language}`}
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                >
+                  <AnimatePresence mode="wait">
+                    <motion.span key={language}
+                      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                      transition={{ duration: 0.18 }}
+                    >
+                      {content.button.default}
+                    </motion.span>
+                  </AnimatePresence>
+                </motion.span>
+              )}
+              {status === 'sending' && (
+                <motion.div key="loader"
+                  initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
+                >
+                  <FiLoader className="spinner-icon" />
+                </motion.div>
+              )}
+              {status === 'success' && (
+                <motion.div key="success" className="success-content"
+                  initial={{ scale: 0 }} animate={{ scale: 1 }}
+                >
+                  <FiCheck size={22} />
+                  <motion.span key={`s-${language}`}
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                    transition={{ duration: 0.18 }}
+                  >
+                    {content.button.success}
+                  </motion.span>
+                </motion.div>
+              )}
+              {status === 'error' && (
+                <motion.span key={`err-${language}`}>{content.error}</motion.span>
+              )}
+            </AnimatePresence>
+          </motion.button>
+        </motion.form>
+
+        {/* Seção de conexão abaixo do formulário */}
+        <div className="footer-connect">
+          <div className="footer-brand">
+            <img src={logoSrc} alt="Eric Nacif" className="footer-logo" />
+            <div className="footer-brand-info">
+              <span className="footer-brand-name">Eric Nacif</span>
+              <AnimatePresence mode="wait">
+                <motion.span className="footer-location" key={language}
+                  variants={fadeVariants} initial="initial" animate="animate" exit="exit"
+                  transition={{ duration: 0.2 }}
+                >
+                  <FiMapPin size={13} style={{ marginRight: 5 }} />
+                  {content.location}
+                </motion.span>
+              </AnimatePresence>
+            </div>
+          </div>
+
+          <nav className="footer-links" aria-label="Social">
             {socialLinks.map((link) => (
               <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer"
-                className="footer-social" aria-label={link.label}
+                className="footer-link"
               >
-                {link.icon}
+                <span className="footer-link-icon">{link.icon}</span>
+                <span className="footer-link-label">{link.label}</span>
+                <FiArrowUpRight className="footer-link-arrow" />
               </a>
             ))}
-          </div>
+          </nav>
         </div>
 
         {/* Copyright */}
@@ -358,7 +302,7 @@ const Footer = () => {
               variants={fadeVariants} initial="initial" animate="animate" exit="exit"
               transition={{ duration: 0.2 }}
             >
-              © {new Date().getFullYear()} Eric Nacif. {t.copyright}
+              © {new Date().getFullYear()} Eric Nacif. {content.copyright}
             </motion.p>
           </AnimatePresence>
         </div>

@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
-import ProjectCard from "../../components/ProjectCard/ProjectCard";
 import "./Projects.css";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLanguage } from "../../context/LanguageContext";
+import { FiArrowUpRight } from "react-icons/fi";
+import { useLanguage } from "../../hooks/useLanguage";
 import RedirectLoader from "../../components/RedirectLoader/RedirectLoader";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, A11y, Autoplay } from "swiper/modules";
@@ -133,19 +133,9 @@ const projectsData = [
   },
 ];
 
-const sectionTitles = {
-  pt: "Projetos em Destaque",
-  en: "Featured Projects",
-  es: "Proyectos Destacados",
-};
-const redirectMessages = {
-  pt: "Redirecionando...",
-  en: "Redirecting...",
-  es: "Redireccionando...",
-};
-
 const Projects = () => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
+  const content = t.projects;
   const [isRedirecting, setIsRedirecting] = useState(false);
   const swiperRef = useRef(null);
 
@@ -166,7 +156,7 @@ const Projects = () => {
       <AnimatePresence>
         {isRedirecting && (
           <RedirectLoader
-            text={redirectMessages[language] || redirectMessages.pt}
+            text={content.redirecting}
           />
         )}
       </AnimatePresence>
@@ -195,19 +185,42 @@ const Projects = () => {
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="projects-eyebrow">02 — Projetos</span>
-            <AnimatePresence mode="wait">
-              <motion.h2
-                className="projects-title"
-                key={language}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.22 }}
+            <div className="projects-header-text">
+              <span className="projects-eyebrow">{content.eyebrow}</span>
+              <AnimatePresence mode="wait">
+                <motion.h2
+                  className="projects-title"
+                  key={language}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.22 }}
+                >
+                  {content.title}
+                </motion.h2>
+              </AnimatePresence>
+            </div>
+
+            <div className="projects-nav">
+              <button
+                className="swiper-arrow swiper-arrow--prev"
+                onClick={goPrev}
+                aria-label={content.previous}
               >
-                {sectionTitles[language] || sectionTitles.pt}
-              </motion.h2>
-            </AnimatePresence>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+              <button
+                className="swiper-arrow swiper-arrow--next"
+                onClick={goNext}
+                aria-label={content.next}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
           </motion.div>
 
           {/* Carrossel */}
@@ -221,7 +234,7 @@ const Projects = () => {
             <Swiper
               ref={swiperRef}
               modules={[Pagination, A11y, Autoplay]}
-              spaceBetween={24}
+              spaceBetween={28}
               slidesPerView={1}
               pagination={{
                 clickable: true,
@@ -230,74 +243,69 @@ const Projects = () => {
                 bulletActiveClass: "swiper-custom-bullet--active",
               }}
               autoplay={{
-                delay: 5000,
+                delay: 6000,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
               }}
               loop
               grabCursor
-              speed={500}
+              speed={600}
               breakpoints={{
-                768: { slidesPerView: 2, spaceBetween: 20 },
-                1100: { slidesPerView: 3, spaceBetween: 24 },
+                981: { slidesPerView: 1.12, spaceBetween: 36 },
               }}
               className="projects-swiper"
             >
-              {projectsData.map((project) => {
+              {projectsData.map((project, idx) => {
                 const lang =
                   project.translations[language] || project.translations.pt;
                 return (
                   <SwiperSlide key={project.id}>
-                    <ProjectCard
-                      {...lang}
-                      image={project.image}
-                      tags={project.tags}
-                      url={project.url}
-                      onClick={(e) => handleProjectClick(e, project.url)}
-                    />
+                    <article className="showcase">
+                      <div
+                        className="showcase__media"
+                        onClick={(e) => handleProjectClick(e, project.url)}
+                        role="link"
+                        tabIndex={0}
+                        aria-label={lang.title}
+                      >
+                        <img
+                          src={project.image}
+                          alt={lang.title}
+                          loading="lazy"
+                        />
+                        <span className="showcase__view">
+                          {content.viewProject}
+                          <FiArrowUpRight />
+                        </span>
+                      </div>
+
+                      <div className="showcase__content">
+                        <span className="showcase__index">
+                          {String(idx + 1).padStart(2, "0")}
+                          <em>/ {String(projectsData.length).padStart(2, "0")}</em>
+                        </span>
+                        <h3 className="showcase__title">{lang.title}</h3>
+                        <p className="showcase__desc">{lang.description}</p>
+                        <div className="showcase__tags">
+                          {project.tags.map((tag) => (
+                            <span key={tag} className="showcase__tag">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <button
+                          className="showcase__btn"
+                          onClick={(e) => handleProjectClick(e, project.url)}
+                        >
+                          {content.viewProject}
+                          <FiArrowUpRight />
+                        </button>
+                      </div>
+                    </article>
                   </SwiperSlide>
                 );
               })}
             </Swiper>
-
-            {/* Setas laterais absolutas */}
-            <button
-              className="swiper-arrow swiper-arrow--prev"
-              onClick={goPrev}
-              aria-label="Anterior"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-            </button>
-
-            <button
-              className="swiper-arrow swiper-arrow--next"
-              onClick={goNext}
-              aria-label="Próximo"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
-            </button>
 
             {/* Paginação abaixo, centralizada */}
             <div className="swiper-custom-pagination" />

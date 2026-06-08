@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Header.css";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaGlobe, FaDownload, FaBars, FaTimes } from "react-icons/fa";
+import { FaDownload, FaTimes } from "react-icons/fa";
 
 import cvPt from "../../assets/docs/cv-pt.pdf";
 import cvEn from "../../assets/docs/cv-en.pdf";
 
-import { useLanguage } from "../../context/LanguageContext";
+import { useLanguage } from "../../hooks/useLanguage";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showLangMenu, setShowLangMenu] = useState(false);
-  const [activeSection, setActiveSection] = useState("hero");
+  const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
 
   const { language, changeLanguage, t } = useLanguage();
@@ -36,16 +35,34 @@ const Header = () => {
 
   useEffect(() => {
     const opts = { rootMargin: "-30% 0px -40% 0px", threshold: 0 };
+    const observedSections = new Set();
+    const requiredSections = ["home", "sobre", "projetos", "contato"];
+    let mo;
+
     observerRef.current = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) setActiveSection(e.target.id); });
     }, opts);
-    const observe = () =>
-      document.querySelectorAll("section[id], footer#contato").forEach((s) =>
-        observerRef.current.observe(s)
-      );
+
+    const observe = () => {
+      document.querySelectorAll("section[id], footer#contato").forEach((section) => {
+        if (!observedSections.has(section.id)) {
+          observerRef.current.observe(section);
+          observedSections.add(section.id);
+        }
+      });
+
+      if (mo && requiredSections.every((id) => observedSections.has(id))) {
+        mo.disconnect();
+      }
+    };
+
     observe();
-    const mo = new MutationObserver(observe);
-    mo.observe(document.body, { childList: true, subtree: true });
+    mo = new MutationObserver(observe);
+    const root = document.getElementById("root");
+    if (root && !requiredSections.every((id) => observedSections.has(id))) {
+      mo.observe(root, { childList: true, subtree: true });
+    }
+
     return () => { observerRef.current?.disconnect(); mo.disconnect(); };
   }, []);
 
@@ -62,10 +79,10 @@ const Header = () => {
 
   const handleScrollTo = (e, id) => {
     e.preventDefault();
-    const el = document.getElementById(id === "home" ? "hero" : id);
+    const el = document.getElementById(id);
     if (el) {
       window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 80, behavior: "smooth" });
-      setActiveSection(id === "home" ? "hero" : id);
+      setActiveSection(id);
       setIsMenuOpen(false);
     }
   };
@@ -84,7 +101,7 @@ const Header = () => {
       <div className="header-container">
 
         {/* Logo */}
-        <a href="#hero" className="header-logo-link" onClick={(e) => handleScrollTo(e, "hero")}>
+        <a href="#home" className="header-logo-link" onClick={(e) => handleScrollTo(e, "home")}>
           <img src={logoSrc} alt="Logo" className="header-logo-img" width="36" height="36" />
           <span className="header-logo-text">Eric Nacif</span>
         </a>
@@ -136,6 +153,7 @@ const Header = () => {
                 <button
                   className={`lang-inline-btn ${language === lang ? "active" : ""}`}
                   onClick={() => changeLanguage(lang)}
+                  aria-label={`Alterar idioma para ${lang.toUpperCase()}`}
                 >
                   {lang.toUpperCase()}
                 </button>
@@ -160,7 +178,7 @@ const Header = () => {
                 {t.cvBtn}
               </motion.span>
             </AnimatePresence>
-            <FaDownload size={10} />
+            <FaDownload size={12} />
           </motion.a>
         </div>
 
@@ -220,6 +238,7 @@ const Header = () => {
                       key={lang}
                       onClick={() => changeLanguage(lang)}
                       className={language === lang ? "active" : ""}
+                      aria-label={`Alterar idioma para ${lang.toUpperCase()}`}
                     >
                       {lang.toUpperCase()}
                     </button>

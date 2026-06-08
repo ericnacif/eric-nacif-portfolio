@@ -1,158 +1,173 @@
 .not-found-section {
-    height: 100vh;
+    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: var(--bg-color);
+    background: var(--bg-color);
     padding: 20px;
     position: relative;
-    /* Para posicionar o header absolute */
+    overflow: hidden;
 }
 
-/* --- ESTILO DO HEADER SIMPLES --- */
+/* ── Fundo acolhedor ── */
+.not-found-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.nf-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+}
+
+.nf-blob--1 {
+    width: min(50vw, 540px);
+    height: min(50vw, 540px);
+    top: -10%;
+    left: -8%;
+    background: radial-gradient(circle, rgba(var(--accent-rgb), 0.32), transparent 70%);
+    animation: nfBlob 16s ease-in-out infinite;
+}
+
+.nf-blob--2 {
+    width: min(46vw, 500px);
+    height: min(46vw, 500px);
+    bottom: -12%;
+    right: -8%;
+    background: radial-gradient(circle, rgba(255, 176, 120, 0.28), transparent 70%);
+    animation: nfBlob 20s ease-in-out infinite reverse;
+}
+
+@keyframes nfBlob {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(32px, 24px) scale(1.1);
+    }
+}
+
+.nf-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(11, 16, 32, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(11, 16, 32, 0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 70%);
+    mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 70%);
+}
+
+/* ── Header simples ── */
 .simple-header {
     position: absolute;
     top: 40px;
-    /* Distância do topo */
     left: 50%;
     transform: translateX(-50%);
-    /* Centraliza exato */
+    z-index: 2;
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
 .simple-logo-img {
-    height: 50px;
+    height: 44px;
     width: auto;
     object-fit: contain;
 }
 
 .simple-logo-text {
-    font-family: var(--font-display);
-    font-size: 24px;
-    font-weight: 700;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    color: var(--text-color);
+}
+
+/* ── Conteúdo ── */
+.not-found-content {
+    position: relative;
+    z-index: 1;
+    max-width: 560px;
+}
+
+.nf-code {
+    font-size: clamp(120px, 22vw, 220px);
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    margin-bottom: 16px;
+    background: linear-gradient(160deg, var(--text-color) 30%, var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     color: var(--accent-color);
 }
 
-/* --- CONTEÚDO RESTAURADO (Glitch) --- */
-.not-found-content h1 {
-    font-size: clamp(80px, 15vw, 150px);
-    font-family: var(--font-display);
-    font-weight: 900;
-    color: var(--text-color);
-    position: relative;
-    margin-bottom: 10px;
-    line-height: 1;
-}
-
-/* Efeito Glitch */
-.glitch-text::before,
-.glitch-text::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.glitch-text::before {
-    left: 2px;
-    text-shadow: -2px 0 #ff00c1;
-    clip: rect(44px, 450px, 56px, 0);
-    animation: glitch-anim 5s infinite linear alternate-reverse;
-}
-
-.glitch-text::after {
-    left: -2px;
-    text-shadow: -2px 0 #00fff9;
-    clip: rect(44px, 450px, 56px, 0);
-    animation: glitch-anim2 5s infinite linear alternate-reverse;
-}
-
-@keyframes glitch-anim {
-    0% {
-        clip: rect(15px, 9999px, 81px, 0);
-    }
-
-    20% {
-        clip: rect(88px, 9999px, 98px, 0);
-    }
-
-    40% {
-        clip: rect(26px, 9999px, 11px, 0);
-    }
-
-    60% {
-        clip: rect(6px, 9999px, 66px, 0);
-    }
-
-    80% {
-        clip: rect(55px, 9999px, 18px, 0);
-    }
-
-    100% {
-        clip: rect(74px, 9999px, 4px, 0);
-    }
-}
-
-@keyframes glitch-anim2 {
-    0% {
-        clip: rect(25px, 9999px, 99px, 0);
-    }
-
-    20% {
-        clip: rect(100px, 9999px, 4px, 0);
-    }
-
-    40% {
-        clip: rect(34px, 9999px, 33px, 0);
-    }
-
-    60% {
-        clip: rect(4px, 9999px, 94px, 0);
-    }
-
-    80% {
-        clip: rect(20px, 9999px, 12px, 0);
-    }
-
-    100% {
-        clip: rect(67px, 9999px, 78px, 0);
-    }
-}
-
-.not-found-content h2 {
-    font-size: 24px;
+.nf-subtitle {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
     color: var(--accent-color);
     margin-bottom: 16px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
 }
 
-.not-found-content p {
+.nf-text {
     color: var(--text-secondary);
     margin-bottom: 40px;
-    font-size: 18px;
+    font-size: clamp(16px, 1.6vw, 19px);
+    line-height: 1.7;
 }
 
 .back-home-btn {
-    display: inline-block;
-    padding: 12px 32px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 15px 32px;
     background-color: var(--accent-color);
-    color: #fff;
-    border-radius: 50px;
-    font-weight: 600;
+    color: #ffffff;
+    border-radius: 999px;
+    font-family: var(--font-ui);
+    font-size: 12.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(41, 82, 255, 0.3);
+    transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 18px 42px rgba(var(--accent-rgb), 0.28);
+}
+
+.back-home-btn svg {
+    font-size: 16px;
+    transition: transform 0.25s var(--ease-out);
 }
 
 .back-home-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(41, 82, 255, 0.5);
+    transform: translateY(-2px);
+    background-color: var(--deep-color);
+    box-shadow: 0 20px 44px rgba(20, 40, 120, 0.26);
+}
+
+.back-home-btn:hover svg {
+    transform: translateX(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .nf-blob {
+        animation: none;
+    }
 }

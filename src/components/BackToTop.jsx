@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './BackToTop.css';
+import { useBackToTopVisible } from '../hooks/useBackToTopVisible';
 
 const BackToTop = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const isVisible = useBackToTopVisible();
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  useEffect(() => {
-    const onScroll = () => setIsVisible(window.scrollY > 600);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   return (
     <AnimatePresence>

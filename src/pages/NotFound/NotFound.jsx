@@ -1,56 +1,40 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { FiArrowLeft } from 'react-icons/fi';
 import './NotFound.css';
-import { useLanguage } from '../../context/LanguageContext';
-// REMOVIDO: import logoBlue
+import { useLanguage } from '../../hooks/useLanguage';
 
 const NotFound = () => {
-    const { language } = useLanguage();
-
-    const content = {
-        pt: {
-            title: "404",
-            subtitle: "Página não encontrada",
-            text: "Parece que você se perdeu no ciberespaço.",
-            button: "Voltar para o Início"
-        },
-        en: {
-            title: "404",
-            subtitle: "Page Not Found",
-            text: "Looks like you got lost in cyberspace.",
-            button: "Back to Home"
-        },
-        es: {
-            title: "404",
-            subtitle: "Página no encontrada",
-            text: "Parece que te perdiste en el ciberespacio.",
-            button: "Volver al Inicio"
-        }
-    };
-
-    const t = content[language] || content.pt;
+    const { t } = useLanguage();
+    const content = t.notFound;
 
     return (
         <section className="not-found-section">
+            <div className="not-found-bg" aria-hidden="true">
+                <span className="nf-blob nf-blob--1" />
+                <span className="nf-blob nf-blob--2" />
+                <div className="nf-grid" />
+            </div>
+
             <div className="simple-header">
-                {/* CORREÇÃO: Uso direto da string */}
-                <img src="/logo-blue.webp" alt="Logo" className="simple-logo-img" />
+                <img src="/logo-blue.webp" alt="Eric Nacif" className="simple-logo-img" />
                 <span className="simple-logo-text">Eric Nacif</span>
             </div>
 
             <motion.div
                 className="not-found-content"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
-                <h1 className="glitch-text" data-text="404">404</h1>
-                <h2>{t.subtitle}</h2>
-                <p>{t.text}</p>
+                <h1 className="nf-code">404</h1>
+                <h2 className="nf-subtitle">{content.subtitle}</h2>
+                <p className="nf-text">{content.text}</p>
 
                 <Link to="/" className="back-home-btn">
-                    {t.button}
+                    <FiArrowLeft />
+                    {content.button}
                 </Link>
             </motion.div>
         </section>

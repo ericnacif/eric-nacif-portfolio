@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
 import './RedirectLoader.css';
 
@@ -47,7 +47,7 @@ const RedirectLoader = ({ text }) => {
         </motion.div>
     );
 
-    return ReactDOM.createPortal(content, document.body);
+    return createPortal(content, document.body);
 };
 
 export default RedirectLoader;

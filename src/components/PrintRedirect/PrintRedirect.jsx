@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from '../../hooks/useLanguage';
 
 // Importe seus currículos
 import cvPt from '../../assets/docs/cv-pt.pdf';
