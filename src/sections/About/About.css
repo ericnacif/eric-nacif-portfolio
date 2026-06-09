@@ -135,67 +135,6 @@
     opacity: 0.7;
 }
 
-/* ── Tech Stack ── */
-.about-stack {
-    padding-top: clamp(40px, 5vw, 64px);
-    border-top: 1px solid var(--border-color);
-}
-
-.tech-stack-title {
-    font-family: var(--font-ui);
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-tertiary);
-    text-transform: none;
-    letter-spacing: 0.01em;
-    margin-bottom: 28px;
-    text-align: left;
-}
-
-.about-chips {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
-}
-
-.about-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 11px;
-    padding: 14px 16px;
-    border-radius: 14px;
-    border: 1px solid var(--border-color);
-    background: rgba(255, 255, 255, 0.55);
-    cursor: default;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.25s ease;
-}
-
-.about-chip-icon {
-    font-size: 18px;
-    color: var(--accent-color);
-    display: flex;
-    align-items: center;
-}
-
-.about-chip-name {
-    font-family: var(--font-ui);
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    color: var(--text-color);
-    white-space: nowrap;
-}
-
-/* Hover rico só no desktop com mouse */
-@media (min-width: 981px) and (pointer: fine) {
-    .about-chip:hover {
-        border-color: rgba(var(--accent-rgb), 0.35);
-        background: rgba(255, 255, 255, 0.95);
-        box-shadow: 0 16px 30px rgba(20, 40, 120, 0.1);
-        transform: translateY(-3px);
-    }
-}
-
 /* ── Eyebrow + header de seção ── */
 .section-header {
     display: flex;
@@ -294,29 +233,6 @@
         vertical-align: middle;
     }
 
-    .intro-text {
-        font-size: clamp(34px, 12vw, 52px);
-        text-align: center;
-    }
-
-    .detail-text {
-        font-size: 15px;
-        text-align: center;
-    }
-
-    .tech-stack-title,
-    .about-chips {
-        text-align: center;
-        justify-content: center;
-    }
-
-    .about-footer {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 20px;
-    }
-
     .section-title {
         text-align: center;
         margin-left: auto;
@@ -327,15 +243,10 @@
         left: 50%;
         transform: translateX(-50%);
     }
-
-    .cta-text {
-        font-size: 16px;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
 
-    .about-chip,
     .about-social-btn {
         transition: none;
     }

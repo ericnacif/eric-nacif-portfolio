@@ -17,20 +17,12 @@ const Hero = () => {
       <div className="hero-bg" aria-hidden="true" />
 
       <div className="hero-inner">
-        <div className="hero-meta" key={`meta-${language}`}>
-          <span className="hero-meta-item">{content.metaRole}</span>
-          <span className="hero-meta-sep" aria-hidden="true" />
-          <span className="hero-meta-item">{t.footer.location}</span>
-          <span className="hero-meta-sep" aria-hidden="true" />
-          <span className="hero-meta-item hero-meta-status">
-            <span className="hero-status-dot" aria-hidden="true" />
-            {content.available}
-          </span>
-        </div>
-
         <h1 className="hero-title" key={`title-${language}`}>
           {content.headline}{' '}
-          <span className="hero-title-accent">{content.headlineAccent}</span>
+          <span className="hero-title-l2">
+            {content.headlineLead}{' '}
+            <span className="hero-title-accent">{content.headlineAccent}</span>
+          </span>
         </h1>
 
         <div className="hero-foot">
