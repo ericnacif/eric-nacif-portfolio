@@ -1,5 +1,5 @@
 /* =========================================
-   PRELOADER — CLEAN, MELHORADO
+   PRELOADER — MINIMAL, ESTILO APPLE
    ========================================= */
 
 .preloader-overlay {
@@ -13,159 +13,47 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    will-change: transform;
-    overflow: hidden;
+    will-change: opacity;
 }
 
-/* Blobs acolhedores no fundo */
-.preloader-overlay::before,
-.preloader-overlay::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    pointer-events: none;
-}
-
-.preloader-overlay::before {
-    width: min(50vw, 540px);
-    height: min(50vw, 540px);
-    top: -10%;
-    left: -8%;
-    background: radial-gradient(circle, rgba(var(--accent-rgb), 0.34), transparent 70%);
-    animation: preBlob1 14s ease-in-out infinite;
-}
-
-.preloader-overlay::after {
-    width: min(46vw, 500px);
-    height: min(46vw, 500px);
-    bottom: -12%;
-    right: -8%;
-    background: radial-gradient(circle, rgba(255, 176, 120, 0.3), transparent 70%);
-    animation: preBlob2 18s ease-in-out infinite;
-}
-
-@keyframes preBlob1 {
-
-    0%,
-    100% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    50% {
-        transform: translate(36px, 26px) scale(1.1);
-    }
-}
-
-@keyframes preBlob2 {
-
-    0%,
-    100% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    50% {
-        transform: translate(-32px, -22px) scale(1.12);
-    }
-}
-
-/* Linha de progresso no topo */
-.preloader-progress {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 2px;
-    width: 100%;
-    background: linear-gradient(90deg, var(--accent-soft), var(--accent-color));
-    transform-origin: left center;
-    transform: scaleX(0);
-    z-index: 3;
-}
-
-/* Conteúdo central */
 .preloader-content {
-    position: relative;
-    z-index: 2;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 200px;
-}
-
-/* Texto */
-.preloader-text {
-    font-family: var(--font-display);
-    font-size: clamp(56px, 11vw, 112px);
-    font-weight: 700;
-    color: var(--text-color);
-    margin: 0;
-    display: flex;
-    align-items: flex-end;
-    gap: 4px;
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-}
-
-.preloader-dot {
-    color: var(--accent-color);
-    line-height: 1;
-}
-
-/* Logo */
-.preloader-logo-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 40px;
 }
 
 .preloader-logo {
-    width: 120px;
+    width: 92px;
     height: auto;
     object-fit: contain;
     display: block;
 }
 
-/* Counter canto inferior direito */
-.preloader-counter {
-    position: absolute;
-    bottom: 32px;
-    right: 40px;
-    z-index: 3;
-    font-family: var(--font-ui);
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.22em;
-    color: var(--text-secondary);
-    opacity: 0.4;
+/* Barra fina, estilo boot da Apple */
+.preloader-bar {
+    width: 180px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(11, 16, 32, 0.1);
+    overflow: hidden;
 }
 
-/* =========================================
-   RESPONSIVIDADE
-   ========================================= */
+.preloader-bar-fill {
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--accent-color);
+    transform-origin: left center;
+    transform: scaleX(0);
+}
 
 @media (max-width: 768px) {
-    .preloader-text {
-        font-size: clamp(36px, 12vw, 56px);
-    }
-
     .preloader-logo {
-        width: 110px;
+        width: 80px;
     }
 
-    .preloader-counter {
-        bottom: 24px;
-        right: 24px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .preloader-progress {
-        transition: none;
-    }
-
-    .preloader-overlay::before,
-    .preloader-overlay::after {
-        animation: none;
+    .preloader-bar {
+        width: 160px;
     }
 }
