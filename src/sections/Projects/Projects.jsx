@@ -2,18 +2,18 @@ import React, { useRef, useState } from "react";
 import "./Projects.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiArrowUpRight } from "react-icons/fi";
-import { useLanguage } from "../../hooks/useLanguage";
-import RedirectLoader from "../../components/RedirectLoader/RedirectLoader";
+import { useLanguage } from "@/hooks/useLanguage";
+import RedirectLoader from "@/components/RedirectLoader/RedirectLoader";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, A11y, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import certificafeImg from "../../assets/images/project-certificafe.webp";
-import engelmigImg from "../../assets/images/project-engelmig.png";
-import monacImg from "../../assets/images/project-monac.png";
-import okanImg from "../../assets/images/project-okan.jpg";
-import murkeImg from "../../assets/images/project-murke.png";
+import certificafeImg from "@/assets/images/project-certificafe.webp";
+import engelmigImg from "@/assets/images/project-engelmig.png";
+import monacImg from "@/assets/images/project-monac.png";
+import okanImg from "@/assets/images/project-okan.jpg";
+import murkeImg from "@/assets/images/project-murke.png";
 
 const projectsData = [
   {

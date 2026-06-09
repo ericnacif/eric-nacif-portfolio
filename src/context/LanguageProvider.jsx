@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { LanguageContext } from './LanguageContext';
-import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES, translations } from '../i18n/translations';
+import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES, translations } from '@/i18n/translations';
 
 const STORAGE_KEY = 'portfolio-language';
 

@@ -2,8 +2,8 @@ import React from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
 import './WhatsAppButton.css';
 import { motion } from 'framer-motion';
-import { useLanguage } from '../../hooks/useLanguage';
-import { useBackToTopVisible } from '../../hooks/useBackToTopVisible';
+import { useLanguage } from '@/hooks/useLanguage';
+import { useBackToTopVisible } from '@/hooks/useBackToTopVisible';
 
 const WhatsAppButton = () => {
     const { t } = useLanguage();

@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
+import { fileURLToPath, URL } from 'node:url';
 import react from '@vitejs/plugin-react';
-import svgr from 'vite-plugin-svgr';
 import viteCompression from 'vite-plugin-compression';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
@@ -8,16 +8,17 @@ import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 export default defineConfig({
   plugins: [
     react(),
-    svgr({
-      svgrOptions: {},
-      exportAsDefault: true,
-    }),
     cssInjectedByJsPlugin(),
     viteCompression({
       algorithm: 'brotliCompress',
       ext: '.br',
     }),
   ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
   build: {
     minify: 'terser',
     cssCodeSplit: true, // Garante CSS sob demanda

@@ -1,7 +1,7 @@
 import React from 'react';
 import './About.css';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLanguage } from '../../hooks/useLanguage';
+import { useLanguage } from '@/hooks/useLanguage';
 import {
   SiInstagram, SiGithub, SiLinkedin, SiGmail,
   SiPhp, SiLaravel, SiJavascript, SiReact, SiTypescript,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './BackToTop.css';
-import { useBackToTopVisible } from '../hooks/useBackToTopVisible';
+import { useBackToTopVisible } from '@/hooks/useBackToTopVisible';
 
 const BackToTop = () => {
   const isVisible = useBackToTopVisible();

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Footer.css';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLanguage } from '../../hooks/useLanguage';
-import { translations } from '../../i18n/translations';
+import { useLanguage } from '@/hooks/useLanguage';
+import { translations } from '@/i18n/translations';
 import { SiLinkedin, SiInstagram, SiGithub } from 'react-icons/si';
 import { FiLoader, FiCheck, FiMapPin, FiArrowUpRight } from 'react-icons/fi';
 

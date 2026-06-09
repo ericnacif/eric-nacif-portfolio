@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useLanguage } from '../../hooks/useLanguage';
+import { useLanguage } from '@/hooks/useLanguage';
 
 // Importe seus currículos
-import cvPt from '../../assets/docs/cv-pt.pdf';
-import cvEn from '../../assets/docs/cv-en.pdf';
+import cvPt from '@/assets/docs/cv-pt.pdf';
+import cvEn from '@/assets/docs/cv-en.pdf';
 
 const PrintRedirect = () => {
     const { language } = useLanguage();

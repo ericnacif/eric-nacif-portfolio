@@ -3,10 +3,10 @@ import "./Header.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaDownload, FaTimes } from "react-icons/fa";
 
-import cvPt from "../../assets/docs/cv-pt.pdf";
-import cvEn from "../../assets/docs/cv-en.pdf";
+import cvPt from "@/assets/docs/cv-pt.pdf";
+import cvEn from "@/assets/docs/cv-en.pdf";
 
-import { useLanguage } from "../../hooks/useLanguage";
+import { useLanguage } from "@/hooks/useLanguage";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
