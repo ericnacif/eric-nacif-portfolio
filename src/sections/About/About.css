@@ -3,7 +3,7 @@
    ========================================= */
 
 .about-section {
-    padding: clamp(96px, 12vw, 160px) 0 clamp(72px, 8vw, 120px);
+    padding: clamp(56px, 6vw, 96px) 0 clamp(72px, 8vw, 120px);
 }
 
 .about-container {

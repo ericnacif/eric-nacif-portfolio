@@ -4,14 +4,13 @@
 
 .hero-section {
     position: relative;
-    min-height: 100vh;
-    min-height: 100dvh;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    padding: 120px 20px 96px;
+    padding: clamp(150px, 22vh, 240px) 20px clamp(96px, 12vh, 150px);
 }
 
 /* ── Fundo: brilho suave estático ── */
