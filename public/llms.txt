@@ -1,0 +1,42 @@
+# Eric Nacif
+
+> Desenvolvedor Full Stack em Manhuaçu (MG), Brasil. Criação de sites profissionais, landing pages e sistemas web sob medida, com foco em performance, SEO e conversão. Atendimento remoto para todo o Brasil.
+
+## Sobre
+
+Eric Nacif é desenvolvedor Full Stack baseado em Manhuaçu, Minas Gerais. Ajuda pessoas e empresas a criar interfaces, sistemas e presenças digitais com estética e foco em resultado.
+
+## Serviços
+
+- Criação de sites profissionais e institucionais
+- Landing pages de alta conversão
+- Sistemas web e plataformas sob medida
+- Manutenção e evolução de aplicações existentes
+- Otimização de performance e SEO técnico
+
+## Tecnologias
+
+PHP, Laravel, React, React Native, Node.js, JavaScript, SQL, MongoDB.
+
+## Projetos
+
+- OKAN Contabilidade (https://okancontabilidade.com): site institucional para escritório de contabilidade, com foco em autoridade e captação de clientes.
+- Murke (https://murke.netlify.app): identidade visual e presença digital para estúdio criativo.
+- MONAC Sistemas (https://monacsistemas.netlify.app): plataforma de gestão empresarial e emissão fiscal, com integração via API REST.
+- Certificafé (https://certificafe.com.br): sistema corporativo de certificação de café, manutenção de aplicação Laravel.
+- Engelmig Energia (https://www.engelmig.com.br): portal corporativo do setor de energia, com otimização de SEO on-page.
+
+## Perguntas frequentes
+
+- Quem é Eric Nacif? Desenvolvedor Full Stack em Manhuaçu (MG), especializado em criação de sites, landing pages e sistemas web sob medida.
+- Quais serviços oferece? Criação de sites, landing pages, sistemas web personalizados, manutenção de aplicações e otimização de performance/SEO.
+- Quais tecnologias usa? Principalmente PHP, Laravel, React, React Native, Node.js, JavaScript, SQL e MongoDB.
+- Atende clientes de outras cidades? Sim, atendimento remoto para todo o Brasil, com base em Manhuaçu e região (MG).
+
+## Contato
+
+- Site: https://ericnacif.dev
+- E-mail: naciferic7@gmail.com
+- LinkedIn: https://www.linkedin.com/in/eric-nacif-956930324/
+- GitHub: https://github.com/ericnacif
+- Instagram: https://www.instagram.com/nacif_/

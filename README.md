@@ -23,11 +23,12 @@ Portfólio desenvolvido com foco em **performance**, **SEO técnico** e **experi
 
 ### 🔍 SEO técnico
 
-- **Dados estruturados (JSON-LD):** Schema.org `Person` para o Google Knowledge Graph.
+- **Prerender no build:** a home é renderizada e salva como HTML estático, entregando o conteúdo completo sem depender de JS (ótimo para SEO e crawlers de IA).
+- **Dados estruturados (JSON-LD):** `Person`, `ProfessionalService` e `WebSite`.
 - **Sitemap.xml & robots.txt** configurados.
-- **Meta tags:** Open Graph (Facebook/LinkedIn) e Twitter Cards.
+- **Meta tags:** Open Graph, Twitter Cards e SEO local (`geo.*`).
 - **Canonical URL** para evitar conteúdo duplicado.
-- **Conteúdo em `<noscript>`** para crawlers sem execução de JS.
+- **`llms.txt`** e conteúdo em `<noscript>` para crawlers e motores de IA.
 
 ### 🌐 Internacionalização (i18n)
 
@@ -76,10 +77,13 @@ npm run dev
 | Script | Descrição |
 |--------|-----------|
 | `npm run dev` | Servidor de desenvolvimento (Vite) |
-| `npm run build` | Build de produção |
+| `npm run build` | Build de produção **com prerender** (gera `dist/index.html` já com o HTML renderizado) |
+| `npm run build:spa` | Build de produção sem prerender (fallback) |
 | `npm run preview` | Pré-visualização do build |
 | `npm run lint` | Análise estática com ESLint |
 | `npm run optimize:images` | Converte imagens para `.webp` |
+
+> O `build` roda o Vite e, em seguida, `scripts/prerender.mjs`: sobe o preview, abre a home num Chromium headless (Puppeteer) e salva o HTML já renderizado. Isso entrega o conteúdo completo no HTML para mecanismos de busca e crawlers de IA, sem depender de execução de JavaScript. O Chromium é baixado para `node_modules/.cache/puppeteer` (ver `.puppeteerrc.cjs`).
 
 ### Variáveis de ambiente
 
