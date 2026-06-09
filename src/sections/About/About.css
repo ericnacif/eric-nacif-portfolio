@@ -92,69 +92,86 @@
     padding-top: 8px;
 }
 
-/* ── Textos ── */
-.intro-text {
-    font-size: clamp(28px, 3.6vw, 48px);
-    font-weight: 600;
+/* ── Textos enxutos ── */
+.about-punchline {
+    font-size: clamp(22px, 2.8vw, 32px);
+    font-weight: 500;
     color: var(--text-color);
-    line-height: 1.18;
+    line-height: 1.35;
     margin-bottom: 28px;
     font-family: var(--font-display);
-    letter-spacing: -0.025em;
+    letter-spacing: -0.03em;
+    max-width: 28ch;
 }
 
-.detail-text {
-    font-size: clamp(16px, 1.5vw, 19px);
-    line-height: 1.85;
+.about-highlights {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 0;
+    margin: 0;
+}
+
+.about-highlight-item {
+    position: relative;
+    padding-left: 20px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
     color: var(--text-secondary);
-    max-width: 620px;
+    letter-spacing: -0.01em;
+}
+
+.about-highlight-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    opacity: 0.7;
 }
 
 /* ── Tech Stack ── */
 .about-stack {
-    margin-bottom: 48px;
+    padding-top: clamp(40px, 5vw, 64px);
+    border-top: 1px solid var(--border-color);
 }
 
 .tech-stack-title {
     font-family: var(--font-ui);
-    font-size: 11px;
-    font-weight: 800;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.28em;
-    margin-bottom: 24px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: none;
+    letter-spacing: 0.01em;
+    margin-bottom: 28px;
     text-align: left;
-    opacity: 0.78;
 }
 
 .about-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
 }
 
 .about-chip {
     display: inline-flex;
     align-items: center;
-    gap: 9px;
-    padding: 10px 15px;
-    border-radius: 999px;
+    gap: 11px;
+    padding: 14px 16px;
+    border-radius: 14px;
     border: 1px solid var(--border-color);
-    background: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.55);
     cursor: default;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-    will-change: transform;
-}
-
-.about-chip:hover {
-    border-color: rgba(var(--accent-rgb), 0.35);
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 16px 30px rgba(20, 40, 120, 0.1);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.25s ease;
 }
 
 .about-chip-icon {
-    font-size: 16px;
+    font-size: 18px;
     color: var(--accent-color);
     display: flex;
     align-items: center;
@@ -162,31 +179,21 @@
 
 .about-chip-name {
     font-family: var(--font-ui);
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
     color: var(--text-color);
     white-space: nowrap;
 }
 
-/* ── Footer ── */
-.about-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 32px;
-    padding-top: 32px;
-    border-top: 1px solid var(--border-color);
-    flex-wrap: wrap;
-}
-
-.cta-text {
-    font-family: var(--font-display);
-    font-size: clamp(26px, 3.4vw, 46px);
-    color: var(--accent-color);
-    font-weight: 600;
-    font-style: normal;
-    text-transform: none;
-    letter-spacing: -0.025em;
+/* Hover rico só no desktop com mouse */
+@media (min-width: 981px) and (pointer: fine) {
+    .about-chip:hover {
+        border-color: rgba(var(--accent-rgb), 0.35);
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 16px 30px rgba(20, 40, 120, 0.1);
+        transform: translateY(-3px);
+    }
 }
 
 /* ── Eyebrow + header de seção ── */

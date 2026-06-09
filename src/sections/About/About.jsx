@@ -1,22 +1,20 @@
 import React from 'react';
 import './About.css';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/hooks/useLanguage';
+import { useReveal } from '@/hooks/useReveal';
 import {
   SiInstagram, SiGithub, SiLinkedin, SiGmail,
   SiPhp, SiLaravel, SiJavascript, SiReact, SiTypescript,
   SiNodedotjs, SiDocker, SiMysql, SiGit, SiTailwindcss,
-  SiMongodb, SiNextdotjs, SiVuedotjs
+  SiMongodb,
 } from 'react-icons/si';
 
 const technologies = [
   { name: 'PHP', icon: <SiPhp /> },
   { name: 'Laravel', icon: <SiLaravel /> },
   { name: 'JavaScript', icon: <SiJavascript /> },
-  { name: 'React / Native', icon: <SiReact /> },
-  { name: 'Next.js', icon: <SiNextdotjs /> },
-  { name: 'Vue.js', icon: <SiVuedotjs /> },
   { name: 'TypeScript', icon: <SiTypescript /> },
+  { name: 'React / Native', icon: <SiReact /> },
   { name: 'Node.js', icon: <SiNodedotjs /> },
   { name: 'MongoDB', icon: <SiMongodb /> },
   { name: 'SQL', icon: <SiMysql /> },
@@ -35,77 +33,20 @@ const socialLinks = [
 const About = () => {
   const { language, t } = useLanguage();
   const content = t.about;
-  const logoSrc = '/logo-blue.webp';
-
-  const fadeUp = {
-    hidden: { opacity: 0, y: 24 },
-    visible: (i = 0) => ({
-      opacity: 1, y: 0,
-      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.08 },
-    }),
-  };
-
-  const chipVariants = {
-    hidden: { opacity: 0, scale: 0.92 },
-    visible: (i) => ({
-      opacity: 1, scale: 1,
-      transition: { duration: 0.3, delay: i * 0.04 },
-    }),
-  };
+  const revealRef = useReveal();
 
   return (
-    <section id="sobre" className="about-section">
+    <section id="sobre" className="about-section" ref={revealRef}>
       <div className="container about-container">
 
-        {/* Eyebrow + Título */}
-        <motion.div
-          className="section-header"
-          variants={fadeUp}
-          custom={0}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.6 }}
-        >
-          <AnimatePresence mode="wait">
-            <motion.span
-              className="section-eyebrow"
-              key={language}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              {content.eyebrow}
-            </motion.span>
-          </AnimatePresence>
-          <AnimatePresence mode="wait">
-            <motion.h2
-              className="section-title"
-              key={`title-${language}`}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.22 }}
-            >
-              {content.title}
-            </motion.h2>
-          </AnimatePresence>
-        </motion.div>
+        <div className="section-header" data-reveal>
+          <h2 className="section-title">{content.title}</h2>
+        </div>
 
-        {/* Layout duas colunas */}
         <div className="about-body">
-
-          {/* Coluna esquerda — logo + socials */}
-          <motion.div
-            className="about-col-left"
-            variants={fadeUp}
-            custom={1}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-          >
+          <div className="about-col-left" data-reveal>
             <div className="about-logo-card">
-              <img src={logoSrc} alt="Eric Nacif Logo" className="about-logo" />
+              <img src="/logo-blue.webp" alt="Eric Nacif Logo" className="about-logo" width="180" height="180" loading="lazy" />
             </div>
 
             <div className="about-socials">
@@ -122,88 +63,30 @@ const About = () => {
                 </a>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          {/* Coluna direita — texto */}
-          <div className="about-col-right">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={language}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-              >
-                <p className="intro-text">{content.paragraph1}</p>
-                <p className="detail-text">{content.paragraph2}</p>
-              </motion.div>
-            </AnimatePresence>
+          <div className="about-col-right" data-reveal key={language}>
+            <p className="about-punchline">{content.punchline}</p>
+            <ul className="about-highlights">
+              {content.highlights.map((item) => (
+                <li key={item} className="about-highlight-item">{item}</li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* Tech stack */}
-        <motion.div
-          className="about-stack"
-          variants={fadeUp}
-          custom={2}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <AnimatePresence mode="wait">
-            <motion.h3
-              className="tech-stack-title"
-              key={language}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-            >
-              {content.techTitle}
-            </motion.h3>
-          </AnimatePresence>
+        <div className="about-stack" data-reveal>
+          <h3 className="tech-stack-title">{content.techTitle}</h3>
 
           <div className="about-chips">
-            {technologies.map((tech, i) => (
-              <motion.div
-                key={tech.name}
-                className="about-chip"
-                variants={chipVariants}
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.1 }}
-                whileHover={{ y: -3, transition: { duration: 0.18 } }}
-              >
+            {technologies.map((tech) => (
+              <div key={tech.name} className="about-chip">
                 <span className="about-chip-icon">{tech.icon}</span>
                 <span className="about-chip-name">{tech.name}</span>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
-
-        {/* Footer CTA */}
-        <motion.div
-          className="about-footer"
-          variants={fadeUp}
-          custom={3}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-        >
-          <AnimatePresence mode="wait">
-            <motion.span
-              className="cta-text"
-              key={language}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-            >
-              {content.cta}
-            </motion.span>
-          </AnimatePresence>
-        </motion.div>
+        </div>
 
       </div>
     </section>

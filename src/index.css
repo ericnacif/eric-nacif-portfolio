@@ -15,9 +15,9 @@
   --accent-rgb: 59, 91, 255;
   --accent-soft: #c8d4ff;
   --deep-color: #0b1020;
-  --font-main: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-display: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-ui: "Manrope", system-ui, sans-serif;
+  --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -82,12 +82,12 @@ h4,
 h5,
 h6 {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 500;
   color: inherit;
   overflow-wrap: normal;
   word-break: keep-all;
   hyphens: none;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
 
 .container {
@@ -99,10 +99,10 @@ h6 {
 .section-title {
   display: inline-block;
   font-size: clamp(40px, 6.4vw, 84px);
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 64px;
   position: relative;
-  line-height: 1.0;
+  line-height: 1.05;
 }
 
 .section-title::after {
@@ -185,7 +185,36 @@ html {
 }
 
 /* =========================================
-   6. PERFORMANCE (LCP)
+   6. SCROLL REVEAL (CSS, sem JS pesado)
+   ========================================= */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (min-width: 981px) and (pointer: fine) {
+  [data-reveal] {
+    transform: translateY(22px);
+    transition-duration: 0.65s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* =========================================
+   7. PERFORMANCE (LCP)
    ========================================= */
 section:not(.hero-section) {
   content-visibility: auto;

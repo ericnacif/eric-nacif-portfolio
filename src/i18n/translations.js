@@ -19,8 +19,13 @@ export const translations = {
     about: {
       eyebrow: '01 — Sobre',
       title: 'Sobre Mim',
-      paragraph1: 'Desenvolvedor Full Stack com sólida expertise em PHP, Laravel e JavaScript, especializado em arquiteturas web escaláveis e aplicações móveis com React Native.',
-      paragraph2: 'Possuo forte proficiência em gestão de dados (SQL e MongoDB) e foco em boas práticas de código para entregar soluções robustas em projetos desafiadores.',
+      punchline: 'Crio interfaces e sistemas que funcionam — com estética e resultado.',
+      highlights: [
+        'Full Stack: PHP, Laravel, React & Node',
+        'Interfaces rápidas e responsivas',
+        'Dados: SQL, MongoDB & arquitetura escalável',
+        'Código limpo e entrega consistente',
+      ],
       cta: 'Vamos construir algo juntos?',
       techTitle: 'Minha Tech Stack',
     },
@@ -74,8 +79,13 @@ export const translations = {
     about: {
       eyebrow: '01 — About',
       title: 'About Me',
-      paragraph1: 'Full Stack Developer with solid expertise in PHP, Laravel, and JavaScript, specializing in scalable web architectures and mobile applications with React Native.',
-      paragraph2: 'Strong proficiency in data management (SQL and MongoDB) and code best practices to deliver robust solutions in challenging projects.',
+      punchline: 'I build interfaces and systems that work — with aesthetics and results.',
+      highlights: [
+        'Full Stack: PHP, Laravel, React & Node',
+        'Fast, responsive interfaces',
+        'Data: SQL, MongoDB & scalable architecture',
+        'Clean code and consistent delivery',
+      ],
       cta: "Let's build something together?",
       techTitle: 'My Tech Stack',
     },
@@ -129,8 +139,13 @@ export const translations = {
     about: {
       eyebrow: '01 — Sobre',
       title: 'Sobre Mí',
-      paragraph1: 'Desarrollador Full Stack con sólida experiencia en PHP, Laravel y JavaScript, especializado en arquitecturas web escalables y aplicaciones móviles con React Native.',
-      paragraph2: 'Tengo una fuerte competencia en gestión de datos (SQL y MongoDB) y me enfoco en las mejores prácticas para entregar soluciones robustas.',
+      punchline: 'Creo interfaces y sistemas que funcionan — con estética y resultados.',
+      highlights: [
+        'Full Stack: PHP, Laravel, React & Node',
+        'Interfaces rápidas y responsivas',
+        'Datos: SQL, MongoDB y arquitectura escalable',
+        'Código limpio y entrega consistente',
+      ],
       cta: '¿Construimos algo juntos?',
       techTitle: 'Mi Tech Stack',
     },

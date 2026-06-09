@@ -4,16 +4,56 @@
 <head>
   <meta charset="UTF-8" />
 
-  <!-- Preconnects -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="/favicon.webp" />
 
   <!-- Viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0a192f" />
+
+  <!-- Boot screen (pinta instantaneamente, antes do JS) -->
+  <style>
+    .app-boot {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      background: #f6f8fc;
+      z-index: 99999;
+    }
+    .app-boot img { width: 92px; height: auto; }
+    .app-boot .app-boot-bar {
+      position: relative;
+      width: 180px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(11, 16, 32, 0.1);
+      overflow: hidden;
+    }
+    .app-boot .app-boot-bar::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 40%;
+      border-radius: 999px;
+      background: #3b5bff;
+      animation: appBootSlide 1s ease-in-out infinite;
+    }
+    @keyframes appBootSlide {
+      0% { transform: translateX(-120%); }
+      100% { transform: translateX(320%); }
+    }
+    @media (max-width: 768px) {
+      .app-boot img { width: 80px; }
+      .app-boot .app-boot-bar { width: 160px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .app-boot .app-boot-bar::after { animation: none; width: 100%; }
+    }
+  </style>
 
   <!-- 🔥 TITLE OTIMIZADO -->
   <title>Desenvolvedor Full Stack em Manhuaçu | Criação de Sites Profissionais – Eric Nacif</title>
@@ -23,14 +63,6 @@
 
   <!-- Preload -->
   <link rel="preload" as="image" href="/logo-blue.webp" fetchpriority="high">
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"
-    media="print" onload="this.media='all'">
-  <noscript>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet">
-  </noscript>
 
   <!-- 🔥 META DESCRIPTION MELHORADA -->
   <meta name="description"
@@ -103,7 +135,12 @@
 </head>
 
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <div class="app-boot">
+      <img src="/logo-blue.webp" alt="Eric Nacif" width="92" height="92" fetchpriority="high" />
+      <div class="app-boot-bar"></div>
+    </div>
+  </div>
   <script type="module" src="/src/main.jsx"></script>
 </body>
 

@@ -9,7 +9,9 @@
     right: 0;
     height: 1px;
     background: linear-gradient(90deg, var(--accent-soft), var(--accent-color));
+    transform: scaleX(0);
     transform-origin: 0%;
+    will-change: transform;
     z-index: 99999;
     pointer-events: none;
 }

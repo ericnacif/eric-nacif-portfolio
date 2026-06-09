@@ -10,10 +10,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import certificafeImg from "@/assets/images/project-certificafe.webp";
-import engelmigImg from "@/assets/images/project-engelmig.png";
-import monacImg from "@/assets/images/project-monac.png";
-import okanImg from "@/assets/images/project-okan.jpg";
-import murkeImg from "@/assets/images/project-murke.png";
+import engelmigImg from "@/assets/images/project-engelmig.webp";
+import monacImg from "@/assets/images/project-monac.webp";
+import okanImg from "@/assets/images/project-okan.webp";
+import murkeImg from "@/assets/images/project-murke.webp";
 
 const projectsData = [
   {
@@ -186,7 +186,6 @@ const Projects = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="projects-header-text">
-              <span className="projects-eyebrow">{content.eyebrow}</span>
               <AnimatePresence mode="wait">
                 <motion.h2
                   className="projects-title"
