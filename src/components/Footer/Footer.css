@@ -358,7 +358,7 @@
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    transition: background-position 1s var(--ease-out), letter-spacing 0.5s var(--ease-out);
+    transition: background-position 3.4s var(--ease-out), letter-spacing 1.2s var(--ease-out);
 }
 
 .footer-wordmark-logo {
