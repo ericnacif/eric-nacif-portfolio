@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
@@ -8,6 +8,21 @@ import { useLanguage } from '@/hooks/useLanguage';
 const NotFound = () => {
     const { t } = useLanguage();
     const content = t.notFound;
+
+    useEffect(() => {
+        const prevTitle = document.title;
+        document.title = '404 | Eric Nacif';
+
+        const meta = document.createElement('meta');
+        meta.name = 'robots';
+        meta.content = 'noindex, follow';
+        document.head.appendChild(meta);
+
+        return () => {
+            document.title = prevTitle;
+            document.head.removeChild(meta);
+        };
+    }, []);
 
     return (
         <section className="not-found-section">

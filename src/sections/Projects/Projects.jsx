@@ -1,9 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import "./Projects.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiArrowUpRight } from "react-icons/fi";
 import { useLanguage } from "@/hooks/useLanguage";
-import RedirectLoader from "@/components/RedirectLoader/RedirectLoader";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, A11y, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -25,17 +24,17 @@ const projectsData = [
       pt: {
         title: "OKAN Contabilidade",
         description:
-          "Site institucional moderno com design profissional, foco em conversão e performance otimizada.",
+          "Site institucional para escritório de contabilidade. Estruturei a comunicação para transmitir autoridade e captar clientes, com navegação clara e carregamento rápido em qualquer dispositivo.",
       },
       en: {
         title: "OKAN Contabilidade",
         description:
-          "Modern institutional website with professional design, focused on conversion and optimized performance.",
+          "Institutional website for an accounting firm. I structured the messaging to convey authority and attract clients, with clear navigation and fast loading on any device.",
       },
       es: {
         title: "OKAN Contabilidade",
         description:
-          "Sitio institucional moderno con diseño profesional, enfocado en conversión y rendimiento optimizado.",
+          "Sitio institucional para un despacho contable. Estructuré la comunicación para transmitir autoridad y captar clientes, con navegación clara y carga rápida en cualquier dispositivo.",
       },
     },
   },
@@ -48,17 +47,17 @@ const projectsData = [
       pt: {
         title: "Murke",
         description:
-          "Projeto de branding e presença digital para estúdio criativo. Identidade visual autoral com direção estética marcante e interface orientada a conceito.",
+          "Identidade visual e presença digital para estúdio criativo. Direção estética autoral com interface conceitual e animações que reforçam a marca em cada interação.",
       },
       en: {
         title: "Murke",
         description:
-          "Branding and digital presence project for a creative studio. Authorial visual identity with bold aesthetic direction and concept-driven interface.",
+          "Visual identity and digital presence for a creative studio. Authorial aesthetic direction with a concept-driven interface and animations that reinforce the brand at every interaction.",
       },
       es: {
         title: "Murke",
         description:
-          "Proyecto de branding y presencia digital para estudio creativo. Identidad visual autoral con fuerte dirección estética e interfaz conceptual.",
+          "Identidad visual y presencia digital para un estudio creativo. Dirección estética autoral con interfaz conceptual y animaciones que refuerzan la marca en cada interacción.",
       },
     },
   },
@@ -71,17 +70,17 @@ const projectsData = [
       pt: {
         title: "MONAC Sistemas",
         description:
-          "Plataforma SaaS para gestão empresarial e emissão fiscal. Arquitetura escalável com API REST robusta.",
+          "Plataforma de gestão empresarial e emissão fiscal. Desenvolvi a interface e a integração com a API REST, priorizando fluxos claros para as tarefas do dia a dia da operação.",
       },
       en: {
         title: "MONAC Sistemas",
         description:
-          "SaaS platform for business management and tax invoicing. Scalable architecture with robust REST API.",
+          "Business management and tax invoicing platform. I built the interface and the REST API integration, prioritizing clear flows for the team's day-to-day operations.",
       },
       es: {
         title: "MONAC Sistemas",
         description:
-          "Plataforma SaaS para gestión empresarial y emisión fiscal. Arquitectura escalable con API REST robusta.",
+          "Plataforma de gestión empresarial y emisión fiscal. Desarrollé la interfaz y la integración con la API REST, priorizando flujos claros para las tareas diarias de la operación.",
       },
     },
   },
@@ -94,17 +93,17 @@ const projectsData = [
       pt: {
         title: "Certificafé",
         description:
-          "Sistema corporativo para certificação de café. Manutenção de aplicação legacy com foco em estabilidade e performance.",
+          "Sistema corporativo de certificação de café. Assumi a manutenção de uma aplicação legada em Laravel, corrigindo falhas e melhorando a estabilidade sem interromper a operação.",
       },
       en: {
         title: "Certificafé",
         description:
-          "Corporate system for coffee certification. Legacy application maintenance focused on stability and performance.",
+          "Corporate coffee certification system. I took over the maintenance of a legacy Laravel application, fixing bugs and improving stability without disrupting operations.",
       },
       es: {
         title: "Certificafé",
         description:
-          "Sistema corporativo para certificación de café. Mantenimiento de aplicación heredada enfocada en estabilidad.",
+          "Sistema corporativo de certificación de café. Asumí el mantenimiento de una aplicación heredada en Laravel, corrigiendo fallos y mejorando la estabilidad sin interrumpir la operación.",
       },
     },
   },
@@ -117,17 +116,17 @@ const projectsData = [
       pt: {
         title: "Engelmig Energia",
         description:
-          "Portal corporativo do setor energético. Desenvolvimento de páginas institucionais e otimização SEO.",
+          "Portal corporativo do setor de energia. Desenvolvi páginas institucionais e apliquei otimizações de SEO on-page para ampliar a visibilidade da empresa nas buscas.",
       },
       en: {
         title: "Engelmig Energia",
         description:
-          "Energy sector corporate portal. Development of institutional pages and SEO optimization.",
+          "Corporate portal for the energy sector. I developed institutional pages and applied on-page SEO optimizations to increase the company's visibility in search.",
       },
       es: {
         title: "Engelmig Energia",
         description:
-          "Portal corporativo del sector energético. Desarrollo de páginas institucionales y optimización SEO.",
+          "Portal corporativo del sector energético. Desarrollé páginas institucionales y apliqué optimizaciones de SEO on-page para ampliar la visibilidad de la empresa en las búsquedas.",
       },
     },
   },
@@ -136,16 +135,11 @@ const projectsData = [
 const Projects = () => {
   const { language, t } = useLanguage();
   const content = t.projects;
-  const [isRedirecting, setIsRedirecting] = useState(false);
   const swiperRef = useRef(null);
 
   const handleProjectClick = (e, url) => {
     e.preventDefault();
-    setIsRedirecting(true);
-    setTimeout(() => {
-      window.open(url, "_blank", "noopener,noreferrer");
-      setIsRedirecting(false);
-    }, 1800);
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   const goNext = () => swiperRef.current?.swiper?.slideNext();
@@ -153,14 +147,6 @@ const Projects = () => {
 
   return (
     <>
-      <AnimatePresence>
-        {isRedirecting && (
-          <RedirectLoader
-            text={content.redirecting}
-          />
-        )}
-      </AnimatePresence>
-
       <section id="projetos" className="projects-section">
         <div className="custom-shape-divider-top">
           <svg

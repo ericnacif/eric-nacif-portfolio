@@ -4,6 +4,10 @@ export const SUPPORTED_LANGUAGES = ['pt', 'en', 'es'];
 
 export const translations = {
   pt: {
+    seo: {
+      title: 'Eric Nacif | Desenvolvedor Full Stack em Manhuaçu',
+      description: 'Desenvolvedor Full Stack em Manhuaçu (MG). Criação de sites profissionais, landing pages e sistemas web sob medida, com foco em performance, SEO e conversão. Peça seu orçamento.',
+    },
     nav: { projects: 'Projetos', about: 'Sobre', contact: 'Contato' },
     hero: {
       available: 'Disponível para projetos',
@@ -33,7 +37,6 @@ export const translations = {
     projects: {
       eyebrow: '02 — Projetos',
       title: 'Projetos em Destaque',
-      redirecting: 'Redirecionando...',
       previous: 'Anterior',
       next: 'Próximo',
       viewProject: 'Ver projeto',
@@ -74,6 +77,10 @@ export const translations = {
     },
   },
   en: {
+    seo: {
+      title: 'Eric Nacif | Full Stack Developer & Web Development',
+      description: 'Full Stack Developer specialized in professional websites, landing pages and custom web systems, with a focus on performance, SEO and conversion. Get in touch.',
+    },
     nav: { projects: 'Projects', about: 'About', contact: 'Contact' },
     hero: {
       available: 'Available for projects',
@@ -103,7 +110,6 @@ export const translations = {
     projects: {
       eyebrow: '02 — Projects',
       title: 'Featured Projects',
-      redirecting: 'Redirecting...',
       previous: 'Previous',
       next: 'Next',
       viewProject: 'View project',
@@ -144,6 +150,10 @@ export const translations = {
     },
   },
   es: {
+    seo: {
+      title: 'Eric Nacif | Desarrollador Full Stack y Creación de Sitios',
+      description: 'Desarrollador Full Stack especializado en sitios profesionales, landing pages y sistemas web a medida, con foco en rendimiento, SEO y conversión. Pide tu presupuesto.',
+    },
     nav: { projects: 'Proyectos', about: 'Sobre mí', contact: 'Contacto' },
     hero: {
       available: 'Disponible para proyectos',
@@ -173,7 +183,6 @@ export const translations = {
     projects: {
       eyebrow: '02 — Proyectos',
       title: 'Proyectos Destacados',
-      redirecting: 'Redireccionando...',
       previous: 'Anterior',
       next: 'Próximo',
       viewProject: 'Ver proyecto',

@@ -7,6 +7,8 @@ import Hero from '@/sections/Hero/Hero';
 import ScrollProgress from '@/components/ScrollProgress/ScrollProgress';
 import EasterEgg from '@/components/EasterEgg/EasterEgg';
 import PrintRedirect from '@/components/PrintRedirect/PrintRedirect';
+import Analytics from '@/components/Analytics/Analytics';
+import Seo from '@/components/Seo/Seo';
 
 const About = React.lazy(() => import('@/sections/About/About'));
 const Projects = React.lazy(() => import('@/sections/Projects/Projects'));
@@ -44,6 +46,8 @@ function App() {
 
   return (
     <Router>
+      <Analytics />
+      <Seo />
       <ScrollProgress />
       <EasterEgg />
       <PrintRedirect />
