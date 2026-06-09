@@ -17,22 +17,35 @@ const Hero = () => {
       <div className="hero-bg" aria-hidden="true" />
 
       <div className="hero-inner">
+        <div className="hero-meta" key={`meta-${language}`}>
+          <span className="hero-meta-item">{content.metaRole}</span>
+          <span className="hero-meta-sep" aria-hidden="true" />
+          <span className="hero-meta-item">{t.footer.location}</span>
+          <span className="hero-meta-sep" aria-hidden="true" />
+          <span className="hero-meta-item hero-meta-status">
+            <span className="hero-status-dot" aria-hidden="true" />
+            {content.available}
+          </span>
+        </div>
+
         <h1 className="hero-title" key={`title-${language}`}>
           {content.headline}{' '}
           <span className="hero-title-accent">{content.headlineAccent}</span>
         </h1>
 
-        <p className="hero-sub hero-reveal hero-reveal--1" key={`sub-${language}`}>
-          {content.sub}
-        </p>
+        <div className="hero-foot">
+          <p className="hero-sub hero-reveal hero-reveal--1" key={`sub-${language}`}>
+            {content.sub}
+          </p>
 
-        <div className="hero-ctas hero-reveal hero-reveal--2" key={`ctas-${language}`}>
-          <button className="hero-cta hero-cta--primary" onClick={() => handleScroll('projetos')}>
-            {content.cta1}
-          </button>
-          <button className="hero-cta hero-cta--secondary" onClick={() => handleScroll('contato')}>
-            {content.cta2}
-          </button>
+          <div className="hero-ctas hero-reveal hero-reveal--2" key={`ctas-${language}`}>
+            <button className="hero-cta hero-cta--primary" onClick={() => handleScroll('projetos')}>
+              {content.cta1}
+            </button>
+            <button className="hero-cta hero-cta--secondary" onClick={() => handleScroll('contato')}>
+              {content.cta2}
+            </button>
+          </div>
         </div>
       </div>
     </section>

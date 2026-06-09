@@ -13,7 +13,12 @@ export const useBackToTopVisible = (threshold = 600) => {
 
   useEffect(() => {
     const onScroll = () => {
-      const nextVisibility = window.scrollY > threshold;
+      const footer = document.getElementById('contato');
+      const footerVisible = footer
+        ? footer.getBoundingClientRect().top < window.innerHeight
+        : false;
+
+      const nextVisibility = window.scrollY > threshold && !footerVisible;
 
       if (nextVisibility !== currentVisibility) {
         currentVisibility = nextVisibility;

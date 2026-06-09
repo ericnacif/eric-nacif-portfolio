@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/hooks/useLanguage';
 import { translations } from '@/i18n/translations';
 import { SiLinkedin, SiInstagram, SiGithub } from 'react-icons/si';
-import { FiLoader, FiCheck, FiMapPin, FiArrowUpRight } from 'react-icons/fi';
+import { FiLoader, FiCheck, FiMapPin, FiArrowUpRight, FiArrowUp } from 'react-icons/fi';
 
 const Footer = () => {
   const { language, t } = useLanguage();
@@ -78,11 +78,28 @@ const Footer = () => {
     } catch { setStatus('error'); setTimeout(() => setStatus('idle'), 3000); }
   };
 
+  const emailAddress = 'naciferic7@gmail.com';
+
   const socialLinks = [
     { href: 'https://www.linkedin.com/in/eric-nacif-956930324/', icon: <SiLinkedin />, label: 'LinkedIn' },
     { href: 'https://github.com/ericnacif', icon: <SiGithub />, label: 'GitHub' },
     { href: 'https://www.instagram.com/nacif_/', icon: <SiInstagram />, label: 'Instagram' },
   ];
+
+  const navLinks = [
+    { id: 'sobre', label: t.nav.about },
+    { id: 'projetos', label: t.nav.projects },
+    { id: 'contato', label: t.nav.contact },
+  ];
+
+  const handleNav = (e, id) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (!el) return;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 80, behavior: 'smooth' });
+  };
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   const isDisabled = status === 'sending' || status === 'success';
   const fadeVariants = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } };
@@ -91,69 +108,56 @@ const Footer = () => {
     <footer id="contato" className="main-footer">
       <div className="footer-inner">
 
-        <div className="footer-grid">
+        <div className="footer-top">
+          {/* Lead — CTA + colunas de links */}
+          <div className="footer-lead">
+            <motion.div
+              className="footer-cta"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <AnimatePresence mode="wait">
+                <motion.span
+                  className="footer-cta-label"
+                  key={`${language}-${greetingKey}`}
+                  variants={fadeVariants}
+                  initial="initial" animate="animate" exit="exit"
+                  transition={{ duration: 0.2 }}
+                >
+                  {content.letsTalk}
+                </motion.span>
+              </AnimatePresence>
+              <a className="footer-email" href={`mailto:${emailAddress}`}>
+                {emailAddress}
+                <FiArrowUpRight className="footer-email-arrow" />
+              </a>
+            </motion.div>
 
-          {/* Coluna esquerda — intro + contato */}
-          <motion.div
-            className="footer-intro"
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <AnimatePresence mode="wait">
-              <motion.h2
-                className="footer-greeting"
-                key={`${language}-${greetingKey}`}
-                variants={fadeVariants}
-                initial="initial" animate="animate" exit="exit"
-                transition={{ duration: 0.22 }}
-              >
-                {content.greetings[greetingKey]}
-              </motion.h2>
-            </AnimatePresence>
-            <AnimatePresence mode="wait">
-              <motion.p
-                className="footer-subtitle"
-                key={language}
-                variants={fadeVariants}
-                initial="initial" animate="animate" exit="exit"
-                transition={{ duration: 0.2 }}
-              >
-                {content.subtitle}
-              </motion.p>
-            </AnimatePresence>
+            <div className="footer-cols">
+              <div className="footer-col">
+                <span className="footer-col-title">{content.navTitle}</span>
+                {navLinks.map((link) => (
+                  <a key={link.id} href={`#${link.id}`} onClick={(e) => handleNav(e, link.id)} className="footer-col-link">
+                    {link.label}
+                  </a>
+                ))}
+              </div>
 
-            <div className="footer-brand">
-              <img src={logoSrc} alt="Eric Nacif" className="footer-logo" width="40" height="40" loading="lazy" />
-              <div className="footer-brand-info">
-                <span className="footer-brand-name">Eric Nacif</span>
-                <AnimatePresence mode="wait">
-                  <motion.span className="footer-location" key={language}
-                    variants={fadeVariants} initial="initial" animate="animate" exit="exit"
-                    transition={{ duration: 0.2 }}
-                  >
-                    <FiMapPin size={13} style={{ marginRight: 5 }} />
-                    {content.location}
-                  </motion.span>
-                </AnimatePresence>
+              <div className="footer-col">
+                <span className="footer-col-title">{content.socialTitle}</span>
+                {socialLinks.map((link) => (
+                  <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="footer-col-link">
+                    {link.label}
+                    <FiArrowUpRight className="footer-col-link-arrow" />
+                  </a>
+                ))}
               </div>
             </div>
+          </div>
 
-            <nav className="footer-links" aria-label="Social">
-              {socialLinks.map((link) => (
-                <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer"
-                  className="footer-link"
-                >
-                  <span className="footer-link-icon">{link.icon}</span>
-                  <span className="footer-link-label">{link.label}</span>
-                  <FiArrowUpRight className="footer-link-arrow" />
-                </a>
-              ))}
-            </nav>
-          </motion.div>
-
-          {/* Coluna direita — formulário */}
+          {/* Formulário enxuto */}
           <motion.form
             className="contact-form"
             onSubmit={handleSubmit}
@@ -162,45 +166,47 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
           >
-            <div className="form-field">
-              <label htmlFor="name">{content.labels.name}</label>
-              <input
-                type="text" name="name" id="name"
-                value={name} onChange={(e) => setName(e.target.value)}
-                required disabled={isDisabled}
-              />
-            </div>
+            <div className="form-row">
+              <div className="form-field">
+                <label htmlFor="name">{content.labels.name}</label>
+                <input
+                  type="text" name="name" id="name"
+                  value={name} onChange={(e) => setName(e.target.value)}
+                  required disabled={isDisabled}
+                />
+              </div>
 
-            <div className="form-field" ref={suggestionsRef}>
-              <label htmlFor="email">{content.labels.email}</label>
-              <input
-                type="email" name="email" id="email"
-                value={email} onChange={handleEmailChange}
-                required disabled={isDisabled} autoComplete="off"
-              />
-              <AnimatePresence>
-                {showSuggestions && (
-                  <motion.ul
-                    className="email-suggestions"
-                    initial={{ opacity: 0, y: -4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    {suggestions.map((domain) => (
-                      <li key={domain} onClick={() => handleDomainSelect(domain)}>
-                        <span className="sug-user">{email.split('@')[0]}@</span>
-                        <span className="sug-domain">{domain}</span>
-                      </li>
-                    ))}
-                  </motion.ul>
-                )}
-              </AnimatePresence>
+              <div className="form-field" ref={suggestionsRef}>
+                <label htmlFor="email">{content.labels.email}</label>
+                <input
+                  type="email" name="email" id="email"
+                  value={email} onChange={handleEmailChange}
+                  required disabled={isDisabled} autoComplete="off"
+                />
+                <AnimatePresence>
+                  {showSuggestions && (
+                    <motion.ul
+                      className="email-suggestions"
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      {suggestions.map((domain) => (
+                        <li key={domain} onClick={() => handleDomainSelect(domain)}>
+                          <span className="sug-user">{email.split('@')[0]}@</span>
+                          <span className="sug-domain">{domain}</span>
+                        </li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
 
             <div className="form-field">
               <label htmlFor="message">{content.labels.message}</label>
               <textarea
-                name="message" id="message" rows="3"
+                name="message" id="message" rows="2"
                 value={message} onChange={(e) => setMessage(e.target.value)}
                 required disabled={isDisabled}
               />
@@ -222,14 +228,32 @@ const Footer = () => {
               {status === 'error' && <span>{content.error}</span>}
             </button>
           </motion.form>
-
         </div>
 
-        {/* Copyright */}
-        <div className="footer-copyright">
-          <p>© {new Date().getFullYear()} Eric Nacif. {content.copyright}</p>
-        </div>
+      </div>
 
+      {/* Faixa escura — wordmark + barra inferior */}
+      <div className="footer-dark">
+        <div className="footer-dark-inner">
+          <div className="footer-wordmark" aria-hidden="true">
+            <img src={logoSrc} alt="" className="footer-wordmark-logo" width="48" height="48" loading="lazy" />
+            <span>Eric Nacif</span>
+          </div>
+
+          <div className="footer-bottom">
+            <p className="footer-copy">© {new Date().getFullYear()} Eric Nacif. {content.copyright}</p>
+            <div className="footer-bottom-right">
+              <span className="footer-loc">
+                <FiMapPin size={13} />
+                {content.location}
+              </span>
+              <button type="button" className="footer-top-btn" onClick={scrollToTop}>
+                {content.backToTop}
+                <FiArrowUp />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
   );
