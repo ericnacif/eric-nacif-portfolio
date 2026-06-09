@@ -4,7 +4,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/hooks/useLanguage';
 import { translations } from '@/i18n/translations';
 import { SiLinkedin, SiInstagram, SiGithub } from 'react-icons/si';
-import { FiLoader, FiCheck, FiMapPin, FiArrowUpRight, FiArrowUp } from 'react-icons/fi';
+import {
+  FiLoader, FiCheck, FiMapPin, FiArrowUpRight, FiArrowUp, FiArrowRight,
+  FiMail, FiUser, FiMessageSquare, FiClock, FiLock,
+} from 'react-icons/fi';
+
+const MESSAGE_MAX = 600;
 
 const Footer = () => {
   const { language, t } = useLanguage();
@@ -14,18 +19,13 @@ const Footer = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState('idle');
-  const [greetingKey, setGreetingKey] = useState('morning');
+  const [touched, setTouched] = useState({});
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   const logoSrc = '/logo-blue.webp';
   const suggestionsRef = useRef(null);
   const commonDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'icloud.com', 'yahoo.com'];
-
-  useEffect(() => {
-    const h = new Date().getHours();
-    setGreetingKey(h >= 5 && h < 12 ? 'morning' : h < 18 ? 'afternoon' : 'evening');
-  }, []);
 
   useEffect(() => {
     const isDefault = Object.values(translations).some(({ footer }) => footer.defaultMessage === message) || message === '';
@@ -72,7 +72,7 @@ const Footer = () => {
       });
       if (res.ok) {
         setStatus('success');
-        setName(''); setEmail(''); setMessage(content.defaultMessage);
+        setName(''); setEmail(''); setMessage(content.defaultMessage); setTouched({});
         setTimeout(() => setStatus('idle'), 3500);
       } else { setStatus('error'); setTimeout(() => setStatus('idle'), 3000); }
     } catch { setStatus('error'); setTimeout(() => setStatus('idle'), 3000); }
@@ -102,38 +102,48 @@ const Footer = () => {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   const isDisabled = status === 'sending' || status === 'success';
-  const fadeVariants = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } };
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const markTouched = (field) => setTouched((prev) => ({ ...prev, [field]: true }));
+  const errors = {
+    name: touched.name && !name.trim(),
+    email: touched.email && !emailValid,
+    message: touched.message && !message.trim(),
+  };
+
+  const formContainer = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.09, delayChildren: 0.08 } },
+  };
+  const formItem = {
+    hidden: { opacity: 0, y: 16 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+  };
 
   return (
     <footer id="contato" className="main-footer">
       <div className="footer-inner">
 
         <div className="footer-top">
-          {/* Lead — CTA + colunas de links */}
+          {/* Lead — contexto + colunas de links */}
           <div className="footer-lead">
-            <motion.div
-              className="footer-cta"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <AnimatePresence mode="wait">
-                <motion.span
-                  className="footer-cta-label"
-                  key={`${language}-${greetingKey}`}
-                  variants={fadeVariants}
-                  initial="initial" animate="animate" exit="exit"
-                  transition={{ duration: 0.2 }}
-                >
-                  {content.letsTalk}
-                </motion.span>
-              </AnimatePresence>
-              <a className="footer-email" href={`mailto:${emailAddress}`}>
-                {emailAddress}
-                <FiArrowUpRight className="footer-email-arrow" />
-              </a>
-            </motion.div>
+            <span className="footer-eyebrow">{content.letsTalk}</span>
+            <h2 className="footer-heading">{content.heading}</h2>
+
+            <div className="footer-badges">
+              <span className="footer-badge footer-badge--status">
+                <span className="footer-badge-dot" aria-hidden="true" />
+                {content.statusAvailable}
+              </span>
+              <span className="footer-badge">
+                <FiClock className="footer-badge-icon" />
+                {content.responseTime}
+              </span>
+            </div>
+
+            <a className="footer-contact-email" href={`mailto:${emailAddress}`}>
+              <FiMail className="footer-contact-icon" />
+              {emailAddress}
+            </a>
 
             <div className="footer-cols">
               <div className="footer-col">
@@ -157,32 +167,49 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Formulário enxuto */}
+          {/* Formulário profissional */}
           <motion.form
             className="contact-form"
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
+            variants={formContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
           >
-            <div className="form-row">
-              <div className="form-field">
+            <motion.div className="form-head" variants={formItem}>
+              <h3 className="form-title">{content.formTitle}</h3>
+              <p className="form-subtitle">{content.subtitle}</p>
+            </motion.div>
+
+            <motion.div className="form-row" variants={formItem}>
+              <div className={`form-field ${errors.name ? 'has-error' : ''}`}>
                 <label htmlFor="name">{content.labels.name}</label>
-                <input
-                  type="text" name="name" id="name"
-                  value={name} onChange={(e) => setName(e.target.value)}
-                  required disabled={isDisabled}
-                />
+                <div className="input-wrap">
+                  <FiUser className="input-icon" aria-hidden="true" />
+                  <input
+                    type="text" name="name" id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    onBlur={() => markTouched('name')}
+                    required disabled={isDisabled}
+                  />
+                </div>
+                {errors.name && <span className="field-error">{content.errors.name}</span>}
               </div>
 
-              <div className="form-field" ref={suggestionsRef}>
+              <div className={`form-field ${errors.email ? 'has-error' : ''}`} ref={suggestionsRef}>
                 <label htmlFor="email">{content.labels.email}</label>
-                <input
-                  type="email" name="email" id="email"
-                  value={email} onChange={handleEmailChange}
-                  required disabled={isDisabled} autoComplete="off"
-                />
+                <div className="input-wrap">
+                  <FiMail className="input-icon" aria-hidden="true" />
+                  <input
+                    type="email" name="email" id="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    onBlur={() => markTouched('email')}
+                    required disabled={isDisabled} autoComplete="off"
+                  />
+                </div>
+                {errors.email && <span className="field-error">{content.errors.email}</span>}
                 <AnimatePresence>
                   {showSuggestions && (
                     <motion.ul
@@ -201,32 +228,53 @@ const Footer = () => {
                   )}
                 </AnimatePresence>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="form-field">
+            <motion.div className={`form-field ${errors.message ? 'has-error' : ''}`} variants={formItem}>
               <label htmlFor="message">{content.labels.message}</label>
-              <textarea
-                name="message" id="message" rows="2"
-                value={message} onChange={(e) => setMessage(e.target.value)}
-                required disabled={isDisabled}
-              />
-            </div>
+              <div className="input-wrap input-wrap--textarea">
+                <FiMessageSquare className="input-icon" aria-hidden="true" />
+                <textarea
+                  name="message" id="message" rows="3"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value.slice(0, MESSAGE_MAX))}
+                  onBlur={() => markTouched('message')}
+                  required disabled={isDisabled}
+                />
+              </div>
+              <div className="field-meta">
+                <span className="field-error">{errors.message ? content.errors.message : ''}</span>
+                <span className="char-count">{message.length}/{MESSAGE_MAX}</span>
+              </div>
+            </motion.div>
 
-            <button
-              type="submit"
-              className={`submit-btn ${status}`}
-              disabled={isDisabled}
-            >
-              {status === 'idle' && <span>{content.button.default}</span>}
-              {status === 'sending' && <FiLoader className="spinner-icon" />}
-              {status === 'success' && (
-                <span className="success-content">
-                  <FiCheck size={20} />
-                  {content.button.success}
-                </span>
-              )}
-              {status === 'error' && <span>{content.error}</span>}
-            </button>
+            <motion.div className="form-actions" variants={formItem}>
+              <span className="form-privacy">
+                <FiLock className="form-privacy-icon" aria-hidden="true" />
+                {content.privacy}
+              </span>
+
+              <button
+                type="submit"
+                className={`submit-btn ${status}`}
+                disabled={isDisabled}
+              >
+                {status === 'idle' && (
+                  <span className="submit-default">
+                    {content.button.default}
+                    <FiArrowRight className="submit-arrow" />
+                  </span>
+                )}
+                {status === 'sending' && <FiLoader className="spinner-icon" />}
+                {status === 'success' && (
+                  <span className="success-content">
+                    <FiCheck size={20} />
+                    {content.button.success}
+                  </span>
+                )}
+                {status === 'error' && <span>{content.error}</span>}
+              </button>
+            </motion.div>
           </motion.form>
         </div>
 
