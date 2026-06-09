@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import "./Header.css";
-import { FaDownload, FaTimes } from "react-icons/fa";
-
-import cvPt from "@/assets/docs/cv-pt.pdf";
-import cvEn from "@/assets/docs/cv-en.pdf";
+import { FaTimes } from "react-icons/fa";
 
 import { useLanguage } from "@/hooks/useLanguage";
 
@@ -22,8 +20,6 @@ const Header = () => {
     { id: "projetos", label: t.nav?.projects || "Projetos" },
     { id: "contato", label: t.nav?.contact || "Contato" },
   ];
-
-  const getCvLink = () => (language === "pt" ? cvPt : cvEn);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -125,11 +121,6 @@ const Header = () => {
               </React.Fragment>
             ))}
           </div>
-
-          <a href={getCvLink()} download className="cv-button">
-            <span className="cv-text">{t.cvBtn}</span>
-            <FaDownload size={12} />
-          </a>
         </div>
 
         {/* Hamburger */}
@@ -138,14 +129,14 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Mobile Drawer */}
-      {isMenuOpen && (
+      {/* Mobile Drawer — via portal no body para evitar containing-block do header */}
+      {isMenuOpen && createPortal(
         <>
           <div
             className="mobile-menu-overlay"
             onClick={() => setIsMenuOpen(false)}
           />
-          <nav className="mobile-menu-drawer mobile-menu-drawer--open" ref={menuRef}>
+          <nav className="mobile-menu-drawer" ref={menuRef}>
             <div className="drawer-header">
               <div className="drawer-logo">
                 <img src={logoSrc} alt="Eric Nacif" width="24" height="24" />
@@ -182,13 +173,10 @@ const Header = () => {
                   </button>
                 ))}
               </div>
-              <a href={getCvLink()} download className="drawer-cv-btn">
-                <FaDownload size={12} />
-                <span>{t.cvBtn}</span>
-              </a>
             </div>
           </nav>
-        </>
+        </>,
+        document.body
       )}
     </header>
   );

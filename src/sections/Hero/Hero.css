@@ -118,39 +118,6 @@
     color: var(--accent-color);
 }
 
-/* ── Scroll indicator ── */
-.hero-scroll {
-    position: absolute;
-    bottom: clamp(24px, 4vh, 44px);
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-}
-
-.hero-scroll-mouse {
-    width: 22px;
-    height: 34px;
-    border: 1.5px solid var(--text-color);
-    border-radius: 11px;
-    opacity: 0.18;
-    display: flex;
-    justify-content: center;
-    padding-top: 5px;
-}
-
-.hero-scroll-wheel {
-    width: 2px;
-    height: 6px;
-    background: var(--text-color);
-    border-radius: 2px;
-    animation: scrollWheel 2s ease-in-out infinite;
-}
-
-@keyframes scrollWheel {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(8px); opacity: 0; }
-}
-
 /* ── Reveal (CSS, sem JS) ── */
 .hero-reveal {
     opacity: 0;
@@ -160,7 +127,6 @@
 
 .hero-reveal--1 { animation-delay: 0.08s; }
 .hero-reveal--2 { animation-delay: 0.16s; }
-.hero-reveal--3 { animation-delay: 0.5s; }
 
 @keyframes heroReveal {
     to { opacity: 1; transform: translateY(0); }
@@ -185,11 +151,15 @@
    RESPONSIVIDADE
    ========================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .hero-section {
-        padding: 96px 22px 88px;
+        min-height: auto;
+        justify-content: flex-start;
+        padding: 128px 20px 72px;
     }
+}
 
+@media (max-width: 600px) {
     .hero-title {
         font-size: clamp(30px, 8vw, 40px);
         margin-bottom: 18px;
@@ -215,10 +185,6 @@
     .hero-reveal {
         opacity: 1;
         transform: none;
-        animation: none;
-    }
-
-    .hero-scroll-wheel {
         animation: none;
     }
 }

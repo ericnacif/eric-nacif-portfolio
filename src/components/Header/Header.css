@@ -8,7 +8,7 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding: 0 clamp(18px, 4vw, 54px);
+  padding: 0 20px;
   transition: background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
@@ -40,14 +40,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1480px;
+  max-width: 1240px;
   margin: 0 auto;
-  height: 88px;
+  height: 76px;
   transition: height 0.35s ease;
 }
 
 .main-header.scrolled .header-container {
-  height: 72px;
+  height: 66px;
 }
 
 /* ── Logo ── */
@@ -169,29 +169,6 @@
   height: 13px;
   background: var(--border-color);
   margin: 0 5px;
-}
-
-/* CV */
-.cv-button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--accent-color);
-  color: #ffffff;
-  padding: 11px 22px;
-  border-radius: 999px;
-  text-decoration: none;
-  font-family: var(--font-ui);
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  transition: background 0.22s, box-shadow 0.22s, transform 0.18s;
-}
-
-.cv-button:hover {
-  background: var(--deep-color);
-  box-shadow: 0 12px 30px rgba(var(--accent-rgb), 0.3);
-  transform: translateY(-1px);
 }
 
 /* =========================================
@@ -369,48 +346,18 @@
   color: var(--accent-color);
 }
 
-.drawer-cv-btn {
-  background: var(--accent-color);
-  color: #ffffff;
-  padding: 14px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  text-decoration: none;
-  font-family: var(--font-ui);
-  font-weight: 700;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  transition: background 0.22s;
-}
-
-.drawer-cv-btn:hover {
-  background: var(--accent-color);
-}
-
 /* =========================================
    RESPONSIVIDADE
    ========================================= */
 
 /* Notebooks menores: reduz folgas sem encolher a tipografia */
 @media (min-width: 1025px) and (max-width: 1200px) {
-  .header-container {
-    height: 80px;
-  }
-
   .desktop-nav {
     gap: 26px;
   }
 
   .header-controls {
     gap: 16px;
-  }
-
-  .cv-button {
-    padding: 11px 18px;
   }
 }
 
@@ -439,10 +386,6 @@
 @media (max-width: 600px) {
   .main-header {
     padding: 0 18px;
-  }
-
-  .header-logo-text {
-    display: none;
   }
 
   .header-logo-img {

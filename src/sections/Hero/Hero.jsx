@@ -35,12 +35,6 @@ const Hero = () => {
           </button>
         </div>
       </div>
-
-      <div className="hero-scroll hero-reveal hero-reveal--3">
-        <div className="hero-scroll-mouse">
-          <div className="hero-scroll-wheel" />
-        </div>
-      </div>
     </section>
   );
 };

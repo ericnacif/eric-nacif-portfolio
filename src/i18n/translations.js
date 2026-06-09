@@ -5,7 +5,6 @@ export const SUPPORTED_LANGUAGES = ['pt', 'en', 'es'];
 export const translations = {
   pt: {
     nav: { projects: 'Projetos', about: 'Sobre', contact: 'Contato' },
-    cvBtn: 'Baixar CV',
     hero: {
       available: 'Disponível para projetos',
       role: 'Eric',
@@ -65,7 +64,6 @@ export const translations = {
   },
   en: {
     nav: { projects: 'Projects', about: 'About', contact: 'Contact' },
-    cvBtn: 'Download CV',
     hero: {
       available: 'Available for projects',
       role: 'Eric',
@@ -125,7 +123,6 @@ export const translations = {
   },
   es: {
     nav: { projects: 'Proyectos', about: 'Sobre mí', contact: 'Contacto' },
-    cvBtn: 'Descargar CV',
     hero: {
       available: 'Disponible para proyectos',
       role: 'Eric',
