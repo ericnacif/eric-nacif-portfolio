@@ -266,6 +266,32 @@
 
     .about-col-right {
         width: 100%;
+        text-align: center;
+    }
+
+    .section-header {
+        align-items: center;
+    }
+
+    .about-punchline {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .about-highlights {
+        align-items: center;
+    }
+
+    .about-highlight-item {
+        padding-left: 0;
+        text-align: center;
+    }
+
+    .about-highlight-item::before {
+        position: static;
+        display: inline-block;
+        margin-right: 8px;
+        vertical-align: middle;
     }
 
     .intro-text {

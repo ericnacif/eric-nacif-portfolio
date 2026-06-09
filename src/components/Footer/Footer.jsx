@@ -6,7 +6,7 @@ import { translations } from '@/i18n/translations';
 import { SiLinkedin, SiInstagram, SiGithub } from 'react-icons/si';
 import {
   FiLoader, FiCheck, FiMapPin, FiArrowUpRight, FiArrowUp, FiArrowRight,
-  FiMail, FiUser, FiMessageSquare, FiClock, FiLock,
+  FiMail, FiClock, FiLock,
 } from 'react-icons/fi';
 
 const MESSAGE_MAX = 600;
@@ -145,7 +145,7 @@ const Footer = () => {
               {emailAddress}
             </a>
 
-            <div className="footer-cols">
+            <div className="footer-cols footer-cols--lead">
               <div className="footer-col">
                 <span className="footer-col-title">{content.navTitle}</span>
                 {navLinks.map((link) => (
@@ -184,31 +184,25 @@ const Footer = () => {
             <motion.div className="form-row" variants={formItem}>
               <div className={`form-field ${errors.name ? 'has-error' : ''}`}>
                 <label htmlFor="name">{content.labels.name}</label>
-                <div className="input-wrap">
-                  <FiUser className="input-icon" aria-hidden="true" />
-                  <input
-                    type="text" name="name" id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    onBlur={() => markTouched('name')}
-                    required disabled={isDisabled}
-                  />
-                </div>
+                <input
+                  type="text" name="name" id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  onBlur={() => markTouched('name')}
+                  required disabled={isDisabled}
+                />
                 {errors.name && <span className="field-error">{content.errors.name}</span>}
               </div>
 
               <div className={`form-field ${errors.email ? 'has-error' : ''}`} ref={suggestionsRef}>
                 <label htmlFor="email">{content.labels.email}</label>
-                <div className="input-wrap">
-                  <FiMail className="input-icon" aria-hidden="true" />
-                  <input
-                    type="email" name="email" id="email"
-                    value={email}
-                    onChange={handleEmailChange}
-                    onBlur={() => markTouched('email')}
-                    required disabled={isDisabled} autoComplete="off"
-                  />
-                </div>
+                <input
+                  type="email" name="email" id="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  onBlur={() => markTouched('email')}
+                  required disabled={isDisabled} autoComplete="off"
+                />
                 {errors.email && <span className="field-error">{content.errors.email}</span>}
                 <AnimatePresence>
                   {showSuggestions && (
@@ -232,16 +226,13 @@ const Footer = () => {
 
             <motion.div className={`form-field ${errors.message ? 'has-error' : ''}`} variants={formItem}>
               <label htmlFor="message">{content.labels.message}</label>
-              <div className="input-wrap input-wrap--textarea">
-                <FiMessageSquare className="input-icon" aria-hidden="true" />
-                <textarea
-                  name="message" id="message" rows="3"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value.slice(0, MESSAGE_MAX))}
-                  onBlur={() => markTouched('message')}
-                  required disabled={isDisabled}
-                />
-              </div>
+              <textarea
+                name="message" id="message" rows="3"
+                value={message}
+                onChange={(e) => setMessage(e.target.value.slice(0, MESSAGE_MAX))}
+                onBlur={() => markTouched('message')}
+                required disabled={isDisabled}
+              />
               <div className="field-meta">
                 <span className="field-error">{errors.message ? content.errors.message : ''}</span>
                 <span className="char-count">{message.length}/{MESSAGE_MAX}</span>
@@ -287,6 +278,28 @@ const Footer = () => {
             <img src={logoSrc} alt="" className="footer-wordmark-logo" width="48" height="48" loading="lazy" />
             <span>Eric Nacif</span>
           </div>
+
+          {/* Colunas — só no mobile, embutidas na faixa escura */}
+          <nav className="footer-cols footer-cols--dark" aria-label="Footer">
+            <div className="footer-col">
+              <span className="footer-col-title">{content.navTitle}</span>
+              {navLinks.map((link) => (
+                <a key={link.id} href={`#${link.id}`} onClick={(e) => handleNav(e, link.id)} className="footer-col-link">
+                  {link.label}
+                </a>
+              ))}
+            </div>
+
+            <div className="footer-col">
+              <span className="footer-col-title">{content.socialTitle}</span>
+              {socialLinks.map((link) => (
+                <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="footer-col-link">
+                  {link.label}
+                  <FiArrowUpRight className="footer-col-link-arrow" />
+                </a>
+              ))}
+            </div>
+          </nav>
 
           <div className="footer-bottom">
             <p className="footer-copy">© {new Date().getFullYear()} Eric Nacif. {content.copyright}</p>

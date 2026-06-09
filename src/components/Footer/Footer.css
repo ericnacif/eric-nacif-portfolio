@@ -186,6 +186,23 @@
     transform: translate(2px, -2px);
 }
 
+/* Versão escura das colunas (só mobile, dentro do wordmark) */
+.footer-cols--dark {
+    display: none;
+}
+
+.footer-cols--dark .footer-col-title {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.footer-cols--dark .footer-col-link {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.footer-cols--dark .footer-col-link:hover {
+    color: #ffffff;
+}
+
 /* =========================================
    FORMULÁRIO (CLARO)
    ========================================= */
@@ -195,22 +212,10 @@
     display: flex;
     flex-direction: column;
     gap: 18px;
-    padding: clamp(26px, 3vw, 40px);
-    background: linear-gradient(180deg, var(--surface-color) 0%, var(--surface-color) 70%, var(--surface-muted) 160%);
+    padding: clamp(24px, 3vw, 36px);
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
-    border-radius: 22px;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 26px 64px rgba(20, 40, 120, 0.1);
-}
-
-.contact-form::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    border-radius: 22px 22px 0 0;
-    background: linear-gradient(90deg, var(--accent-color), var(--accent-soft) 60%, transparent);
+    border-radius: 18px;
 }
 
 /* ── Cabeçalho do formulário ── */
@@ -257,32 +262,10 @@
     color: var(--text-secondary);
 }
 
-/* ── Wrapper com ícone ── */
-.input-wrap {
-    position: relative;
-    display: flex;
-}
-
-.input-icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 16px;
-    color: var(--text-tertiary);
-    pointer-events: none;
-    transition: color 0.22s;
-}
-
-.input-wrap--textarea .input-icon {
-    top: 16px;
-    transform: none;
-}
-
 .form-field input,
 .form-field textarea {
     width: 100%;
-    padding: 12px 14px 12px 42px;
+    padding: 12px 14px;
     font-size: 15px;
     font-weight: 400;
     color: var(--text-color);
@@ -290,19 +273,14 @@
     background: var(--bg-color);
     outline: none;
     font-family: var(--font-main);
-    border-radius: 12px;
+    border-radius: 10px;
     transition: border-color 0.22s, box-shadow 0.22s, background-color 0.22s;
 }
 
 .form-field textarea {
     resize: vertical;
-    min-height: 92px;
+    min-height: 96px;
     line-height: 1.55;
-}
-
-.form-field input:focus ~ .input-icon,
-.input-wrap:focus-within .input-icon {
-    color: var(--accent-color);
 }
 
 .form-field input::placeholder,
@@ -401,9 +379,7 @@
     justify-content: space-between;
     gap: 18px;
     flex-wrap: wrap;
-    margin-top: 6px;
-    padding-top: 18px;
-    border-top: 1px solid var(--border-color);
+    margin-top: 4px;
 }
 
 .form-privacy {
@@ -438,7 +414,6 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 10px 26px rgba(var(--accent-rgb), 0.24);
     transition: background-color 0.25s, box-shadow 0.25s, transform 0.2s;
 }
 
@@ -661,6 +636,72 @@
     }
 }
 
+/* Mobile: tudo centralizado + simplificado */
+@media (max-width: 768px) {
+    .footer-lead {
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-heading {
+        max-width: 100%;
+    }
+
+    /* Simplifica: remove excesso de informação no mobile */
+    .footer-badges,
+    .form-subtitle,
+    .form-privacy,
+    .char-count {
+        display: none;
+    }
+
+    .form-actions {
+        padding-top: 0;
+        border-top: none;
+    }
+
+    .footer-cols {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .footer-col {
+        align-items: center;
+    }
+
+    /* Colunas saem do lead e entram na faixa escura */
+    .footer-cols--lead {
+        display: none;
+    }
+
+    .footer-cols--dark {
+        display: flex;
+        justify-content: center;
+        gap: clamp(40px, 12vw, 64px);
+        margin-bottom: clamp(28px, 6vw, 40px);
+    }
+
+    .footer-wordmark {
+        padding-bottom: clamp(28px, 6vw, 40px);
+    }
+
+    .form-head {
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 14px;
+    }
+
+    .footer-bottom-right {
+        justify-content: center;
+    }
+}
+
 @media (max-width: 600px) {
     .main-footer {
         padding-top: 72px;
@@ -691,7 +732,8 @@
 
     .footer-bottom {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        text-align: center;
         gap: 14px;
     }
 }

@@ -161,6 +161,14 @@ const Header = () => {
             </div>
 
             <div className="drawer-footer">
+              <a
+                href="#contato"
+                onClick={(e) => handleScrollTo(e, "contato")}
+                className="drawer-cta"
+              >
+                {t.hero?.cta2 || "Falar comigo"}
+              </a>
+
               <div className="drawer-lang">
                 {["pt", "en", "es"].map((lang) => (
                   <button

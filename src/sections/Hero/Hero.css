@@ -201,13 +201,32 @@
         padding: 120px 0 64px;
     }
 
+    .hero-inner {
+        text-align: center;
+    }
+
+    .hero-meta {
+        justify-content: center;
+    }
+
+    .hero-title {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .hero-foot {
         flex-direction: column;
-        align-items: stretch;
+        align-items: center;
     }
 
     .hero-sub {
         max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-ctas {
+        justify-content: center;
     }
 }
 
