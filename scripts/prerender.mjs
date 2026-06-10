@@ -34,7 +34,8 @@ const run = async () => {
 
       await page.goto(url, { waitUntil: 'networkidle0', timeout: 45000 });
       // Garante que as seções lazy (About/Projects/Footer) já montaram.
-      await page.waitForSelector('footer#contato', { timeout: 30000 });
+      await page.waitForSelector('#contato', { timeout: 30000 });
+      await page.waitForSelector('.site-footer', { timeout: 30000 });
 
       const html = await page.content();
 
