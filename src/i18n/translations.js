@@ -25,14 +25,13 @@ export const translations = {
       eyebrow: '01 — Sobre',
       title: 'Sobre Mim',
       punchline: 'Crio interfaces e sistemas que funcionam — com estética e resultado.',
-      highlights: [
-        'Full Stack: PHP, Laravel, React & Node',
-        'Interfaces rápidas e responsivas',
-        'Dados: SQL, MongoDB & arquitetura escalável',
-        'Código limpo e entrega consistente',
+      bio: [
+        'Sou desenvolvedor full stack e transformo ideias em produtos digitais — sites, sistemas e interfaces que as pessoas realmente gostam de usar.',
+        'Cuido do projeto inteiro, da arquitetura do back-end ao último detalhe da tela. Para mim, engenharia e design andam juntos: o que parece simples por fora é o que dá mais trabalho por dentro.',
+        'Trabalho perto de quem confia no projeto, explico cada decisão e entrego com consistência — do primeiro rascunho ao deploy. Tem uma ideia em mente? Eu ajudo a tirar do papel.',
       ],
       cta: 'Vamos construir algo juntos?',
-      techTitle: 'Minha Tech Stack',
+      techTitle: 'Tecnologias que uso',
     },
     projects: {
       eyebrow: '02 — Projetos',
@@ -107,14 +106,13 @@ export const translations = {
       eyebrow: '01 — About',
       title: 'About Me',
       punchline: 'I build interfaces and systems that work — with aesthetics and results.',
-      highlights: [
-        'Full Stack: PHP, Laravel, React & Node',
-        'Fast, responsive interfaces',
-        'Data: SQL, MongoDB & scalable architecture',
-        'Clean code and consistent delivery',
+      bio: [
+        "I'm a full stack developer, and I turn ideas into digital products — websites, systems and interfaces that people actually enjoy using.",
+        'I handle the whole project, from back-end architecture to the last detail on screen. To me, engineering and design go together: what looks simple on the outside is usually what took the most care inside.',
+        "I work closely with the people who trust the project, explain every decision and deliver consistently — from the first draft to the deploy. Got an idea in mind? I'll help bring it to life.",
       ],
       cta: "Let's build something together?",
-      techTitle: 'My Tech Stack',
+      techTitle: 'Technologies I use',
     },
     projects: {
       eyebrow: '02 — Projects',
@@ -189,14 +187,13 @@ export const translations = {
       eyebrow: '01 — Sobre',
       title: 'Sobre Mí',
       punchline: 'Creo interfaces y sistemas que funcionan — con estética y resultados.',
-      highlights: [
-        'Full Stack: PHP, Laravel, React & Node',
-        'Interfaces rápidas y responsivas',
-        'Datos: SQL, MongoDB y arquitectura escalable',
-        'Código limpio y entrega consistente',
+      bio: [
+        'Soy desarrollador full stack y convierto ideas en productos digitales — sitios, sistemas e interfaces que las personas disfrutan usar.',
+        'Me encargo del proyecto completo, desde la arquitectura del back-end hasta el último detalle en pantalla. Para mí, ingeniería y diseño van juntos: lo que parece simple por fuera suele ser lo que más cuidado llevó por dentro.',
+        '¿Tienes una idea en mente? Trabajo cerca de quien confía en el proyecto, explico cada decisión y entrego con consistencia — del primer boceto al deploy. Te ayudo a hacerla realidad.',
       ],
       cta: '¿Construimos algo juntos?',
-      techTitle: 'Mi Tech Stack',
+      techTitle: 'Tecnologías que uso',
     },
     projects: {
       eyebrow: '02 — Proyectos',

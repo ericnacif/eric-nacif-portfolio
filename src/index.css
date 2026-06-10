@@ -260,8 +260,8 @@ section:not(.hero-section) {
   .hero-title { font-size: clamp(94px, 6.6vw, 112px); }
   .hero-sub { font-size: clamp(18px, 1.25vw, 21px); max-width: 560px; }
   .section-title { font-size: clamp(84px, 6.4vw, 104px); }
-  .about-section .section-title { font-size: clamp(96px, 7vw, 116px); }
-  .about-punchline { font-size: clamp(32px, 2.8vw, 38px); }
+  .about-section .section-title { font-size: clamp(60px, 4.4vw, 72px); }
+  .about-punchline { font-size: clamp(34px, 2.8vw, 42px); }
   .projects-title { font-size: clamp(76px, 6vw, 92px); }
   .showcase__title { font-size: clamp(52px, 4vw, 64px); }
   .showcase__desc { font-size: clamp(17px, 1.3vw, 19px); }
@@ -272,7 +272,7 @@ section:not(.hero-section) {
   .hero-title { font-size: clamp(112px, 6.4vw, 128px); }
   .hero-sub { max-width: 640px; }
   .section-title { font-size: clamp(104px, 6.2vw, 120px); }
-  .about-section .section-title { font-size: clamp(116px, 6.8vw, 132px); }
+  .about-section .section-title { font-size: clamp(68px, 4.2vw, 80px); }
   .projects-title { font-size: clamp(92px, 5.8vw, 108px); }
   .showcase__title { font-size: clamp(64px, 4vw, 76px); }
   .footer-heading { font-size: clamp(54px, 3.2vw, 64px); }

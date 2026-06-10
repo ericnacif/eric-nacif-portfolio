@@ -48,11 +48,17 @@ const About = () => {
 
           <div className="about-col-right" data-reveal>
             <p className="about-punchline">{content.punchline}</p>
-            <ul className="about-highlights">
-              {content.highlights.map((item) => (
-                <li key={item} className="about-highlight-item">{item}</li>
+
+            <div className="about-bio">
+              {content.bio.map((paragraph) => (
+                <p key={paragraph} className="about-bio-text">{paragraph}</p>
               ))}
-            </ul>
+            </div>
+
+            <div className="about-signature">
+              <span className="about-signature-line" aria-hidden="true" />
+              <span className="about-signature-text">{content.cta}</span>
+            </div>
           </div>
         </div>
 
