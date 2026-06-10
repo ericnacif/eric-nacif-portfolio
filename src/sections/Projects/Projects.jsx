@@ -270,6 +270,7 @@ const Projects = () => {
                           src={project.image}
                           alt={lang.title}
                           loading="lazy"
+                          decoding="async"
                         />
                         <span className="showcase__view">
                           {content.viewProject}
