@@ -12,9 +12,33 @@ import certificafeImg from "@/assets/images/project-certificafe.webp";
 import engelmigImg from "@/assets/images/project-engelmig.webp";
 import monacImg from "@/assets/images/project-monac.webp";
 import okanImg from "@/assets/images/project-okan.webp";
+import whatsappBotImg from "@/assets/images/project-whatsapp-bot.webp";
 import murkeImg from "@/assets/images/project-murke.webp";
 
 const projectsData = [
+  {
+    id: "monac",
+    image: monacImg,
+    url: "https://monacsistemas.netlify.app",
+    tags: ["React", "Node.js", "MongoDB", "REST API"],
+    translations: {
+      pt: {
+        title: "MONAC Sistemas",
+        description:
+          "Plataforma de gestão empresarial e emissão fiscal. Desenvolvi a interface e a integração com a API REST, priorizando fluxos claros para as tarefas do dia a dia da operação.",
+      },
+      en: {
+        title: "MONAC Sistemas",
+        description:
+          "Business management and tax invoicing platform. I built the interface and the REST API integration, prioritizing clear flows for the team's day-to-day operations.",
+      },
+      es: {
+        title: "MONAC Sistemas",
+        description:
+          "Plataforma de gestión empresarial y emisión fiscal. Desarrollé la interfaz y la integración con la API REST, priorizando flujos claros para las tareas diarias de la operación.",
+      },
+    },
+  },
   {
     id: "okan",
     image: okanImg,
@@ -39,6 +63,29 @@ const projectsData = [
     },
   },
   {
+    id: "whatsapp-bot-template",
+    image: whatsappBotImg,
+    url: "https://github.com/ericnacif/template-bot-whatsapp",
+    tags: ["Node.js", "WhatsApp", "Boilerplate", "Automation"],
+    translations: {
+      pt: {
+        title: "Template Bot WhatsApp",
+        description:
+          "Template profissional em Node.js para criar assistentes de WhatsApp com fluxos de atendimento, menus interativos, sessões por usuário, rate limiting e estrutura pronta para integrar IA.",
+      },
+      en: {
+        title: "WhatsApp Bot Template",
+        description:
+          "Professional Node.js template for building WhatsApp assistants with service flows, interactive menus, per-user sessions, rate limiting, and an AI-ready structure.",
+      },
+      es: {
+        title: "Template Bot WhatsApp",
+        description:
+          "Template profesional en Node.js para crear asistentes de WhatsApp con flujos de atención, menús interactivos, sesiones por usuario, rate limiting y estructura lista para integrar IA.",
+      },
+    },
+  },
+  {
     id: "murke",
     image: murkeImg,
     url: "https://murke.netlify.app",
@@ -58,29 +105,6 @@ const projectsData = [
         title: "Murke",
         description:
           "Identidad visual y presencia digital para un estudio creativo. Dirección estética autoral con interfaz conceptual y animaciones que refuerzan la marca en cada interacción.",
-      },
-    },
-  },
-  {
-    id: "monac",
-    image: monacImg,
-    url: "https://monacsistemas.netlify.app",
-    tags: ["React", "Node.js", "MongoDB", "REST API"],
-    translations: {
-      pt: {
-        title: "MONAC Sistemas",
-        description:
-          "Plataforma de gestão empresarial e emissão fiscal. Desenvolvi a interface e a integração com a API REST, priorizando fluxos claros para as tarefas do dia a dia da operação.",
-      },
-      en: {
-        title: "MONAC Sistemas",
-        description:
-          "Business management and tax invoicing platform. I built the interface and the REST API integration, prioritizing clear flows for the team's day-to-day operations.",
-      },
-      es: {
-        title: "MONAC Sistemas",
-        description:
-          "Plataforma de gestión empresarial y emisión fiscal. Desarrollé la interfaz y la integración con la API REST, priorizando flujos claros para las tareas diarias de la operación.",
       },
     },
   },
