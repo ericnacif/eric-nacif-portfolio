@@ -6,7 +6,7 @@ import { translations } from '@/i18n/translations';
 import { SiLinkedin, SiInstagram, SiGithub } from 'react-icons/si';
 import {
   FiLoader, FiCheck, FiMapPin, FiArrowUpRight, FiArrowUp, FiArrowRight,
-  FiMail, FiClock, FiLock,
+  FiLock,
 } from 'react-icons/fi';
 
 const MESSAGE_MAX = 600;
@@ -120,8 +120,6 @@ const Footer = () => {
     }
   };
 
-  const emailAddress = 'naciferic7@gmail.com';
-
   const socialLinks = [
     { href: 'https://www.linkedin.com/in/eric-nacif-956930324/', icon: <SiLinkedin />, label: 'LinkedIn' },
     { href: 'https://github.com/ericnacif', icon: <SiGithub />, label: 'GitHub' },
@@ -166,140 +164,139 @@ const Footer = () => {
       <section id="contato" className="cta-section">
         <div className="footer-inner">
 
-          <div className="footer-top">
-          {/* Lead — contexto + colunas de links */}
-          <div className="footer-lead">
-            <h2 className="footer-heading">{content.heading}</h2>
-
-            <div className="footer-badges">
-              <span className="footer-badge footer-badge--status">
-                <span className="footer-badge-dot" aria-hidden="true" />
-                {content.statusAvailable}
-              </span>
-              <span className="footer-badge">
-                <FiClock className="footer-badge-icon" />
-                {content.responseTime}
-              </span>
-            </div>
-
-            <a className="footer-contact-email" href={`mailto:${emailAddress}`}>
-              <FiMail className="footer-contact-icon" />
-              {emailAddress}
-            </a>
-          </div>
-
-          {/* Formulário profissional */}
-          <motion.form
-            className="contact-form"
-            onSubmit={handleSubmit}
+          <motion.div
+            className="cta-grid"
             variants={formContainer}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.15 }}
           >
-            {/* Honeypot anti-spam: invisível para usuários, preenchido só por bots */}
-            <input
-              ref={honeypotRef}
-              type="text"
-              name="website"
-              tabIndex={-1}
-              autoComplete="off"
-              aria-hidden="true"
-              style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
-            />
+            <div className="cta-aside">
+              <motion.h2 className="cta-heading" variants={formItem}>{content.heading}</motion.h2>
+              <motion.p className="cta-sub" variants={formItem}>{content.leadSubtitle}</motion.p>
 
-            <motion.div className="form-head" variants={formItem}>
-              <h3 className="form-title">{content.formTitle}</h3>
-              <p className="form-subtitle">{content.subtitle}</p>
-            </motion.div>
+              <motion.div className="cta-socials" variants={formItem}>
+                <span className="cta-socials-title">{content.socialTitle}</span>
+                <div className="cta-socials-row">
+                  {socialLinks.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="cta-social"
+                      aria-label={link.label}
+                    >
+                      {link.icon}
+                    </a>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
 
-            <motion.div className="form-row" variants={formItem}>
-              <div className={`form-field ${errors.name ? 'has-error' : ''}`}>
-                <label htmlFor="name">{content.labels.name}</label>
-                <input
-                  type="text" name="name" id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  onBlur={() => markTouched('name')}
+            <motion.form
+              className="contact-form"
+              onSubmit={handleSubmit}
+              variants={formItem}
+            >
+              {/* Honeypot anti-spam: invisível para usuários, preenchido só por bots */}
+              <input
+                ref={honeypotRef}
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+              />
+
+              <div className="form-row">
+                <div className={`form-field ${errors.name ? 'has-error' : ''}`}>
+                  <label htmlFor="name">{content.labels.name}</label>
+                  <input
+                    type="text" name="name" id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    onBlur={() => markTouched('name')}
+                    required disabled={isDisabled}
+                  />
+                  {errors.name && <span className="field-error">{content.errors.name}</span>}
+                </div>
+
+                <div className={`form-field ${errors.email ? 'has-error' : ''}`} ref={suggestionsRef}>
+                  <label htmlFor="email">{content.labels.email}</label>
+                  <input
+                    type="email" name="email" id="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    onBlur={() => markTouched('email')}
+                    required disabled={isDisabled} autoComplete="off"
+                  />
+                  {errors.email && <span className="field-error">{content.errors.email}</span>}
+                  <AnimatePresence>
+                    {showSuggestions && (
+                      <motion.ul
+                        className="email-suggestions"
+                        initial={{ opacity: 0, y: -4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        {suggestions.map((domain) => (
+                          <li key={domain} onClick={() => handleDomainSelect(domain)}>
+                            <span className="sug-user">{email.split('@')[0]}@</span>
+                            <span className="sug-domain">{domain}</span>
+                          </li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              <div className={`form-field ${errors.message ? 'has-error' : ''}`}>
+                <label htmlFor="message">{content.labels.message}</label>
+                <textarea
+                  name="message" id="message" rows="4"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value.slice(0, MESSAGE_MAX))}
+                  onBlur={() => markTouched('message')}
                   required disabled={isDisabled}
                 />
-                {errors.name && <span className="field-error">{content.errors.name}</span>}
+                <div className="field-meta">
+                  <span className="field-error">{errors.message ? content.errors.message : ''}</span>
+                  <span className="char-count">{message.length}/{MESSAGE_MAX}</span>
+                </div>
               </div>
 
-              <div className={`form-field ${errors.email ? 'has-error' : ''}`} ref={suggestionsRef}>
-                <label htmlFor="email">{content.labels.email}</label>
-                <input
-                  type="email" name="email" id="email"
-                  value={email}
-                  onChange={handleEmailChange}
-                  onBlur={() => markTouched('email')}
-                  required disabled={isDisabled} autoComplete="off"
-                />
-                {errors.email && <span className="field-error">{content.errors.email}</span>}
-                <AnimatePresence>
-                  {showSuggestions && (
-                    <motion.ul
-                      className="email-suggestions"
-                      initial={{ opacity: 0, y: -4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      {suggestions.map((domain) => (
-                        <li key={domain} onClick={() => handleDomainSelect(domain)}>
-                          <span className="sug-user">{email.split('@')[0]}@</span>
-                          <span className="sug-domain">{domain}</span>
-                        </li>
-                      ))}
-                    </motion.ul>
+              <div className="form-actions">
+                <span className="form-privacy">
+                  <FiLock className="form-privacy-icon" aria-hidden="true" />
+                  {content.privacy}
+                </span>
+
+                <button
+                  type="submit"
+                  className={`submit-btn ${status}`}
+                  disabled={isDisabled}
+                >
+                  {status === 'idle' && (
+                    <span className="submit-default">
+                      {content.button.default}
+                      <FiArrowRight className="submit-arrow" />
+                    </span>
                   )}
-                </AnimatePresence>
+                  {status === 'sending' && <FiLoader className="spinner-icon" />}
+                  {status === 'success' && (
+                    <span className="success-content">
+                      <FiCheck size={20} />
+                      {content.button.success}
+                    </span>
+                  )}
+                  {status === 'error' && <span>{content.error}</span>}
+                </button>
               </div>
-            </motion.div>
-
-            <motion.div className={`form-field ${errors.message ? 'has-error' : ''}`} variants={formItem}>
-              <label htmlFor="message">{content.labels.message}</label>
-              <textarea
-                name="message" id="message" rows="3"
-                value={message}
-                onChange={(e) => setMessage(e.target.value.slice(0, MESSAGE_MAX))}
-                onBlur={() => markTouched('message')}
-                required disabled={isDisabled}
-              />
-              <div className="field-meta">
-                <span className="field-error">{errors.message ? content.errors.message : ''}</span>
-                <span className="char-count">{message.length}/{MESSAGE_MAX}</span>
-              </div>
-            </motion.div>
-
-            <motion.div className="form-actions" variants={formItem}>
-              <span className="form-privacy">
-                <FiLock className="form-privacy-icon" aria-hidden="true" />
-                {content.privacy}
-              </span>
-
-              <button
-                type="submit"
-                className={`submit-btn ${status}`}
-                disabled={isDisabled}
-              >
-                {status === 'idle' && (
-                  <span className="submit-default">
-                    {content.button.default}
-                    <FiArrowRight className="submit-arrow" />
-                  </span>
-                )}
-                {status === 'sending' && <FiLoader className="spinner-icon" />}
-                {status === 'success' && (
-                  <span className="success-content">
-                    <FiCheck size={20} />
-                    {content.button.success}
-                  </span>
-                )}
-                {status === 'error' && <span>{content.error}</span>}
-              </button>
-            </motion.div>
-          </motion.form>
-        </div>
+            </motion.form>
+          </motion.div>
 
         </div>
       </section>
