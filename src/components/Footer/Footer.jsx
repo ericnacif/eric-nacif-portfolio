@@ -12,7 +12,7 @@ import {
 const MESSAGE_MAX = 600;
 
 const Footer = () => {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
   const content = t.footer;
 
   const [name, setName] = useState('');

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import "./Projects.css";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { FiArrowUpRight } from "react-icons/fi";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -196,18 +196,7 @@ const Projects = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="projects-header-text">
-              <AnimatePresence mode="wait">
-                <motion.h2
-                  className="projects-title"
-                  key={language}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.22 }}
-                >
-                  {content.title}
-                </motion.h2>
-              </AnimatePresence>
+              <h2 className="projects-title">{content.title}</h2>
             </div>
 
             <div className="projects-nav">

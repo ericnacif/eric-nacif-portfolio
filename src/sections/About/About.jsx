@@ -12,7 +12,7 @@ const socialLinks = [
 ];
 
 const About = () => {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
   const content = t.about;
   const revealRef = useReveal();
 
@@ -46,7 +46,7 @@ const About = () => {
             </div>
           </div>
 
-          <div className="about-col-right" data-reveal key={language}>
+          <div className="about-col-right" data-reveal>
             <p className="about-punchline">{content.punchline}</p>
             <ul className="about-highlights">
               {content.highlights.map((item) => (
