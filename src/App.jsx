@@ -1,5 +1,4 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Header from '@/components/Header/Header';
 import Hero from '@/sections/Hero/Hero';
@@ -43,21 +42,26 @@ const Home = () => {
 };
 
 function App() {
+  const pathname =
+    typeof window === 'undefined' ? '/' : window.location.pathname;
+  const isHome = pathname === '/' || pathname === '/index.html';
 
   return (
-    <Router>
+    <>
       <Analytics />
       <Seo />
       <ScrollProgress />
       <EasterEgg />
       <PrintRedirect />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<Suspense fallback={null}><NotFound /></Suspense>} />
-      </Routes>
-
-    </Router>
+      {isHome ? (
+        <Home />
+      ) : (
+        <Suspense fallback={null}>
+          <NotFound />
+        </Suspense>
+      )}
+    </>
   );
 }
 

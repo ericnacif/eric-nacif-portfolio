@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import './NotFound.css';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -47,10 +46,10 @@ const NotFound = () => {
                 <h2 className="nf-subtitle">{content.subtitle}</h2>
                 <p className="nf-text">{content.text}</p>
 
-                <Link to="/" className="back-home-btn">
+                <a href="/" className="back-home-btn">
                     <FiArrowLeft />
                     {content.button}
-                </Link>
+                </a>
             </motion.div>
         </section>
     );

@@ -33,12 +33,7 @@ export default defineConfig({
             return 'react-dom';
           }
 
-          // 3. Roteamento (Separado para não bloquear o início)
-          if (id.includes('node_modules/react-router') || id.includes('node_modules/react-router-dom')) {
-            return 'react-router';
-          }
-
-          // 4. Animações (Framer Motion é pesado, fica isolado)
+          // 3. Animações (Framer Motion é pesado, fica isolado)
           if (id.includes('node_modules/framer-motion')) {
             return 'framer-motion';
           }
