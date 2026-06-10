@@ -13,7 +13,7 @@
 }
 
 .projects-container {
-  max-width: 1340px;
+  max-width: var(--container-wide);
   margin: 0 auto;
   padding: 0 clamp(20px, 5vw, 80px);
   position: relative;

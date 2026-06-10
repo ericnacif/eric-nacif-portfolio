@@ -19,6 +19,37 @@
   --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Larguras de conteúdo (crescem em telas grandes — ver media queries abaixo) */
+  --container-narrow: 1180px;
+  --container: 1240px;
+  --container-wide: 1340px;
+  --gutter: 20px;
+}
+
+/* Telas grandes: o conteúdo acompanha a largura sem perder leiturabilidade */
+@media (min-width: 1600px) {
+  :root {
+    --container-narrow: 1320px;
+    --container: 1400px;
+    --container-wide: 1500px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --container-narrow: 1480px;
+    --container: 1560px;
+    --container-wide: 1680px;
+  }
+}
+
+@media (min-width: 2560px) {
+  :root {
+    --container-narrow: 1720px;
+    --container: 1820px;
+    --container-wide: 1960px;
+  }
 }
 
 /* =========================================
@@ -91,9 +122,9 @@ h6 {
 }
 
 .container {
-  max-width: 1240px;
+  max-width: var(--container);
   margin: 0 auto;
-  padding: 100px 20px;
+  padding: 100px var(--gutter);
 }
 
 .section-title {
@@ -219,4 +250,30 @@ html {
 section:not(.hero-section) {
   content-visibility: auto;
   contain-intrinsic-size: 1px 1000px;
+}
+
+/* =========================================
+   8. ESCALA TIPOGRÁFICA EM TELAS GRANDES
+   (acompanha o container mais largo sem exagerar)
+   ========================================= */
+@media (min-width: 1600px) {
+  .hero-title { font-size: clamp(94px, 6.6vw, 112px); }
+  .hero-sub { font-size: clamp(18px, 1.25vw, 21px); max-width: 560px; }
+  .section-title { font-size: clamp(84px, 6.4vw, 104px); }
+  .about-section .section-title { font-size: clamp(96px, 7vw, 116px); }
+  .about-punchline { font-size: clamp(32px, 2.8vw, 38px); }
+  .projects-title { font-size: clamp(76px, 6vw, 92px); }
+  .showcase__title { font-size: clamp(52px, 4vw, 64px); }
+  .showcase__desc { font-size: clamp(17px, 1.3vw, 19px); }
+  .footer-heading { font-size: clamp(44px, 3.4vw, 54px); }
+}
+
+@media (min-width: 1920px) {
+  .hero-title { font-size: clamp(112px, 6.4vw, 128px); }
+  .hero-sub { max-width: 640px; }
+  .section-title { font-size: clamp(104px, 6.2vw, 120px); }
+  .about-section .section-title { font-size: clamp(116px, 6.8vw, 132px); }
+  .projects-title { font-size: clamp(92px, 5.8vw, 108px); }
+  .showcase__title { font-size: clamp(64px, 4vw, 76px); }
+  .footer-heading { font-size: clamp(54px, 3.2vw, 64px); }
 }

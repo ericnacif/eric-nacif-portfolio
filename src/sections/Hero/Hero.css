@@ -26,9 +26,9 @@
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 1240px;
+    max-width: var(--container);
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 var(--gutter);
 }
 
 /* ── Título (LCP — pintado imediatamente, sem fade) ── */
