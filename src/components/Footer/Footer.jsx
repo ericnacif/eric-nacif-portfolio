@@ -14,8 +14,10 @@ const CONTACT_ENDPOINT = '/api/contato';
 const FORMSPREE_FALLBACK = 'https://formspree.io/f/movpajdd';
 
 const Footer = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const content = t.footer;
+  const phoneDisplay = language === 'pt' ? '(33) 99708-8999' : '+55 (33) 99708-8999';
+  const locationDisplay = language === 'pt' ? 'Brasil - MG' : 'Brazil';
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -25,7 +27,6 @@ const Footer = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const logoSrc = '/logo-blue.webp';
   const suggestionsRef = useRef(null);
   const honeypotRef = useRef(null);
   const commonDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'icloud.com', 'yahoo.com'];
@@ -161,13 +162,13 @@ const Footer = () => {
   };
 
   return (
-    <footer id="contato" className="main-footer">
-      <div className="footer-inner">
+    <>
+      <section id="contato" className="cta-section">
+        <div className="footer-inner">
 
-        <div className="footer-top">
+          <div className="footer-top">
           {/* Lead — contexto + colunas de links */}
           <div className="footer-lead">
-            <span className="footer-eyebrow">{content.letsTalk}</span>
             <h2 className="footer-heading">{content.heading}</h2>
 
             <div className="footer-badges">
@@ -185,27 +186,6 @@ const Footer = () => {
               <FiMail className="footer-contact-icon" />
               {emailAddress}
             </a>
-
-            <div className="footer-cols footer-cols--lead">
-              <div className="footer-col">
-                <span className="footer-col-title">{content.navTitle}</span>
-                {navLinks.map((link) => (
-                  <a key={link.id} href={`#${link.id}`} onClick={(e) => handleNav(e, link.id)} className="footer-col-link">
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-
-              <div className="footer-col">
-                <span className="footer-col-title">{content.socialTitle}</span>
-                {socialLinks.map((link) => (
-                  <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="footer-col-link">
-                    {link.label}
-                    <FiArrowUpRight className="footer-col-link-arrow" />
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
 
           {/* Formulário profissional */}
@@ -321,39 +301,53 @@ const Footer = () => {
           </motion.form>
         </div>
 
-      </div>
+        </div>
+      </section>
 
-      {/* Faixa escura — wordmark + barra inferior */}
-      <div className="footer-dark">
-        <div className="footer-dark-inner">
-          <div className="footer-wordmark" aria-hidden="true">
-            <img src={logoSrc} alt="" className="footer-wordmark-logo" width="48" height="48" loading="lazy" />
-            <span>Eric Nacif</span>
+      {/* ── Footer (faixa azul, wordmark gigante estilo assinatura) ── */}
+      <footer className="site-footer">
+        <div className="site-footer-inner">
+          <div className="site-footer-top">
+            <div className="site-footer-brand">
+              <a
+                href="#home"
+                className="site-footer-logo"
+                onClick={(e) => handleNav(e, "home")}
+                aria-label="Eric Nacif"
+              >
+                <img src="/logo-gray.webp" alt="Eric Nacif" width="46" height="46" loading="lazy" />
+              </a>
+
+              <div className="site-footer-contact">
+                <span className="site-footer-loc">{locationDisplay}</span>
+                <a href="tel:+5533997088999" className="site-footer-contact-link">{phoneDisplay}</a>
+                <a href="mailto:naciferic7@gmail.com" className="site-footer-contact-link">naciferic7@gmail.com</a>
+              </div>
+            </div>
+
+            <nav className="site-footer-cols" aria-label="Footer">
+              <div className="footer-col">
+                <span className="footer-col-title">{content.navTitle}</span>
+                {navLinks.map((link) => (
+                  <a key={link.id} href={`#${link.id}`} onClick={(e) => handleNav(e, link.id)} className="footer-col-link">
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+
+              <div className="footer-col">
+                <span className="footer-col-title">{content.socialTitle}</span>
+                {socialLinks.map((link) => (
+                  <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="footer-col-link">
+                    {link.label}
+                    <FiArrowUpRight className="footer-col-link-arrow" />
+                  </a>
+                ))}
+              </div>
+            </nav>
           </div>
 
-          {/* Colunas — só no mobile, embutidas na faixa escura */}
-          <nav className="footer-cols footer-cols--dark" aria-label="Footer">
-            <div className="footer-col">
-              <span className="footer-col-title">{content.navTitle}</span>
-              {navLinks.map((link) => (
-                <a key={link.id} href={`#${link.id}`} onClick={(e) => handleNav(e, link.id)} className="footer-col-link">
-                  {link.label}
-                </a>
-              ))}
-            </div>
-
-            <div className="footer-col">
-              <span className="footer-col-title">{content.socialTitle}</span>
-              {socialLinks.map((link) => (
-                <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="footer-col-link">
-                  {link.label}
-                  <FiArrowUpRight className="footer-col-link-arrow" />
-                </a>
-              ))}
-            </div>
-          </nav>
-
-          <div className="footer-bottom">
+          <div className="site-footer-meta">
             <p className="footer-copy">© {new Date().getFullYear()} Eric Nacif. {content.copyright}</p>
             <div className="footer-bottom-right">
               <span className="footer-loc">
@@ -367,8 +361,25 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
-    </footer>
+
+        <svg
+          className="site-footer-wordmark"
+          viewBox="0 0 1000 190"
+          preserveAspectRatio="xMidYMax meet"
+          aria-hidden="true"
+        >
+          <text
+            x="500"
+            y="168"
+            textAnchor="middle"
+            textLength="945"
+            lengthAdjust="spacingAndGlyphs"
+          >
+            naciferic
+          </text>
+        </svg>
+      </footer>
+    </>
   );
 };
 

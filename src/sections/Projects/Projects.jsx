@@ -1,19 +1,20 @@
 import React, { useRef } from "react";
 import "./Projects.css";
 import { motion } from "framer-motion";
-import { FiArrowUpRight } from "react-icons/fi";
+import { FiArrowUpRight, FiGithub } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, A11y, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import certificafeImg from "@/assets/images/project-certificafe.webp";
-import engelmigImg from "@/assets/images/project-engelmig.webp";
 import monacImg from "@/assets/images/project-monac.webp";
 import okanImg from "@/assets/images/project-okan.webp";
 import whatsappBotImg from "@/assets/images/project-whatsapp-bot.webp";
 import murkeImg from "@/assets/images/project-murke.webp";
+
+const WHATSAPP_NUMBER = "5533997088999";
 
 const projectsData = [
   {
@@ -43,6 +44,7 @@ const projectsData = [
     id: "okan",
     image: okanImg,
     url: "https://okancontabilidade.com",
+    repoUrl: "https://github.com/ericnacif/okan-contabilidade",
     tags: ["React", "TypeScript", "Next.js", "Responsive"],
     translations: {
       pt: {
@@ -66,6 +68,8 @@ const projectsData = [
     id: "whatsapp-bot-template",
     image: whatsappBotImg,
     url: "https://github.com/ericnacif/template-bot-whatsapp",
+    repoUrl: "https://github.com/ericnacif/template-bot-whatsapp",
+    implement: true,
     tags: ["Node.js", "WhatsApp", "Boilerplate", "Automation"],
     translations: {
       pt: {
@@ -89,6 +93,7 @@ const projectsData = [
     id: "murke",
     image: murkeImg,
     url: "https://murke.netlify.app",
+    repoUrl: "https://github.com/ericnacif/murke",
     tags: ["React", "Framer Motion", "UI", "Responsive"],
     translations: {
       pt: {
@@ -105,52 +110,6 @@ const projectsData = [
         title: "Murke",
         description:
           "Sitio para un estudio creativo. Desarrollé la interfaz y la presencia digital con animaciones fluidas, priorizando una experiencia envolvente y una navegación ligera en cualquier dispositivo.",
-      },
-    },
-  },
-  {
-    id: "certificafe",
-    image: certificafeImg,
-    url: "https://certificafe.com.br/",
-    tags: ["PHP", "Laravel", "MySQL", "Blade"],
-    translations: {
-      pt: {
-        title: "Certificafé",
-        description:
-          "Sistema corporativo de certificação de café. Atuo como um dos desenvolvedores da plataforma em Laravel, implementando funcionalidades e correções junto ao time para manter a operação estável.",
-      },
-      en: {
-        title: "Certificafé",
-        description:
-          "Corporate coffee certification system. I work as one of the developers on the Laravel platform, shipping features and fixes alongside the team to keep operations stable.",
-      },
-      es: {
-        title: "Certificafé",
-        description:
-          "Sistema corporativo de certificación de café. Actúo como uno de los desarrolladores de la plataforma en Laravel, implementando funcionalidades y correcciones junto al equipo para mantener la operación estable.",
-      },
-    },
-  },
-  {
-    id: "engelmig",
-    image: engelmigImg,
-    url: "https://www.engelmig.com.br/",
-    tags: ["WordPress", "JavaScript", "SEO", "UX/UI"],
-    translations: {
-      pt: {
-        title: "Engelmig Energia",
-        description:
-          "Portal corporativo do setor de energia. Desenvolvi páginas institucionais e apliquei otimizações de SEO on-page para ampliar a visibilidade da empresa nas buscas.",
-      },
-      en: {
-        title: "Engelmig Energia",
-        description:
-          "Corporate portal for the energy sector. I developed institutional pages and applied on-page SEO optimizations to increase the company's visibility in search.",
-      },
-      es: {
-        title: "Engelmig Energia",
-        description:
-          "Portal corporativo del sector energético. Desarrollé páginas institucionales y apliqué optimizaciones de SEO on-page para ampliar la visibilidad de la empresa en las búsquedas.",
       },
     },
   },
@@ -256,6 +215,9 @@ const Projects = () => {
               {projectsData.map((project, idx) => {
                 const lang =
                   project.translations[language] || project.translations.pt;
+                const implementUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                  content.implementMessage
+                )}`;
                 return (
                   <SwiperSlide key={project.id}>
                     <article className="showcase">
@@ -292,13 +254,59 @@ const Projects = () => {
                             </span>
                           ))}
                         </div>
-                        <button
-                          className="showcase__btn"
-                          onClick={(e) => handleProjectClick(e, project.url)}
-                        >
-                          {content.viewProject}
-                          <FiArrowUpRight />
-                        </button>
+                        {project.implement ? (
+                          <div className="showcase__actions">
+                            {project.repoUrl && (
+                              <button
+                                className="showcase__btn showcase__btn--ghost"
+                                onClick={(e) =>
+                                  handleProjectClick(e, project.repoUrl)
+                                }
+                              >
+                                {content.repository}
+                                <FiGithub />
+                              </button>
+                            )}
+                            <button
+                              className="showcase__btn showcase__btn--whatsapp"
+                              onClick={(e) =>
+                                handleProjectClick(e, implementUrl)
+                              }
+                            >
+                              {content.implement}
+                              <FaWhatsapp />
+                            </button>
+                          </div>
+                        ) : project.repoUrl ? (
+                          <div className="showcase__actions">
+                            <button
+                              className="showcase__btn showcase__btn--ghost"
+                              onClick={(e) =>
+                                handleProjectClick(e, project.repoUrl)
+                              }
+                            >
+                              {content.repository}
+                              <FiGithub />
+                            </button>
+                            <button
+                              className="showcase__btn"
+                              onClick={(e) =>
+                                handleProjectClick(e, project.url)
+                              }
+                            >
+                              {content.viewProject}
+                              <FiArrowUpRight />
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            className="showcase__btn"
+                            onClick={(e) => handleProjectClick(e, project.url)}
+                          >
+                            {content.viewProject}
+                            <FiArrowUpRight />
+                          </button>
+                        )}
                       </div>
                     </article>
                   </SwiperSlide>

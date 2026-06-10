@@ -2,12 +2,13 @@
    FOOTER — TOPO CLARO + FAIXA ESCURA (WORDMARK)
    ========================================= */
 
-.main-footer {
+.cta-section {
     position: relative;
     background:
         radial-gradient(circle at 50% 0%, rgba(var(--accent-rgb), 0.07), transparent 34rem),
         var(--bg-color);
     padding-top: clamp(80px, 11vw, 140px);
+    padding-bottom: clamp(56px, 7vw, 96px);
 }
 
 .footer-inner {
@@ -184,23 +185,6 @@
 .footer-col-link:hover .footer-col-link-arrow {
     opacity: 1;
     transform: translate(2px, -2px);
-}
-
-/* Versão escura das colunas (só mobile, dentro do wordmark) */
-.footer-cols--dark {
-    display: none;
-}
-
-.footer-cols--dark .footer-col-title {
-    color: rgba(255, 255, 255, 0.4);
-}
-
-.footer-cols--dark .footer-col-link {
-    color: rgba(255, 255, 255, 0.72);
-}
-
-.footer-cols--dark .footer-col-link:hover {
-    color: #ffffff;
 }
 
 /* =========================================
@@ -481,12 +465,11 @@
 }
 
 /* =========================================
-   FAIXA ESCURA — WORDMARK + BARRA INFERIOR
+   FOOTER (FAIXA AZUL) — NAV + WORDMARK GIGANTE
    ========================================= */
-.footer-dark {
+.site-footer {
     position: relative;
     overflow: hidden;
-    margin-top: clamp(40px, 6vw, 80px);
     background:
         radial-gradient(circle at 16% 0%, rgba(var(--accent-rgb), 0.35), transparent 30rem),
         radial-gradient(circle at 90% 100%, rgba(var(--accent-rgb), 0.2), transparent 28rem),
@@ -494,7 +477,7 @@
     color: #ffffff;
 }
 
-.footer-dark-inner {
+.site-footer-inner {
     position: relative;
     z-index: 2;
     max-width: 1340px;
@@ -502,81 +485,126 @@
     padding: 0 clamp(20px, 5vw, 80px);
 }
 
-/* ── Wordmark gigante ── */
-.footer-wordmark {
+/* ── Linha superior: logo + colunas ── */
+.site-footer-top {
     display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: clamp(32px, 6vw, 80px);
+    flex-wrap: wrap;
+    padding: clamp(48px, 6vw, 90px) 0 clamp(36px, 5vw, 64px);
+}
+
+.site-footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(18px, 2.4vw, 28px);
+}
+
+.site-footer-logo {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: clamp(14px, 2.4vw, 36px);
-    padding: clamp(52px, 8vw, 110px) 0 clamp(44px, 6vw, 84px);
-    line-height: 1;
-    user-select: none;
-    cursor: default;
 }
 
-.footer-wordmark span {
-    font-family: var(--font-display);
-    font-size: clamp(54px, 16vw, 268px);
-    font-weight: 600;
-    letter-spacing: -0.04em;
+.site-footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.site-footer-loc {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    white-space: nowrap;
-    background:
-        linear-gradient(100deg, transparent 32%, rgba(255, 255, 255, 0.95) 50%, transparent 68%) 120% 0 / 250% 100% no-repeat,
-        linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.16) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transition: background-position 3.4s var(--ease-out), letter-spacing 1.2s var(--ease-out);
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 4px;
 }
 
-.footer-wordmark-logo {
-    width: clamp(52px, 9vw, 136px);
+.site-footer-contact-link {
+    width: fit-content;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.72);
+    text-decoration: none;
+    transition: color 0.22s, transform 0.22s;
+}
+
+.site-footer-contact-link:hover {
+    color: #ffffff;
+    transform: translateX(2px);
+}
+
+.site-footer-logo img {
+    width: clamp(40px, 5vw, 54px);
     height: auto;
     opacity: 0.95;
-    transition: transform 0.6s var(--ease-out), opacity 0.4s;
+    transition: transform 0.5s var(--ease-out), opacity 0.3s;
 }
 
-/* ── Hover: varredura de brilho + logo reage ── */
-.footer-wordmark:hover span {
-    background-position: -60% 0, 0 0;
-    letter-spacing: -0.028em;
-}
-
-.footer-wordmark:hover .footer-wordmark-logo {
+.site-footer-logo:hover img {
     opacity: 1;
-    transform: rotate(-8deg) scale(1.08);
+    transform: rotate(-6deg) scale(1.06);
+}
+
+.site-footer-cols {
+    display: flex;
+    gap: clamp(40px, 6vw, 96px);
+}
+
+.site-footer .footer-col-title {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.site-footer .footer-col-link {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.site-footer .footer-col-link:hover {
+    color: #ffffff;
+}
+
+/* ── Meta (copyright / local / voltar ao topo) ── */
+.site-footer-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 22px 0 clamp(28px, 4vw, 48px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ── Wordmark gigante (lado a lado, fim da página) ── */
+.site-footer-wordmark {
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
+    fill: #ffffff;
+}
+
+.site-footer-wordmark text {
+    font-family: "Inter", var(--font-display);
+    font-weight: 700;
+    font-size: 210px;
+    letter-spacing: -0.04em;
+    text-transform: lowercase;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .footer-wordmark span,
-    .footer-wordmark-logo {
+    .site-footer-logo img {
         transition: none;
     }
 
-    .footer-wordmark:hover span {
-        background-position: 120% 0, 0 0;
-        letter-spacing: -0.04em;
-    }
-
-    .footer-wordmark:hover .footer-wordmark-logo {
+    .site-footer-logo:hover img {
         transform: none;
     }
 
     .footer-badge-dot {
         animation: none;
     }
-}
-
-/* ── Barra inferior ── */
-.footer-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
-    padding: 22px 0 26px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-copy {
@@ -669,20 +697,21 @@
         align-items: center;
     }
 
-    /* Colunas saem do lead e entram na faixa escura */
-    .footer-cols--lead {
-        display: none;
+    .site-footer-top {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: clamp(28px, 7vw, 44px);
     }
 
-    .footer-cols--dark {
-        display: flex;
+    .site-footer-brand,
+    .site-footer-contact {
+        align-items: center;
+    }
+
+    .site-footer-cols {
         justify-content: center;
         gap: clamp(40px, 12vw, 64px);
-        margin-bottom: clamp(28px, 6vw, 40px);
-    }
-
-    .footer-wordmark {
-        padding-bottom: clamp(28px, 6vw, 40px);
     }
 
     .form-head {
@@ -690,7 +719,7 @@
         text-align: center;
     }
 
-    .footer-bottom {
+    .site-footer-meta {
         flex-direction: column;
         align-items: center;
         text-align: center;
@@ -703,7 +732,7 @@
 }
 
 @media (max-width: 600px) {
-    .main-footer {
+    .cta-section {
         padding-top: 72px;
     }
 
@@ -730,7 +759,7 @@
         width: 100%;
     }
 
-    .footer-bottom {
+    .site-footer-meta {
         flex-direction: column;
         align-items: center;
         text-align: center;

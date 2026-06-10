@@ -9,6 +9,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const [atFooter, setAtFooter] = useState(false);
 
   const { language, changeLanguage, t } = useLanguage();
   const menuRef = useRef(null);
@@ -22,10 +23,20 @@ const Header = () => {
   ];
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+      // Só esconde o header quando chega ao fim real da página
+      const scrollBottom = window.innerHeight + window.scrollY;
+      const pageHeight = document.documentElement.scrollHeight;
+      setAtFooter(pageHeight - scrollBottom <= 60);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -83,7 +94,7 @@ const Header = () => {
   };
 
   return (
-    <header className={`main-header ${scrolled ? "scrolled" : ""}`} role="banner">
+    <header className={`main-header ${scrolled ? "scrolled" : ""} ${atFooter ? "header-hidden" : ""}`} role="banner">
       <div className="header-container">
 
         {/* Logo */}

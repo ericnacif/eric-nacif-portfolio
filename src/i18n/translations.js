@@ -40,6 +40,9 @@ export const translations = {
       previous: 'Anterior',
       next: 'Próximo',
       viewProject: 'Ver projeto',
+      repository: 'Repositório',
+      implement: 'Quero implementar',
+      implementMessage: 'Olá Eric! Vi o Template Bot WhatsApp no seu portfólio e quero implementar um bot. Pode me ajudar?',
     },
     footer: {
       eyebrow: '03 — Contato',
@@ -113,6 +116,9 @@ export const translations = {
       previous: 'Previous',
       next: 'Next',
       viewProject: 'View project',
+      repository: 'Repository',
+      implement: 'I want to implement it',
+      implementMessage: 'Hi Eric! I saw the WhatsApp Bot Template on your portfolio and I want to implement a bot. Can you help me?',
     },
     footer: {
       eyebrow: '03 — Contact',
@@ -186,6 +192,9 @@ export const translations = {
       previous: 'Anterior',
       next: 'Próximo',
       viewProject: 'Ver proyecto',
+      repository: 'Repositorio',
+      implement: 'Quiero implementarlo',
+      implementMessage: '¡Hola Eric! Vi la Template Bot WhatsApp en tu portafolio y quiero implementar un bot. ¿Puedes ayudarme?',
     },
     footer: {
       eyebrow: '03 — Contacto',

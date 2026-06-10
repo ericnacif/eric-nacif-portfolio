@@ -255,6 +255,37 @@
   box-shadow: 0 16px 36px rgba(var(--accent-rgb), 0.4);
 }
 
+/* ── Grupo de ações (projetos com 2 CTAs) ── */
+.showcase__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.showcase__btn--ghost {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.showcase__btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow: none;
+}
+
+.showcase__btn--whatsapp {
+  background: #25d366;
+  color: #062b16;
+}
+
+.showcase__btn--whatsapp:hover {
+  background: #1ebe5b;
+  color: #062b16;
+  box-shadow: 0 16px 36px rgba(37, 211, 102, 0.4);
+}
+
 /* ── Wrapper (sem padding — imagem alinha com o título) ── */
 .carousel-wrapper {
   position: relative;
@@ -417,6 +448,10 @@
     width: 100%;
     justify-content: center;
     padding: 16px 24px;
+  }
+
+  .showcase__actions {
+    flex-direction: column;
   }
 
   .swiper-arrow {
