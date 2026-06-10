@@ -13,12 +13,12 @@ export const useBackToTopVisible = (threshold = 600) => {
 
   useEffect(() => {
     const onScroll = () => {
-      const footer = document.getElementById('contato');
-      const footerVisible = footer
-        ? footer.getBoundingClientRect().top < window.innerHeight
-        : false;
+      // Esconde no fim real da página, igual ao header e ao botão de WhatsApp
+      const scrollBottom = window.innerHeight + window.scrollY;
+      const pageHeight = document.documentElement.scrollHeight;
+      const atFooter = pageHeight - scrollBottom <= 60;
 
-      const nextVisibility = window.scrollY > threshold && !footerVisible;
+      const nextVisibility = window.scrollY > threshold && !atFooter;
 
       if (nextVisibility !== currentVisibility) {
         currentVisibility = nextVisibility;
@@ -32,6 +32,7 @@ export const useBackToTopVisible = (threshold = 600) => {
       activeHandler = onScroll;
       onScroll();
       window.addEventListener('scroll', activeHandler, { passive: true });
+      window.addEventListener('resize', activeHandler, { passive: true });
     }
 
     return () => {
@@ -39,6 +40,7 @@ export const useBackToTopVisible = (threshold = 600) => {
 
       if (subscribers.size === 0) {
         window.removeEventListener('scroll', activeHandler);
+        window.removeEventListener('resize', activeHandler);
         activeHandler = null;
       }
     };
