@@ -89,22 +89,22 @@ const projectsData = [
     id: "murke",
     image: murkeImg,
     url: "https://murke.netlify.app",
-    tags: ["Branding", "UI Design", "React", "Framer Motion"],
+    tags: ["React", "Framer Motion", "UI", "Responsive"],
     translations: {
       pt: {
         title: "Murke",
         description:
-          "Identidade visual e presença digital para estúdio criativo. Direção estética autoral com interface conceitual e animações que reforçam a marca em cada interação.",
+          "Site para estúdio criativo. Desenvolvi a interface e a presença digital com animações fluidas, priorizando uma experiência envolvente e navegação leve em qualquer dispositivo.",
       },
       en: {
         title: "Murke",
         description:
-          "Visual identity and digital presence for a creative studio. Authorial aesthetic direction with a concept-driven interface and animations that reinforce the brand at every interaction.",
+          "Website for a creative studio. I built the interface and digital presence with fluid animations, prioritizing an engaging experience and smooth navigation on any device.",
       },
       es: {
         title: "Murke",
         description:
-          "Identidad visual y presencia digital para un estudio creativo. Dirección estética autoral con interfaz conceptual y animaciones que refuerzan la marca en cada interacción.",
+          "Sitio para un estudio creativo. Desarrollé la interfaz y la presencia digital con animaciones fluidas, priorizando una experiencia envolvente y una navegación ligera en cualquier dispositivo.",
       },
     },
   },
@@ -117,17 +117,17 @@ const projectsData = [
       pt: {
         title: "Certificafé",
         description:
-          "Sistema corporativo de certificação de café. Assumi a manutenção de uma aplicação legada em Laravel, corrigindo falhas e melhorando a estabilidade sem interromper a operação.",
+          "Sistema corporativo de certificação de café. Atuo como um dos desenvolvedores da plataforma em Laravel, implementando funcionalidades e correções junto ao time para manter a operação estável.",
       },
       en: {
         title: "Certificafé",
         description:
-          "Corporate coffee certification system. I took over the maintenance of a legacy Laravel application, fixing bugs and improving stability without disrupting operations.",
+          "Corporate coffee certification system. I work as one of the developers on the Laravel platform, shipping features and fixes alongside the team to keep operations stable.",
       },
       es: {
         title: "Certificafé",
         description:
-          "Sistema corporativo de certificación de café. Asumí el mantenimiento de una aplicación heredada en Laravel, corrigiendo fallos y mejorando la estabilidad sin interrumpir la operación.",
+          "Sistema corporativo de certificación de café. Actúo como uno de los desarrolladores de la plataforma en Laravel, implementando funcionalidades y correcciones junto al equipo para mantener la operación estable.",
       },
     },
   },
