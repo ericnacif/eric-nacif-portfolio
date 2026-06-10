@@ -10,6 +10,8 @@ import {
 } from 'react-icons/fi';
 
 const MESSAGE_MAX = 600;
+const CONTACT_ENDPOINT = '/api/contato';
+const FORMSPREE_FALLBACK = 'https://formspree.io/f/movpajdd';
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -25,6 +27,7 @@ const Footer = () => {
 
   const logoSrc = '/logo-blue.webp';
   const suggestionsRef = useRef(null);
+  const honeypotRef = useRef(null);
   const commonDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'icloud.com', 'yahoo.com'];
 
   useEffect(() => {
@@ -59,23 +62,61 @@ const Footer = () => {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus('sending');
+  const sendViaBackend = async () => {
+    const res = await fetch(CONTACT_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        email,
+        message,
+        website: honeypotRef.current?.value || '',
+      }),
+    });
+    if (!res.ok) return false;
+    const data = await res.json().catch(() => ({}));
+    return data.ok === true;
+  };
+
+  const sendViaFormspree = async () => {
     const data = new FormData();
     data.append('name', name);
     data.append('email', email);
     data.append('message', message);
+    const res = await fetch(FORMSPREE_FALLBACK, {
+      method: 'POST', body: data, headers: { Accept: 'application/json' },
+    });
+    return res.ok;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+
+    let delivered = false;
     try {
-      const res = await fetch('https://formspree.io/f/movpajdd', {
-        method: 'POST', body: data, headers: { Accept: 'application/json' },
-      });
-      if (res.ok) {
-        setStatus('success');
-        setName(''); setEmail(''); setMessage(content.defaultMessage); setTouched({});
-        setTimeout(() => setStatus('idle'), 3500);
-      } else { setStatus('error'); setTimeout(() => setStatus('idle'), 3000); }
-    } catch { setStatus('error'); setTimeout(() => setStatus('idle'), 3000); }
+      delivered = await sendViaBackend();
+    } catch {
+      delivered = false;
+    }
+
+    // Fallback: usa o Formspree caso o backend novo falhe ou esteja indisponível (ex.: dev local sem Netlify).
+    if (!delivered) {
+      try {
+        delivered = await sendViaFormspree();
+      } catch {
+        delivered = false;
+      }
+    }
+
+    if (delivered) {
+      setStatus('success');
+      setName(''); setEmail(''); setMessage(content.defaultMessage); setTouched({});
+      setTimeout(() => setStatus('idle'), 3500);
+    } else {
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 3000);
+    }
   };
 
   const emailAddress = 'naciferic7@gmail.com';
@@ -176,6 +217,17 @@ const Footer = () => {
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
           >
+            {/* Honeypot anti-spam: invisível para usuários, preenchido só por bots */}
+            <input
+              ref={honeypotRef}
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+            />
+
             <motion.div className="form-head" variants={formItem}>
               <h3 className="form-title">{content.formTitle}</h3>
               <p className="form-subtitle">{content.subtitle}</p>

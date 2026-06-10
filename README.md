@@ -39,7 +39,7 @@ Portfólio desenvolvido com foco em **performance**, **SEO técnico** e **experi
 
 - **Animações fluidas** com Framer Motion (transições de seções e formulário).
 - **Carrossel de projetos** com Swiper (autoplay, paginação custom e navegação acessível).
-- **Formulário de contato** com validação em tempo real, sugestão de domínios de e-mail e envio via Formspree.
+- **Formulário de contato** com validação em tempo real, sugestão de domínios de e-mail e envio por backend próprio (Netlify Function + Resend), com fallback automático para Formspree.
 - **Atalhos:** `Ctrl/Cmd + P` abre o currículo em PDF no idioma ativo.
 
 ---
@@ -50,7 +50,7 @@ Portfólio desenvolvido com foco em **performance**, **SEO técnico** e **experi
 
 **Estilização & animação:** CSS3 moderno (Variáveis, Flexbox, Grid) · Framer Motion · React Icons · Swiper
 
-**Ferramentas & deploy:** ESLint · Sharp (otimização de imagens) · Git/GitHub · Netlify (CI/CD) · Formspree (formulário sem backend)
+**Ferramentas & deploy:** ESLint · Sharp (otimização de imagens) · Git/GitHub · Netlify (CI/CD) · Netlify Functions + Resend (envio de e-mail) · Formspree (fallback)
 
 ---
 
@@ -93,6 +93,22 @@ Crie um arquivo `.env` na raiz (opcional):
 # ID de medição do Google Analytics 4 (deixe vazio para desativar)
 VITE_GA_ID=G-XXXXXXXXXX
 ```
+
+### Formulário de contato (backend)
+
+O envio usa uma **Netlify Function** (`netlify/functions/contato.mjs`) com **Resend**, exposta em `/api/contato`. Se o backend falhar ou estiver indisponível (ex.: `npm run dev` puro, sem Netlify), o formulário cai automaticamente no **Formspree**.
+
+Configure no painel do Netlify (*Site settings → Environment variables*):
+
+| Variável | Descrição |
+|----------|-----------|
+| `RESEND_API_KEY` | Chave de API do [Resend](https://resend.com/api-keys) |
+| `MAIL_FROM` | Remetente, ex.: `Eric Nacif <contato@ericnacif.dev>` (domínio verificado no Resend) |
+| `MAIL_TO` | E-mail que recebe os contatos |
+
+Veja `.env.example` para o formato. Para testar a function localmente, use `netlify dev` (em vez de `npm run dev`).
+
+> **Importante:** para o `MAIL_FROM` usar `@ericnacif.dev`, verifique o domínio no Resend (registros DNS). Antes disso, é possível enviar apenas de `onboarding@resend.dev` para o e-mail da própria conta.
 
 ---
 
